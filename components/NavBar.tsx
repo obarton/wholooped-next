@@ -100,15 +100,15 @@ const NavBar = () => {
                     placement="start"
                 >
                     <Offcanvas.Header closeButton>
-                    <Offcanvas.Title id="offcanvasNavbarLabel" style={{fontSize: "1.5em"}} className="header-logo">Who Looped <span style={{color:"#198754"}}><b>Beta</b></span></Offcanvas.Title>
+                    <Offcanvas.Title id="offcanvasNavbarLabel" style={{fontSize: "1.5em"}} className="header-logo">Who Looped <span style={{color:"#198754", fontSize: "0.75em"}}><b><em>Beta</em></b></span></Offcanvas.Title>
                     </Offcanvas.Header>
                     <Offcanvas.Body>
                     <Stack gap={3}>
                     <div>
-                    {user && (
+                    {userProfile && (
                             <> 
                             <Avatar />
-                            <p style={{marginTop: "0.5em"}}>Signed in as <b>{user.name}</b></p>
+                            <p style={{marginTop: "0.5em"}}>Signed in as <b>{userProfile.displayName}</b></p>
                             </>
                     )}
                     </div>
