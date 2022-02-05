@@ -131,6 +131,12 @@ export default class ContentfulApi {
             artwork {
               url
             }
+            loopmakerCollection {
+              items {
+                name
+                slug
+              }
+            }
           }
         }
     }`;
