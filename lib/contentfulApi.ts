@@ -1,4 +1,8 @@
-import { GET_ARTISTS_INDEX } from "../graphql/getArtistIndex"
+import { GET_ARTIST_BY_SLUG } from "../graphql/getArtistBySlug"
+import { GET_ARTISTS } from "../graphql/getArtistIndex";
+import { GET_ARTIST_SONG_IDS } from "../graphql/getArtistSongIds";
+import { GET_ARTIST_SONGS_FROM_IDS } from "../graphql/getArtistSongsFromIds";
+import { GET_ARTISTS_SONG_IDS } from "../graphql/getArtistsSongIds";
 import { Config } from "../utils/config";
 
 async function fetchGraphQL(query: string, preview = false) {
@@ -15,10 +19,57 @@ async function fetchGraphQL(query: string, preview = false) {
     ).then((response) => response.json())
 }
 
-export async function getArtistIndex() {
-    const response = await fetchGraphQL(GET_ARTISTS_INDEX)
+export async function getArtistBySlug(slug: string) {
+    const query = GET_ARTIST_BY_SLUG(slug)
+    const response = await fetchGraphQL(query);
 
-    return response?.data?.artistCollection?.items;
+    return response?.data?.artistCollection?.items[0];
+}
+
+export async function getArtists() {
+  const query = GET_ARTISTS;
+  const response = await fetchGraphQL(query);
+
+  return response?.data?.artistCollection?.items;
+}
+
+export async function getArtistSongsIds(id: string) {
+  const query = GET_ARTIST_SONG_IDS(id);
+  const response = await fetchGraphQL(query);
+  const songIds = response?.data?.artistCollection?.items[0]?.linkedFrom?.songCollection?.items?.map((item: any) => item?.sys?.id);
+
+  return songIds;
+}
+
+export async function getArtistsSongsIds(ids: string[]) {
+  const query = GET_ARTISTS_SONG_IDS(ids);
+  const response = await fetchGraphQL(query);
+  const songs = response?.data?.artistCollection?.items;
+
+  return songs;
+}
+
+
+export async function getArtistSongs(id: string) {
+  const artistSongIds = await getArtistSongsIds(id);
+  const formattedSongIds = artistSongIds?.map((id: string) => `"${id}"`).join(",")
+  const query = GET_ARTIST_SONGS_FROM_IDS(formattedSongIds);
+
+  
+  const response = await fetchGraphQL(query);
+  //console.log(`getArtistSongs response ${JSON.stringify(response, null, 2)}`); 
+
+  return response?.data?.songCollection?.items;
+}
+
+export async function getArtistsSongs(ids: string[]) {
+  const artistSongIds = await getArtistsSongsIds(ids);
+  const formattedSongIds = artistSongIds?.map((id: string) => `"${id}"`).join(",")
+  const query = GET_ARTIST_SONGS_FROM_IDS(formattedSongIds);
+
+  const response = await fetchGraphQL(query);
+
+  return response?.data?.songCollection?.items;
 }
 
 export default class ContentfulApi {
@@ -149,5 +200,59 @@ export default class ContentfulApi {
       : { total: 0, items: [] };
 
     return paginatedLoopPacks;
+  }
+
+  static async getTotalArtistSongs(artistId: string) {
+    const query =`{
+      artistCollection(where: {sys: {id: "${artistId}"}}) {
+        items {
+          linkedFrom {
+            songCollection {
+              total
+            }
+          }
+        }
+      }
+    }`
+
+        // Call out to the API
+        const response = await this.callContentful(query);
+        const totalArtistSongs = response.data.artistCollection?.items[0]?.linkedFrom?.songCollection?.total
+          ? response.data.artistCollection?.items[0]?.linkedFrom?.songCollection?.total
+          : 0;
+    
+        return totalArtistSongs;
+  }
+
+  static async getPaginatedArtistSongs(artistId: string, page: any) {
+    const skipMultiplier = page === 1 ? 0 : page - 1;
+    const skip =
+      skipMultiplier > 0 ? Config.pagination.pageSize * skipMultiplier : 0;
+
+      const query =`{
+        artistCollection(limit: ${Config.pagination.pageSize}, skip: ${skip}, where: {sys: {id: "${artistId}"}}) {
+          items {
+            linkedFrom {
+              songCollection {
+                items {
+                  sys {
+                    id
+                  }
+                }
+              }
+            }
+          }
+        }
+      }`
+      console.log(`getPaginatedArtistSongs ${JSON.stringify(query, null, 2)}`)
+
+        // Call out to the API
+        const response = await this.callContentful(query);
+
+        const paginatedSongIds = response.data?.artistCollection?.items[0]?.linkedFrom?.songCollection
+          ? response.data?.artistCollection?.items[0]?.linkedFrom?.songCollection
+          : { total: 0, items: [] };
+    
+        return paginatedSongIds;
   }
 }

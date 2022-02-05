@@ -1,12 +1,18 @@
 import React from 'react';
 import { Stack } from 'react-bootstrap';
-// import Pagination from './Pagination';
+import Pagination from './Pagination';
 import { resizeImageFromUrl } from '../../helper/image';
-import CircularAvatar from '../CircularAvatar';
 import NextLink from '../NextLink';
 import HorizontalDivider from '../HorizontalDivider';
+import Artwork from '../Artwork';
 
-const LoopPackList = ({ loopPacks, currentPage, totalPages }: any) => {
+interface LoopPackListProps {
+  loopPacks: any;
+  currentPage: string;
+  totalPages: string;
+}
+
+const LoopPackList = ({ loopPacks, currentPage, totalPages }: LoopPackListProps) => {
 
     const nextDisabled = parseInt(currentPage, 10) === parseInt(totalPages, 10);
     const prevDisabled = parseInt(currentPage, 10) === 1;
@@ -14,64 +20,47 @@ const LoopPackList = ({ loopPacks, currentPage, totalPages }: any) => {
   return (
       <>
         <div>
-        {/* {loopPacks.map(loopPack => {
-          const image = getImage(loopPack.artwork)
-          const altText = loopPack.title;   
-          const { title, slug, loopmaker } = loopPack;
-
-          return (
-          <div style={{padding: "1em"}}>
-          <Stack direction="horizontal" gap={1}>
-            <div style={{ paddingRight: "0.5em"}}>
-                <Link to={`/looppacks/${loopmaker[0]?.slug}/${slug}`}>
-                  <GatsbyImage image={image} alt={altText} style={{ borderRadius: "8px"}}/>
-                </Link>
-            </div>
-            <div>
-            <Link to={`/looppacks/${loopmaker[0]?.slug}/${slug}`}>
-            <p style={{margin: "0"}}>
-              {title}
-            </p>
-                {loopmaker?.map((l, index) => {
-                  if(index == 0) {
-                    return <span style={{color: "#666C7E"}}>{l.name}</span>
-                  }
-
-                    return <span style={{color: "#666C7E"}}>, {l.name}</span>
-                })}
-            </Link>
-            </div>
-          </Stack>
-          </div>)
-        })} */}
             {loopPacks.map((loopPack: any, index: number) => {
                     const imageSrc = resizeImageFromUrl(loopPack.artwork?.url);
                     const altText = loopPack.title;    
-                    const { title, slug, loopmaker } = loopPack;
+                    const { title, slug, loopmakerCollection } = loopPack;
+                    const loopmakers = loopmakerCollection?.items;
+                    const redirectUrl = `/looppacks/${loopmakers[0]?.slug}/${slug}`
 
                     return (
                         <div style={{padding: "1em"}} key={index}>
-                            {/* <Stack direction="horizontal" gap={1}>
+                            <Stack direction="horizontal" gap={1}>
                                 <div style={{ paddingRight: "0.5em"}}>
-                                    <CircularAvatar src={imageSrc} alt={altText}/>
+                                    <NextLink href={redirectUrl}>
+                                      <Artwork src={imageSrc} alt={altText}/>
+                                    </NextLink>
                                 </div>
                                 <div>
-                                <NextLink href={`/artists/${slug}`}>
-                                    {artist.name}
+                                <NextLink href={redirectUrl}>
+                                <p style={{margin: "0"}}>
+                                  {title}
+                                </p>
+                                    {loopmakers?.map((l: any, index: number) => {
+                                      if(index == 0) {
+                                        return <span style={{color: "#666C7E"}}>{l.name}</span>
+                                      }
+
+                                        return <span style={{color: "#666C7E"}}>, {l.name}</span>
+                                    })}
                                 </NextLink>
                                 </div>
-                            </Stack> */}
+                            </Stack>
                         </div>
                         )
                     })}
         </div>
         <HorizontalDivider />
-        {/* <Pagination
+        <Pagination
             totalPages={totalPages}
             currentPage={currentPage}
             nextDisabled={nextDisabled}
             prevDisabled={prevDisabled}
-        /> */}
+        />
     </>
   );
 };

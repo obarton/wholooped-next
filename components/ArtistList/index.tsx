@@ -6,7 +6,13 @@ import CircularAvatar from '../CircularAvatar';
 import NextLink from '../NextLink';
 import HorizontalDivider from '../HorizontalDivider';
 
-const ArtistList = ({ artists, currentPage, totalPages }: any) => {
+interface ArtistListProps {
+    artists: any;
+    currentPage: string;
+    totalPages: string;
+  }
+
+const ArtistList = ({ artists, currentPage, totalPages }: ArtistListProps) => {
 
     const nextDisabled = parseInt(currentPage, 10) === parseInt(totalPages, 10);
     const prevDisabled = parseInt(currentPage, 10) === 1;
