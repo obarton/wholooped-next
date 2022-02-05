@@ -45,9 +45,9 @@ const LoopPackList = ({ loopPacks, currentPage, totalPages }: any) => {
           </div>)
         })} */}
             {loopPacks.map((loopPack: any, index: number) => {
-                    // const imageSrc = resizeImageFromUrl(artist.photo?.url);
-                    // const altText = artist.photo?.title;   
-                    // const { slug } = artist;
+                    const imageSrc = resizeImageFromUrl(loopPack.artwork?.url);
+                    const altText = loopPack.title;    
+                    const { title, slug, loopmaker } = loopPack;
 
                     return (
                         <div style={{padding: "1em"}} key={index}>
