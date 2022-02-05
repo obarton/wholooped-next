@@ -41,7 +41,7 @@ const NavBar = () => {
                 <Navbar expand="lg" style={{boxShadow: "0 2px 2px -2px rgba(0,0,0,.2)"}}>
                 <Container fluid style={{padding: "1em"}}>
                 <StyledLink href={user ? "/app" : "/"}><Navbar.Brand className="header-logo">Who Looped <span style={{color:"#198754", fontSize: "0.75em"}}><b><em>Beta</em></b></span></Navbar.Brand></StyledLink>
-                <div className="vr" style={{marginRight: "1rem"}}/>
+                {/* <div className="vr" style={{marginRight: "1rem", height: "1em"}}/> */}
                     <Navbar.Toggle aria-controls="navbarScroll" />
                     <Navbar.Collapse id="navbarScroll">
                     <Nav

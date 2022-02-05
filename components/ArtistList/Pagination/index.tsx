@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { Stack } from "react-bootstrap";
+import NextLink from "../../NextLink";
 
 export default function Pagination({ totalPages, currentPage, prevDisabled, nextDisabled }: any) {
 
@@ -10,26 +12,26 @@ export default function Pagination({ totalPages, currentPage, prevDisabled, next
   const nextPageUrl = `/artists/page/${parseInt(currentPage, 10) + 1}`;
 
   return (
-    <ol>
-      <li>
-        {prevDisabled && <span>Previous page</span>}
+    <div style={{marginTop: "2rem", display: "flex", justifyContent: "center"}}>
+    <Stack gap={3} direction="horizontal">
+      <div>
         {!prevDisabled && (
-          <Link href={prevPageUrl}>
+          <NextLink href={prevPageUrl}>
             <a>Previous page</a>
-          </Link>
+          </NextLink>
         )}
-      </li>
-      <li>
+      </div>
+      <div>
         Page {currentPage} of {totalPages}
-      </li>
-      <li>
-        {nextDisabled && <span>Next page</span>}
+      </div>
+      <div>
         {!nextDisabled && (
-          <Link href={nextPageUrl}>
+          <NextLink href={nextPageUrl}>
             <a>Next page</a>
-          </Link>
+          </NextLink>
         )}
-      </li>
-    </ol>
+      </div>
+    </Stack>
+    </div>
   );
 }

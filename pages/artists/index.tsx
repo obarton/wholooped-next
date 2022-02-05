@@ -1,19 +1,28 @@
 import React from 'react';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
-import ContentfulApi, { getArtistIndex } from '../../lib/contentfulApi';
+import ContentfulApi from '../../lib/contentfulApi';
 import { Config } from '../../utils/config';
 import ArtistList from '../../components/ArtistList';
+import IndexPageHeader from '../../components/IndexPageHeader';
+import { Desktop } from '../../components/Responsive';
+import Container from "react-bootstrap/Container"
+import PageContainer from '../../components/PageContainer';
 
 const ArtistIndex = ({ artists, currentPage, totalPages }: any) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
 
   return (
-        <ArtistList 
-            artists={artists}
-            currentPage={currentPage}
-            totalPages={totalPages}
-        />
+      <>
+        <Desktop>
+          <PageContainer>
+            <IndexPageHeader title={"Artists"} />
+              <ArtistList 
+                  artists={artists}
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+              />
+          </PageContainer>
+        </Desktop>
+      </>
     )
 };
 
