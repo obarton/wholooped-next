@@ -8,12 +8,25 @@ const StyledContainer = styled(Container)({
     marginBottom: "2rem"
 })
 
-const PageContainer = ({children}: any) => {
+const StyledMobileContainer = styled(Container)({
+    marginTop: "2rem", 
+    marginBottom: "2rem"
+})
+
+export const PageContainer = ({children}: any) => {
   return (
     <StyledContainer>
         {children}
     </StyledContainer>
   );
 };
+
+export const MobilePageContainer = ({children}: any) => {
+    return (
+      <StyledMobileContainer>
+          {children}
+      </StyledMobileContainer>
+    );
+  };
 
 export default PageContainer;

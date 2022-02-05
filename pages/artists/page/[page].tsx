@@ -1,6 +1,6 @@
 import React from 'react';
-import { Desktop } from "../../../components/Responsive"
-import PageContainer from "../../../components/PageContainer"
+import { Desktop, Mobile } from "../../../components/Responsive"
+import { PageContainer, MobilePageContainer } from "../../../components/PageContainer"
 import IndexPageHeader from "../../../components/IndexPageHeader"
 import ContentfulApi from '../../../lib/contentfulApi';
 import { Config } from '../../../utils/config';
@@ -8,12 +8,13 @@ import ArtistList from '../../../components/ArtistList';
 
 const ArtistIndexPage = ({ artists, currentPage, totalPages }: any) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
+  const pageTitle = "Artists"
 
   return (
     <>
       <Desktop>
         <PageContainer>
-          <IndexPageHeader title={"Artists"} />
+          <IndexPageHeader title={pageTitle} />
             <ArtistList 
                 artists={artists}
                 currentPage={currentPage}
@@ -21,6 +22,16 @@ const ArtistIndexPage = ({ artists, currentPage, totalPages }: any) => {
             />
         </PageContainer>
       </Desktop>
+      <Mobile>
+          <MobilePageContainer>
+            <IndexPageHeader title={pageTitle} />
+              <ArtistList 
+                  artists={artists}
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+              />
+          </MobilePageContainer>
+        </Mobile>
     </>
     )
 };
