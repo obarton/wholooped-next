@@ -23,7 +23,7 @@ export async function getArtistIndex() {
 
 export default class ContentfulApi {
 
-static async callContentful(query: string) {
+  static async callContentful(query: string) {
     const fetchUrl = `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}`;
 
     const fetchOptions = {
@@ -57,11 +57,11 @@ static async callContentful(query: string) {
 
     // Call out to the API
     const response = await this.callContentful(query);
-    const totalPosts = response.data.artistCollection.total
+    const totalArtists = response.data.artistCollection.total
       ? response.data.artistCollection.total
       : 0;
 
-    return totalPosts;
+    return totalArtists;
   }
 
   static async getPaginatedArtists(page: any) {
@@ -95,4 +95,53 @@ static async callContentful(query: string) {
     return paginatedArtists;
   }
 
+  static async getTotalLoopPacksCount() {
+    // Build the query
+    const query = `
+      {
+        loopPackCollection {
+          total
+        }
+      }
+    `;
+
+    // Call out to the API
+    const response = await this.callContentful(query);
+    const totalLoopPacks = response.data.loopPackCollection.total
+      ? response.data.loopPackCollection.total
+      : 0;
+
+    return totalLoopPacks;
+  }
+
+  static async getPaginatedLoopPacks(page: any) {
+    const skipMultiplier = page === 1 ? 0 : page - 1;
+    const skip =
+      skipMultiplier > 0 ? Config.pagination.pageSize * skipMultiplier : 0;
+
+    const query = `{
+          loopPackCollection(limit: ${Config.pagination.pageSize}, skip: ${skip}, order: title_ASC) {
+            total
+            items {
+              sys {
+                id
+              }
+            title
+            slug
+            artwork {
+              url
+            }
+          }
+        }
+    }`;
+
+    // Call out to the API
+    const response = await this.callContentful(query);
+
+    const paginatedLoopPacks = response.data.loopPackCollection
+      ? response.data.loopPackCollection
+      : { total: 0, items: [] };
+
+    return paginatedLoopPacks;
+  }
 }

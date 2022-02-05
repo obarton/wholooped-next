@@ -8,12 +8,13 @@ import PageContainer from '../../components/PageContainer';
 
 const LooppacksIndex = ({ artists, currentPage, totalPages }: any) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
+  const pageTitle = "Loop Packs"
 
   return (
       <>
         <Desktop>
           <PageContainer>
-            <IndexPageHeader title={"Artists"} />
+            <IndexPageHeader title={pageTitle} />
               <ArtistList 
                   artists={artists}
                   currentPage={currentPage}
