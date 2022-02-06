@@ -54,7 +54,7 @@ const Dashboard = () => {
     <PageContainer>
         <Desktop>
           <SidebarWrapper>
-          <Container style={{padding: "68px"}}>
+          <Container style={{paddingTop: "68px"}}>
         <Stack gap={4}>
             { 
                 <div>
