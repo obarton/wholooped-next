@@ -19,11 +19,11 @@ const Artist = ({ artist, songs }: ArtistPageProps) => {
   <>
     <Desktop>
         <PageContainer>
+        <NextLink href="/artists">Go Back </NextLink>
           <IndexPageAvatarHeader title={artist?.name} avatarSrc={avatarSrc} />
           <SongList 
                 songs={songs}
             />
-          <NextLink href="/artists">Go Back </NextLink>
         </PageContainer>
       </Desktop>
 
