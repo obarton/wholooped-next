@@ -1,7 +1,5 @@
 import React from 'react';
 import ContentfulApi from '../../lib/contentfulApi';
-import { Config } from '../../utils/config';
-import ArtistList from '../../components/ArtistList';
 import IndexPageHeader from '../../components/IndexPageHeader';
 import { Desktop, Mobile } from '../../components/Responsive';
 import { PageContainer, MobilePageContainer} from '../../components/PageContainer';

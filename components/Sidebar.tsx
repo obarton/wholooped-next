@@ -24,13 +24,17 @@ const MenuItem = styled.li({fontSize: "24px", marginBottom: "10px"})
 
 const Sidebar = () => {
     const [menuItems, setMenuItems] = useState(defaultDesktopMenuItems);
-    const { userProfile } = useUserProfile()
+    const { userProfile, isLoading, isError } = useUserProfile()
 
     useEffect(() => {
       if(userProfile?.linkedLoopmaker) {
         setMenuItems(desktopLoopmakerMenuItems)
       }
     }, [userProfile]);
+
+    if(isLoading) {
+        return <></>
+    }
 
     return (
         <div id="sidebar-content">
