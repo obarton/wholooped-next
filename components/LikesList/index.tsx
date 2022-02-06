@@ -27,9 +27,9 @@ const LikesList = ({ songs }: ListListProps) => {
             <div>
                 <NextLink href={`/artists/${artist[0].slug}/${slug}`}>
                 <p>
-                    {artistNames}'s {songTitle}  
+                    {artistNames}&apos;s {songTitle}  
                     <br/>
-                    Loop of {loopmakerNames}'s {loopTitle}
+                    Loop of {loopmakerNames}&apos;s {loopTitle}
                 </p>
                 </NextLink>
             </div>
