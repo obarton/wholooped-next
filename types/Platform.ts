@@ -1,5 +1,7 @@
-export enum PlatformType {
-    YouTube = "YouTube",
-    SoundCloud = "SoundCloud",
-    Looperman = "Looperman"
+type Platform = {
+    id: string
+    name: string
+    trackId: string
 }
+
+export default Platform;

@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { PlatformType } from '../../types/Platform';
+import React from 'react';
+import { PlatformType } from '../../types/PlatformType';
 import { parseYoutubeIdFromUrl } from '../../utils/youtube';
 import LoopermanPlayer from './LoopermanPlayer';
 import SoundCloudPlayer from './SoundCloudPlayer';
