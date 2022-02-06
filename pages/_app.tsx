@@ -5,7 +5,6 @@ import { UserProvider } from '@auth0/nextjs-auth0';
 import Amplify from 'aws-amplify'
 import config from "../aws-exports"
 import { getAmplifyEndpoints } from '../helper/amplify';
-import { UserProfileProvider } from '../provider/UserProfileProvider';
 
 const stage = "dev"
 const endpoints = getAmplifyEndpoints(stage)
