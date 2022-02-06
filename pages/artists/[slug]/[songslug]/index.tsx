@@ -31,6 +31,7 @@ export const getBrowserWindowUrl = () => {
 }
 
 const Song = (props: any) => {
+    console.log(`Song page props ${JSON.stringify(props, null, 2)}`)
     // const [likeCount, setLikeCount] = useState(likesData || 0)
     // const loop = song.loop[0];
 
@@ -160,6 +161,7 @@ const formatLoopPackLinkHtml = (loop: any) => {
 // }
 
 export const getStaticProps = async (context: any) => {
+    console.log(`getStaticProps context ${JSON.stringify(context, null, 2)}`)
     const slug = context.params.slug;
     const artist = await getArtistBySlug(slug)
     const songs = await getArtistSongs(artist?.sys?.id)
@@ -173,73 +175,34 @@ export const getStaticProps = async (context: any) => {
 }
 
 export const getStaticPaths = async () => {
+    const paths: any[] = [];
     const artists = await getArtists()
-    // const paths = artists?.forEach(async (artist: any) => {
-    //     const songs = await getArtistSongs(artist?.sys?.id)
+    
 
-    //     //console.log(`getStaticPaths result songs ${JSON.stringify(songs, null, 2)}`)
-    //     if (songs?.length > 0) {
-    //         return songs.map((song: any) => {
-    //             return song?.artistCollection?.items?.map((artist: any) => {
-    //                 return {
-    //                     slug: artist?.slug,
-    //                     songslug: song?.slug
-    //                 }
-    //             })
-    //         })
-    //     }
-    // })
-    const songs = await getArtistSongs(artists[0]?.sys?.id);
-    console.log(`songs ${JSON.stringify(songs, null, 2)}`)
-    const initialPaths: any[] = [];
-    const paths = songs?.forEach((song: any) => {
-        song?.artistCollection?.items?.forEach((artist: any) => {
-            initialPaths.push({
-                params: {
-                    slug: artist?.slug,
-                    songslug: song?.slug
-                }
-            })     
+    artists.forEach(async (artistResponse: any) => {
+        const songs = await getArtistSongs(artistResponse?.sys?.id);
+
+        songs?.forEach((song: any) => {
+            song?.artistCollection?.items?.forEach((artist: any) => {
+                paths.push({
+                    params: {
+                        slug: artist?.slug,
+                        songslug: song?.slug,
+                    }
+                })     
+            })
         })
-        // return {
-        //     params: {
-        //         slug: song?.artistCollection?.items[0]?.slug,
-        //         songslug: song?.slug
-        //     }
-        // }
     })
-    console.log(`initialPaths ${JSON.stringify(initialPaths, null, 2)}`)
-    // if (songs?.length > 0) {
-    //     return songs.map((song: any) => {
-    //         return song?.artistCollection?.items?.map((artist: any) => {
-    //             return {
-    //                 slug: artist?.slug,
-    //                 songslug: song?.slug
-    //             }
-    //         })
-    //     })
-    // }
 
-    // const paths = artists?.forEach(async (artist: any) => {
-    //     const songs = await getArtistSongs(artist?.sys?.id)
+    await Promise.all(artists.map(async (a: any) => {
+        await getArtistSongs(a?.sys?.id);
+    }))
 
-    //     //console.log(`getStaticPaths result songs ${JSON.stringify(songs, null, 2)}`)
-    //     if (songs?.length > 0) {
-    //         return songs.map((song: any) => {
-    //             return song?.artistCollection?.items?.map((artist: any) => {
-    //                 return {
-    //                     slug: artist?.slug,
-    //                     songslug: song?.slug
-    //                 }
-    //             })
-    //         })
-    //     }
-    // })
 
-    // console.log(`getStaticPaths paths ${JSON.stringify(paths, null, 2)}`)
+    console.log(`paths ${JSON.stringify(paths, null, 2)}`)
 
     return {
-        paths: initialPaths,
+        paths,
         fallback: false
     }
 }

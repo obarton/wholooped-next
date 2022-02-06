@@ -14,8 +14,6 @@ interface ArtistPageProps {
 }
 
 const Artist = ({ artist, songs }: ArtistPageProps) => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const router = useRouter()
   const avatarSrc = resizeImageFromUrl(artist?.photo?.url)
   return (
   <>

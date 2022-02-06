@@ -1,7 +1,7 @@
 import { GET_ARTIST_BY_SLUG } from "../graphql/getArtistBySlug"
 import { GET_ARTISTS } from "../graphql/getArtistIndex";
 import { GET_ARTIST_SONG_IDS } from "../graphql/getArtistSongIds";
-import { GET_ARTIST_SONGS_FROM_IDS } from "../graphql/getArtistSongsFromIds";
+import { GET_SONGS_FROM_SONG_IDS } from "../graphql/getArtistSongsFromIds";
 import { GET_ARTISTS_SONG_IDS } from "../graphql/getArtistsSongIds";
 import { Config } from "../utils/config";
 
@@ -53,7 +53,7 @@ export async function getArtistsSongsIds(ids: string[]) {
 export async function getArtistSongs(id: string) {
   const artistSongIds = await getArtistSongsIds(id);
   const formattedSongIds = artistSongIds?.map((id: string) => `"${id}"`).join(",")
-  const query = GET_ARTIST_SONGS_FROM_IDS(formattedSongIds);
+  const query = GET_SONGS_FROM_SONG_IDS(formattedSongIds);
 
   
   const response = await fetchGraphQL(query);
@@ -65,7 +65,7 @@ export async function getArtistSongs(id: string) {
 export async function getArtistsSongs(ids: string[]) {
   const artistSongIds = await getArtistsSongsIds(ids);
   const formattedSongIds = artistSongIds?.map((id: string) => `"${id}"`).join(",")
-  const query = GET_ARTIST_SONGS_FROM_IDS(formattedSongIds);
+  const query = GET_SONGS_FROM_SONG_IDS(formattedSongIds);
 
   const response = await fetchGraphQL(query);
 
@@ -254,5 +254,25 @@ export default class ContentfulApi {
           : { total: 0, items: [] };
     
         return paginatedSongIds;
+  }
+
+  static async getGenres() {
+    const query = `{
+      genreCollection {
+         items {
+          name
+          coverImage {
+            url
+          }
+          slug
+        }
+      }
+    }
+    `
+
+    // Call out to the API
+    const response = await this.callContentful(query);
+
+    return response?.data?.genreCollection;
   }
 }
