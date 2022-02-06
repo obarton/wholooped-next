@@ -10,6 +10,7 @@ import SocialShare from "../../../../components/SocialShare";
 import MediaPlayer from "../../../../components/MediaPlayers/MediaPlayer";
 import LoopDetails from "../../../../components/LoopDetails";
 import SongDetails from "../../../../components/SongDetails";
+import Spinner from "../../../../components/Spinner"
 import styled from "styled-components";
 import SongLikes from "../../../../components/SongLikes";
 import { useSongLike } from "../../../../hooks/useSongLike";
@@ -47,7 +48,7 @@ const Song = () => {
   }, [song, loop])
 
   if (isError) return <div>Failed to load</div>
-  if (isLoading || userResponse.isLoading || likeResponse.isLoading) return <div>Loading...</div>
+  if (isLoading || userResponse.isLoading || likeResponse.isLoading) return <Spinner />
 
     return (
       <>
