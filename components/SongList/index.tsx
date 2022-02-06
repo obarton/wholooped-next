@@ -42,10 +42,10 @@ const SongList = ({ songs }: SongListProps) => {
                                 </p>
                                     {artists?.map((l: any, index: number) => {
                                       if(index == 0) {
-                                        return <span style={{color: "#666C7E"}}>{l.name}</span>
+                                        return <span key={l.name} style={{color: "#666C7E"}}>{l.name}</span>
                                       }
 
-                                        return <span style={{color: "#666C7E"}}>, {l.name}</span>
+                                        return <span key={l.name} style={{color: "#666C7E"}}>, {l.name}</span>
                                     })}
                                 </NextLink>
                                 </div>

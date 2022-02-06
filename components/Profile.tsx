@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 import { useUser } from '@auth0/nextjs-auth0';
+import Image from "next/image"
 
 export const Profile: React.FC<any> = () => {
   const { user, error, isLoading } = useUser();
@@ -10,7 +11,7 @@ export const Profile: React.FC<any> = () => {
   return (
     user && (
       <div>
-        <img src={user.picture as string} alt={user.name as string} />
+        <Image src={user.picture as string} alt={user.name as string} />
         <h2>{user.name}</h2>
         <p>{user.email}</p>
       </div>
