@@ -73,17 +73,14 @@ const SongLikes = ({ song, user, isSongLiked }: SongLikesProps) => {
         onClick={likeClickHandler}
       >
         {
-            !user && <FavoriteBorder />
-        }
-        { 
-            user && isLiked === true ? 
-            (
-                <Favorite />
-            )
-            :
-            (
-                <FavoriteBorder />
-            )
+          user ? 
+          (
+            isLiked ? <Favorite /> : <FavoriteBorder />
+          ) 
+          : 
+          (
+            <FavoriteBorder />
+          )
         }
         <span style={{marginLeft: "0.4em"}}>{likesCount} like{likesCount == 1 ? "" : "s"}</span>
       </div>
