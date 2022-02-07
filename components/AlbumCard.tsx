@@ -2,6 +2,7 @@ import React from 'react'
 import { Card, Image } from "react-bootstrap";
 import Link from "next/link"
 import styled from "styled-components"
+import Artwork from './Artwork';
 
 const AlbumCard = ({title, secondaryText, imageSrc, altText, url}: any) => {
     const StyledLink = styled.a`
@@ -15,7 +16,7 @@ const AlbumCard = ({title, secondaryText, imageSrc, altText, url}: any) => {
                 <div>
                     <Card border="light" className="border-0" style={{ textAlign: "center", marginLeft: "auto", marginRight: "auto"}}>
                         <Card.Body>
-                        <Image src={imageSrc} alt={altText} style={{ borderRadius: "8px"}}/>
+                        <Artwork src={imageSrc} alt={altText} />
                             <Card.Title style={{marginTop: '1rem', fontSize: "1rem"}}><b>{title}</b></Card.Title>
                             <Card.Text style={{color: "#666C7E"}}>
                                 {secondaryText}
