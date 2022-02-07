@@ -166,7 +166,7 @@ const Home = ({ songs, loopPacks }: any) => {
                 </div>
                 <div style={{marginBottom: "3rem", textAlign: "center"}}>
                   <h2>Database</h2>
-                  <p style={{fontSize: "1.5rem"}}>Contribute to our community-driven database of loops and sample libraries and help credit the loop makers in today's music industry.</p>
+                  <p style={{fontSize: "1.5rem"}}>Contribute to our community-driven database of loops and sample libraries and help credit the loop makers in today&apos;s music industry.</p>
                   <Button size="lg" onClick={(e) => router.push(`/app/add-a-song`)}>Add a song</Button>
                 </div>
                 <div style={{marginBottom: "3rem", textAlign: "center"}}>
