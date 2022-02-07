@@ -1,10 +1,9 @@
 import React from 'react'
 import { Card, Image } from "react-bootstrap";
-import TruncateMarkup from 'react-truncate-markup';
 import Link from "next/link"
 import styled from "styled-components"
 
-const AlbumCard = ({title, secondaryText, imageSrc, altText, width, url}: any) => {
+const AlbumCard = ({title, secondaryText, imageSrc, altText, url}: any) => {
     const StyledLink = styled.a`
     color: black;
     text-decoration: none;

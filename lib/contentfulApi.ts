@@ -3,6 +3,8 @@ import { GET_ARTISTS } from "../graphql/getArtistIndex";
 import { GET_ARTIST_SONG_IDS } from "../graphql/getArtistSongIds";
 import { GET_SONGS_FROM_SONG_IDS } from "../graphql/getArtistSongsFromIds";
 import { GET_ARTISTS_SONG_IDS } from "../graphql/getArtistsSongIds";
+import { GET_FEATURED_LOOP_PACKS } from "../graphql/getFeaturedLoopPacks";
+import { GET_FEATURED_SONGS } from "../graphql/getFeaturedSongs";
 import { Config } from "../utils/config";
 
 async function fetchGraphQL(query: string, preview = false) {
@@ -17,6 +19,20 @@ async function fetchGraphQL(query: string, preview = false) {
         body: JSON.stringify({ query }),
         }
     ).then((response) => response.json())
+}
+
+export async function getFeaturedLoopPacks() {
+  const query = GET_FEATURED_LOOP_PACKS;
+  const response = await fetchGraphQL(query);
+
+  return response?.data?.loopPackCollection?.items;
+}
+
+export async function getFeaturedSongs() {
+  const query = GET_FEATURED_SONGS;
+  const response = await fetchGraphQL(query);
+
+  return response?.data?.songCollection?.items;
 }
 
 export async function getArtistBySlug(slug: string) {
@@ -48,7 +64,6 @@ export async function getArtistsSongsIds(ids: string[]) {
 
   return songs;
 }
-
 
 export async function getArtistSongs(id: string) {
   const artistSongIds = await getArtistSongsIds(id);
