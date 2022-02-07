@@ -5,6 +5,7 @@ import TextTruncate from 'react-text-truncate';
 import { Avatar } from "@mui/material"
 import Link from "next/link"
 import styled from "styled-components"
+import Artwork from './Artwork';
 
 const StyledLink = styled.a`
   color: black;
@@ -22,7 +23,7 @@ const UserAlbumCard = ({ url, title, secondaryText, imageSrc, altText, width, us
                 <Card.Body>
                         <Link href={url || ""} passHref>
                             <StyledLink>
-                                <Image src={imageSrc} alt={altText} style={{ borderRadius: "8px"}}/>
+                                <Artwork src={imageSrc} alt={altText}/>
                                 <Card.Title style={{marginTop: '1rem', fontSize: "1rem"}}><TruncateMarkup lines={1}><b>{title}</b></TruncateMarkup></Card.Title>
                                 <Card.Text style={{marginBottom: "0.5em", width: "100%"}}>
                                 <TextTruncate
