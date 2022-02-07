@@ -38,7 +38,7 @@ export const mobileLoopmakerMenuItems = [
       },
       {
         title: "My Profile",
-        url: "/app/profile/loopmaker/edit",
+        url: "/profile/loopmaker/edit",
         authRequired: true
       },
       {
@@ -97,7 +97,7 @@ export const desktopLoopmakerMenuItems = [
     },
     {
       title: "My Profile",
-      url: "/app/profile/loopmaker/edit",
+      url: "/profile/loopmaker/edit",
       authRequired: true
     },
     {
