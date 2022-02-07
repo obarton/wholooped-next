@@ -18,7 +18,7 @@ text-decoration: none;
 const UserAlbumCard = ({ url, title, secondaryText, imageSrc, altText, width, username, userDisplayName, userThumbnailUrl, userUrl}: any) => {
     return (
         <div>
-            <Card border="light" className="border-0" style={{textAlign: "center", marginLeft: "auto", marginRight: "auto"}}>
+            <Card border="light" className="border-0" style={{textAlign: "center"}}>
                 <Card.Body>
                         <Link href={url || ""} passHref>
                             <StyledLink>

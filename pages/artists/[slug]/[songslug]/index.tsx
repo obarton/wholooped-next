@@ -76,6 +76,24 @@ const Song = () => {
         </Desktop>
         <Mobile>
           <MobilePageContainer>
+              <SongPageHeader title={song?.title} artist={formatSongArtistLinksHtml(song?.artist)}/>
+                <SongLikes user={userResponse.user} song={song} isSongLiked={likeResponse.isLiked}/>
+                  <SocialShare />
+              <SongContentContainer>
+                <Stack gap={5} style={{ padding: "2em" }}>
+                    <MediaPlayerContainer>
+                      <MediaPlayer platform={song?.platform?.name} mediaUrl={song?.url} title={song?.title} mediaId={song?.platformTrackId}/>
+                      <SongDetails song={song}/>
+                  </MediaPlayerContainer>
+                  <div style={{ textAlign: "center"}}>
+                    Contains a loop of
+                  </div>
+                  <MediaPlayerContainer>
+                    <MediaPlayer platform={song?.loop[0]?.platform?.name} mediaUrl={song?.loop[0]?.url} title={song?.loop[0]?.title} mediaId={song?.loop[0]?.platform?.trackId}/>
+                    <LoopDetails loop={song?.loop[0]} startTimeSeconds={song?.loopStartTimeSeconds}/>
+                  </MediaPlayerContainer>
+                </Stack>
+              </SongContentContainer>
           </MobilePageContainer>
         </Mobile>
       </>

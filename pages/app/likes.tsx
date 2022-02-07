@@ -7,6 +7,7 @@ import { Container } from 'react-bootstrap';
 import { useLikes } from '../../hooks/useLikes';
 import Spinner from '../../components/Spinner';
 import LikesList from '../../components/LikesList';
+import { MobilePageContainer } from '../../components/PageContainer';
 
 const PageContainer = styled.div`
   position: relative;
@@ -21,8 +22,9 @@ const Likes = () => {
     if (isLoading || useLikesData.isLoading ) return <Spinner />
 
   return (
+      <>
+        <Desktop>
         <PageContainer>
-            <Desktop>
                 <SidebarWrapper>
                     <Container style={{padding: "68px"}}>
                         <h2>Likes</h2>
@@ -30,10 +32,16 @@ const Likes = () => {
                         {<LikesList songs={useLikesData.likes}/>}
                     </Container>
                 </SidebarWrapper>
-            </Desktop>
-            <Mobile>
-            </Mobile>
         </PageContainer>
+        </Desktop>
+        <Mobile>
+            <MobilePageContainer>
+                    <h2>Likes</h2>
+                    {useLikesData.likes.length == 0 && <p>No likes yet.</p>}
+                    {<LikesList songs={useLikesData.likes}/>}
+                </MobilePageContainer>
+            </Mobile>
+        </>
     );
 };
 
