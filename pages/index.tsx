@@ -6,7 +6,7 @@ import Carousel from 'react-multi-carousel';
 import styled from 'styled-components';
 import AlbumCard from '../components/AlbumCard';
 import NextLink from '../components/NextLink';
-import { Desktop } from '../components/Responsive';
+import { Desktop, Mobile } from '../components/Responsive';
 import { responsive } from '../helper/carousel';
 import { getFeaturedLoopPacks, getFeaturedSongs } from '../lib/contentfulApi';
 import 'react-multi-carousel/lib/styles.css';
@@ -107,75 +107,75 @@ const Home = ({ songs, loopPacks }: any) => {
                 </div>
           </Container>
       </Desktop>
-      {/* <Mobile>
+      <Mobile>
           <Container fluid style={{padding: "2.5%"}}>
             <Stack gap={3} style={{marginTop: "1rem"}}>
               <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-                <GatsbyImage style={{maxWidth:"50%",maxHeight:"50%", padding: "10%" }} image={landingImage} alt={landingAltText}/>
+                <BootstrapImage style={{maxWidth:"85%",maxHeight:"85%", padding: "10%" }} src={landingImageSrc} alt={"Who Looped"}/>
               </div>
               <div style={{textAlign: "center"}}>
                 <h1><b>{landingText}</b></h1>
               </div>
               <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-                <Button size="lg" onClick={(e) => navigate(`/app`)}>Browse</Button>
+                <Button size="lg" onClick={(e) => router.push(`/app`)}>Browse</Button>
               </div>        
             </Stack>
-            <div style={{marginTop: "3rem", marginBottom: "3rem"}}>
+            <div style={{marginTop: "3rem", marginBottom: "3rem", textAlign: "center"}}>
                   <h2>Tracks</h2>
                   <p style={{fontSize: "1.5rem"}}>Browse and save loops used in industry tracks across all genres.</p>
                     <Carousel
                       responsive={responsive} 
                       infinite={true}
                       removeArrowOnDeviceType={["tablet", "mobile"]} >
-                          {songs?.nodes.map(song => {
-                              const image = getImage(song.album.artwork)
-                              const altText = song.title;
-                              const secondaryText = song.artist.map(a => a.name).join(", ");
-                              const primaryText = song.title;
+                           {songs?.map((song: any, i: number) => {
+                               const image = resizeImageFromUrl(song.album?.artwork?.url, "m")
+                               const altText = song.title;
+                               const secondaryText = song.artistCollection?.items?.map((a: any) => a.name).join(", ");
+                               const primaryText = song.title;
                                       
-                              return (
-                                <Link style={{color: "black"}} to={"/app"}>
-                                  <StaticAlbumCard title={primaryText} secondaryText={secondaryText} image={image} altText={altText}/>
-                                </Link>
-                              )
-                          })}
+                               return (
+                                 <NextLink key={i}  style={{color: "black"}} href={"/app"}>
+                                   <AlbumCard title={primaryText} secondaryText={secondaryText} imageSrc={image} altText={altText}/>
+                                 </NextLink>
+                               )
+                           })}
                       </Carousel>
-                    <Button size="lg" onClick={(e) => navigate(`/app`)}>Browse tracks</Button>
+                    <Button size="lg" onClick={(e) => router.push(`/app`)}>Browse tracks</Button>
                 </div>
-                <div style={{marginBottom: "3rem"}}>
+                <div style={{marginBottom: "3rem", textAlign: "center"}}>
                   <h2>Loopmakers & Composers</h2>
                   <p style={{fontSize: "1.5rem"}}>Discover and connect with your favorite loopmakers, composers, and music libraries.</p>
                   <Carousel
                       responsive={responsive} 
                       infinite={true}
                       removeArrowOnDeviceType={["tablet", "mobile"]} >
-                          {loopPacks?.nodes.map(loopPack => {
-                              const image = getImage(loopPack.artwork)
+                          {loopPacks?.map((loopPack: any, i: number) => {
+                              const image = resizeImageFromUrl(loopPack.artwork?.url, "m")
                               const altText = loopPack.title;
-                              const secondaryText = loopPack.loopmaker.map(a => a.name).join(", ");
+                              const secondaryText = loopPack.loopmakerCollection?.items?.map((a: any) => a.name).join(", ");
                               const primaryText = loopPack.title;
                                       
                               return (
-                                <Link style={{color: "black"}} to={"/app"}>
-                                  <StaticAlbumCard title={primaryText} secondaryText={secondaryText} image={image} altText={altText}/>
-                                </Link>
+                                <NextLink key={i}  style={{color: "black"}} href={"/app"}>
+                                  <AlbumCard title={primaryText} secondaryText={secondaryText} imageSrc={image} altText={altText}/>
+                                </NextLink>
                               )
                           })}
                       </Carousel>
-                    <Button size="lg" onClick={(e) => navigate(`/app`)}>Browse loopmakers</Button>
+                    <Button size="lg" onClick={(e) => router.push(`/app`)}>Browse loopmakers</Button>
                 </div>
-                <div style={{marginBottom: "3rem"}}>
+                <div style={{marginBottom: "3rem", textAlign: "center"}}>
                   <h2>Database</h2>
                   <p style={{fontSize: "1.5rem"}}>Contribute to our community-driven database of loops and sample libraries and help credit the loop makers in today's music industry.</p>
-                  <Button size="lg" onClick={(e) => navigate(`/app/add-a-song`)}>Add a song</Button>
+                  <Button size="lg" onClick={(e) => router.push(`/app/add-a-song`)}>Add a song</Button>
                 </div>
-                <div style={{marginBottom: "3rem"}}>
+                <div style={{marginBottom: "3rem", textAlign: "center"}}>
                   <h2>Community</h2>
                   <p style={{fontSize: "1.5rem"}}>Share and discuss music production and composition resources and techniques with our community.</p>
-                  <Button size="lg" onClick={(e) => navigate(`https://community.wholooped.com`)}>Join our community</Button>        
+                  <Button size="lg" onClick={(e) => router.push(`https://community.wholooped.com`)}>Join our community</Button>        
                 </div>
           </Container>
-      </Mobile> */}
+      </Mobile>
     </section>
     </div>
   )
