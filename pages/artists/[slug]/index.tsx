@@ -1,8 +1,8 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { getArtistBySlug, getArtists, getArtistSongs } from '../../../lib/contentfulApi';
-import { Desktop } from '../../../components/Responsive';
-import PageContainer from '../../../components/PageContainer';
+import { Desktop, Mobile } from '../../../components/Responsive';
+import PageContainer, { MobilePageContainer } from '../../../components/PageContainer';
 import NextLink from '../../../components/NextLink';
 import SongList from '../../../components/SongList';
 import IndexPageAvatarHeader from '../../../components/IndexPageAvatarHeader';
@@ -26,7 +26,15 @@ const Artist = ({ artist, songs }: ArtistPageProps) => {
             />
         </PageContainer>
       </Desktop>
-
+      <Mobile>
+        <MobilePageContainer>
+        <NextLink href="/artists">Go Back </NextLink>
+          <IndexPageAvatarHeader title={artist?.name} avatarSrc={avatarSrc} />
+          <SongList 
+                songs={songs}
+            />
+        </MobilePageContainer>
+      </Mobile>
   </>)
 };
 
