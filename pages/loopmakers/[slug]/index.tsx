@@ -5,23 +5,25 @@ import NextLink from '../../../components/NextLink';
 import CreditsList from '../../../components/CreditsList';
 import IndexPageAvatarHeader from '../../../components/IndexPageAvatarHeader';
 import { resizeImageFromUrl } from '../../../helper/image';
+import { API } from "aws-amplify"
 import styled from "styled-components"
 import LoopmakerProfileCard from '../../../components/LoopmakerProfileCard';
 import HorizontalDivider from '../../../components/HorizontalDivider';
+import { getLoopmakerBySlug, getLoopmakers } from '../../../lib/contentfulApi';
 
 interface LoopmakerPageProps {
     loopmaker: any;
     songs: any;
 }
 
-// const EditProfileButton = styled.button`
-//     height: 40px;
-//     width: 150px;
-//     border: none;
-//     background-color: #000;
-//     color: white;
-//     font-size: 15px
-// `
+const EditProfileButton = styled.button`
+    height: 40px;
+    width: 150px;
+    border: none;
+    background-color: #000;
+    color: white;
+    font-size: 15px
+`
 
 const resizeHeaderImageFromUrl = (url: string) => {
     return url ? `${url}?w=390&h=200&fm=png&q=100` : ""
@@ -30,7 +32,7 @@ const resizeHeaderImageFromUrl = (url: string) => {
 const Loopmaker = ({ loopmaker, songs }: LoopmakerPageProps) => {
   const {name, username, bio, websiteUrl, twitterUrl, facebookUrl, instagramUrl} = loopmaker;
   const avatarSrc = resizeImageFromUrl(loopmaker?.profilePhoto?.url)
-  //const headerSrc = resizeHeaderImageFromUrl(loopmaker?.headerPhoto?.url)
+  const headerSrc = resizeHeaderImageFromUrl(loopmaker?.headerPhoto?.url)
 
   return (
   <>
@@ -76,5 +78,31 @@ const Loopmaker = ({ loopmaker, songs }: LoopmakerPageProps) => {
       </Mobile>
   </>)
 };
+
+export const getStaticProps = async (context: any) => {
+    const slug = context.params.slug;
+    const loopmaker = await getLoopmakerBySlug(slug)
+    const songs = await API.get("LoopmakerApi", `/loopmaker/${loopmaker?.sys?.id}/credits`, {})
+
+
+    return {
+        props: {
+            loopmaker,
+            songs
+        }
+    }
+}
+
+export const getStaticPaths = async () => {
+    const loopmakers = await getLoopmakers()
+
+    const slugs = loopmakers.map((loopmaker: any) => loopmaker.slug);
+    const paths = slugs.map((slug: any) => ({params: {slug: slug.toString()}}))
+
+    return {
+        paths,
+        fallback: false
+    }
+}
 
 export default Loopmaker;
