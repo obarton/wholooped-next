@@ -9,8 +9,11 @@ import { useRouter } from 'next/router';
 import { useLoopPack } from '../../../../hooks/useLoopPack';
 import Spinner from "../../../../components/Spinner"
 import SongList from '../../../../components/Shared/SongList';
+import styled from "styled-components"
 
-//the-vintage-vxndals/the-scenic-route-volume-2
+const LooppackPageContainer = styled.div`
+  min-height: 100vh
+`
 
 const LoopPack = () => {
     const router = useRouter()
@@ -29,8 +32,8 @@ const LoopPack = () => {
   return (
   <>
     <Desktop>
+      <LooppackPageContainer>
         <PageContainer>
-        <NextLink href="/looppacks">Go Back </NextLink>
           <IndexPageArtworkHeader 
             title={loopPack?.title} 
             subtitle={loopmakerName} 
@@ -41,15 +44,17 @@ const LoopPack = () => {
                 songs={songs}
             />
         </PageContainer>
+        </LooppackPageContainer>
       </Desktop>
       <Mobile>
+        <LooppackPageContainer>
         <MobilePageContainer>
-        <NextLink href="/looppacks">Go Back </NextLink>
         <IndexPageArtworkHeader title={loopPack?.title} subtitle={loopmakerName} artworkSrc={loopPackArtworkSrc} />
           <SongList 
                 songs={songs}
             />
         </MobilePageContainer>
+        </LooppackPageContainer>
       </Mobile>
   </>)
 };

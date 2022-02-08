@@ -17,6 +17,10 @@ const EditProfileButton = styled.button`
     font-size: 15px
 `
 
+const EditProfileContainer = styled.div`
+  position: relative;
+  min-height: 100vh;
+`
 
 const EditProfile = () => {
   const router = useRouter()
@@ -28,6 +32,7 @@ const EditProfile = () => {
     return (
       <>
         <Desktop>
+            <EditProfileContainer>
           <PageContainer>
           <div style={{textAlign: "center"}}>
                 <h1>Edit Profile</h1>
@@ -44,8 +49,10 @@ const EditProfile = () => {
                     </div>
                 </div>
           </PageContainer>
+          </EditProfileContainer>
         </Desktop>
         <Mobile>
+        <EditProfileContainer>
           <MobilePageContainer>
               <div style={{textAlign: "center"}}>
                 <h1>Edit Profile</h1>
@@ -62,6 +69,7 @@ const EditProfile = () => {
                     </div>
                 </div>
           </MobilePageContainer>
+          </EditProfileContainer>
         </Mobile>
       </>
     )

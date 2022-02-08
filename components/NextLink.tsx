@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from "styled-components";
 import Link from "next/link"
 
@@ -5,7 +6,10 @@ export const StyledLink = styled.a`
     color: black;
     text-decoration: none;
 `
-import React from 'react';
+export const StyledLightLink = styled.a`
+    color: white;
+    text-decoration: none;
+`
 
 const NextLink = ({ children, href }: any) => {
   return  (
@@ -16,5 +20,15 @@ const NextLink = ({ children, href }: any) => {
         </Link>
   )
 };
+
+export const LightNextLink = ({ children, href }: any) => {
+    return  (
+          <Link href={href || ""} passHref>
+              <StyledLightLink>
+                  {children}
+              </StyledLightLink>
+          </Link>
+    )
+  };
 
 export default NextLink;

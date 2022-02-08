@@ -11,11 +11,16 @@ import HorizontalDivider from '../../../components/HorizontalDivider';
 import { getLoopmakerBySlug, getLoopmakers } from '../../../lib/contentfulApi';
 import { useUserProfile } from '../../../hooks/useUserProfile';
 import Spinner from '../../../components/Spinner';
+import styled from "styled-components"
 
 interface LoopmakerPageProps {
     loopmaker: any;
     songs: any;
 }
+
+const LoopmakerPageContainer = styled.div`
+  min-height: 100vh
+`
 
 const resizeHeaderImageFromUrl = (url: string) => {
     return url ? `${url}?w=390&h=200&fm=png&q=100` : ""
@@ -41,6 +46,7 @@ const Loopmaker = ({ loopmaker, songs }: LoopmakerPageProps) => {
   return (
   <>
     <Desktop>
+        <LoopmakerPageContainer>
         <PageContainer>
           {/* <div style={{position: "relative"}}>
                 <div style={{position: "absolute", 
@@ -72,8 +78,10 @@ const Loopmaker = ({ loopmaker, songs }: LoopmakerPageProps) => {
                 </div>
             </div>
         </PageContainer>
+        </LoopmakerPageContainer>
       </Desktop>
       <Mobile>
+        <LoopmakerPageContainer>
         <MobilePageContainer>
                 <LoopmakerProfileCard 
                     avatarSrc={avatarSrc}
@@ -95,6 +103,7 @@ const Loopmaker = ({ loopmaker, songs }: LoopmakerPageProps) => {
                 </div>
             </div>
         </MobilePageContainer>
+        </LoopmakerPageContainer>
       </Mobile>
   </>)
 };

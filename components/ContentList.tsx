@@ -25,7 +25,14 @@ const ContentList = ({ contentList, key }: ContentListProps) => {
             {
                 contentList.showMoreLink ? (
                     <div style={{display: "flex", justifyContent: "space-between"}}>
-                        <h3 style={{padding: "0", margin: "0"}}>{contentList.title}</h3><Link href={contentList.showMoreLink || ""} passHref><a style={{textDecoration: "none"}}><h4 style={{padding: "0", margin: "0", color: "#4183c4"}}>Show More</h4></a></Link>
+                        <h3 style={{padding: "0", margin: "0"}}>
+                            {contentList.title}
+                        </h3>
+                            <Link href={contentList.showMoreLink || ""} passHref>
+                                <a style={{textDecoration: "none"}}>
+                                    <h4 style={{padding: "0", margin: "0", color: "#4183c4"}}>Show More</h4>
+                                </a>
+                            </Link>
                     </div>
                 ):(
                     <div style={{display: "flex"}}>

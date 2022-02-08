@@ -3,24 +3,24 @@ import { SocialIcon } from 'react-social-icons';
 import Stack from "react-bootstrap/Stack"
 import "../styles/Footer.module.css"
 import { Desktop, Mobile } from "./Responsive"
-import NextLink from './NextLink';
+import { LightNextLink } from './NextLink';
 
 const Footer = () => {
   return (
     <>
     <Desktop>
-    <div className="footer-dark">
-    <footer style={{ backgroundColor: "black" }}>
+    <div className="footer-dark" >
+    <footer style={{ backgroundColor: "black", padding: "2rem" }}>
         <div className="container">
             <Stack direction="horizontal">
                 <Stack gap={4} style={{width: "40%"}}>
                     <div>
                         <ul style={{color: "white", listStyleType: "none", margin: "0", padding: "0"}}>
                             <li><b>Music</b></li>
-                            <li style={{marginBottom: "0.25em", padding: "0"}}><NextLink to="/app" style={{color: "white"}}>Browse</NextLink></li>
-                            <li style={{marginBottom: "0.25em", padding: "0"}}><NextLink to="/artists" style={{color: "white"}}>Artists</NextLink></li>
-                            <li style={{marginBottom: "0.25em", padding: "0"}}><NextLink to="http://community.wholooped.com/" style={{color: "white"}}>Community</NextLink></li>
-                            <li style={{marginBottom: "0.25em", padding: "0"}}><NextLink to="/add-a-song" style={{color: "white"}}>Add A Song</NextLink></li>
+                            <li style={{marginBottom: "0.25em", padding: "0"}}><LightNextLink href="/app" style={{color: "white"}}>Browse</LightNextLink></li>
+                            <li style={{marginBottom: "0.25em", padding: "0"}}><LightNextLink href="/artists" style={{color: "white"}}>Artists</LightNextLink></li>
+                            <li style={{marginBottom: "0.25em", padding: "0"}}><LightNextLink href="http://community.wholooped.com/" style={{color: "white"}}>Community</LightNextLink></li>
+                            <li style={{marginBottom: "0.25em", padding: "0"}}><LightNextLink href="/app" style={{color: "white"}}>Add A Song</LightNextLink></li>
                         </ul>
                     </div>
                 </Stack>
@@ -28,7 +28,7 @@ const Footer = () => {
                     <div>
                         <ul style={{color: "white", listStyleType: "none", margin: "0", padding: "0"}}>
                             <li><b>About</b></li>
-                            <li style={{marginBottom: "0.25em", padding: "0"}}><NextLink to="/contact-us" style={{color: "white"}}>Contact Us</NextLink></li>
+                            <li style={{marginBottom: "0.25em", padding: "0"}}><LightNextLink href="/contact-us" style={{color: "white"}}>Contact Us</LightNextLink></li>
                         </ul>
                     </div>
                     <div>
@@ -41,24 +41,26 @@ const Footer = () => {
                     </div>
                 </Stack>
             </Stack>
-            <p className="copyright">Who Looped © 2022</p>
+            <div style={{ marginTop: "1rem"}}>
+                <p className="copyright" style={{margin: "0", padding: "0", color: "white"}}>Who Looped © 2022</p>
+            </div>
         </div>
     </footer>
 </div>
 </Desktop>
 <Mobile>
 <div className="footer-dark">
-    <footer style={{ backgroundColor: "black" }}>
+    <footer style={{ backgroundColor: "black", padding: "2rem" }}>
         <div className="container">
             <Stack direction="horizontal">
                 <Stack gap={4} style={{width: "40%"}}>
                     <div>
                         <ul style={{color: "white", listStyleType: "none", margin: "0", padding: "0"}}>
                             <li><b>Music</b></li>
-                            <li style={{marginBottom: "0.25em", padding: "0"}}><NextLink to="/app" style={{color: "white"}}>Browse</NextLink></li>
-                            <li style={{marginBottom: "0.25em", padding: "0"}}><NextLink to="/artists" style={{color: "white"}}>Artists</NextLink></li>
-                            <li style={{marginBottom: "0.25em", padding: "0"}}><NextLink to="http://community.wholooped.com/" style={{color: "white"}}>Community</NextLink></li>
-                            <li style={{marginBottom: "0.25em", padding: "0"}}><NextLink to="/add-a-song" style={{color: "white"}}>Add A Song</NextLink></li>
+                            <li style={{marginBottom: "0.25em", padding: "0"}}><LightNextLink href="/app" style={{color: "white"}}>Browse</LightNextLink></li>
+                            <li style={{marginBottom: "0.25em", padding: "0"}}><LightNextLink href="/artists" style={{color: "white"}}>Artists</LightNextLink></li>
+                            <li style={{marginBottom: "0.25em", padding: "0"}}><LightNextLink href="http://community.wholooped.com/" style={{color: "white"}}>Community</LightNextLink></li>
+                            <li style={{marginBottom: "0.25em", padding: "0"}}><LightNextLink href="/app" style={{color: "white"}}>Add A Song</LightNextLink></li>
                         </ul>
                     </div>
                 </Stack>
@@ -66,7 +68,7 @@ const Footer = () => {
                     <div>
                         <ul style={{color: "white", listStyleType: "none", margin: "0", padding: "0"}}>
                             <li><b>About</b></li>
-                            <li style={{marginBottom: "0.25em", padding: "0"}}><NextLink to="/contact-us" style={{color: "white"}}>Contact Us</NextLink></li>
+                            <li style={{marginBottom: "0.25em", padding: "0"}}><LightNextLink href="/contact-us" style={{color: "white"}}>Contact Us</LightNextLink></li>
                         </ul>
                     </div>
                     <div>
@@ -79,7 +81,7 @@ const Footer = () => {
                     </div>
                 </Stack>
             </Stack>
-            <p className="copyright">Who Looped © 2022</p>
+            <p className="copyright" style={{margin: "0", padding: "0", color: "white"}}>Who Looped © 2022</p>
         </div>
     </footer>
 </div>

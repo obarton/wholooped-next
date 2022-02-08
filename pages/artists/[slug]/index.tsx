@@ -7,17 +7,24 @@ import NextLink from '../../../components/NextLink';
 import SongList from '../../../components/SongList';
 import IndexPageAvatarHeader from '../../../components/IndexPageAvatarHeader';
 import { resizeImageFromUrl } from '../../../helper/image';
+import styled from "styled-components"
 
 interface ArtistPageProps {
     artist: any;
     songs: any;
 }
 
+const ArtistPageContainer = styled.div`
+  position: relative;
+  min-height: 100vh;
+`
+
 const Artist = ({ artist, songs }: ArtistPageProps) => {
   const avatarSrc = resizeImageFromUrl(artist?.photo?.url)
   return (
   <>
     <Desktop>
+        <ArtistPageContainer>
         <PageContainer>
         <NextLink href="/artists">Go Back </NextLink>
           <IndexPageAvatarHeader title={artist?.name} avatarSrc={avatarSrc} />
@@ -25,8 +32,10 @@ const Artist = ({ artist, songs }: ArtistPageProps) => {
                 songs={songs}
             />
         </PageContainer>
+        </ArtistPageContainer>
       </Desktop>
       <Mobile>
+      <ArtistPageContainer>
         <MobilePageContainer>
         <NextLink href="/artists">Go Back </NextLink>
           <IndexPageAvatarHeader title={artist?.name} avatarSrc={avatarSrc} />
@@ -34,6 +43,7 @@ const Artist = ({ artist, songs }: ArtistPageProps) => {
                 songs={songs}
             />
         </MobilePageContainer>
+        </ArtistPageContainer>
       </Mobile>
   </>)
 };

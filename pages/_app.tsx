@@ -8,6 +8,8 @@ import config from "../aws-exports"
 import { getAmplifyEndpoints } from '../helper/amplify';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import Footer from '../components/Footer';
+import styled from 'styled-components';
 
 const stage = "dev"
 const endpoints = getAmplifyEndpoints(stage)
@@ -21,12 +23,26 @@ Amplify.configure({
   }
 });
 
+const AppContainer = styled.div`
+min-height: calc(100vh - 160px);
+`
+const FooterWrapper = styled.div`
+  position: relative;
+  left: 0;
+  bottom: 0;
+`
+
 function App({ Component, pageProps }: AppProps) {
   return (
     <UserProvider>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <AppContainer>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout> 
+        </AppContainer>
+        <FooterWrapper>
+          <Footer />
+        </FooterWrapper>
     </UserProvider>
   )
 }

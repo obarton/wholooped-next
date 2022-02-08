@@ -24,8 +24,6 @@ const MenuButton = styled(Button)`
 `
 
 const PageContainer = styled.div`
-  position: relative;
-  min-height: 100vh;
 `
 
 const SetupProfileButton = styled.button`
@@ -58,7 +56,7 @@ const Dashboard = () => {
     <PageContainer>
         <Desktop>
           <SidebarWrapper>
-          <Container style={{paddingTop: "68px"}}>
+          <Container style={{paddingTop: "68px", paddingBottom: "68px"}}>
                 <Stack gap={4}>
                 { 
                     <div>
@@ -81,7 +79,7 @@ const Dashboard = () => {
           </SidebarWrapper>
         </Desktop>
         <Mobile>
-        <Container style={{padding: "0 2.5%" }}>
+        <Container style={{paddingTop: "5%", paddingLeft: "2.5%", paddingRight: "2.5%", paddingBottom: "15%" }}>
             { 
                 <div style={{marginBottom: "1em"}}>
                 {

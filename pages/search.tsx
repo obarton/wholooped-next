@@ -7,7 +7,11 @@ import router, { useRouter } from "next/router";
 import { isPersonType, mapSearchTypeName } from '../utils/search';
 import { useSearch } from '../hooks/useSearch';
 import { useFormik } from 'formik';
+import styled from "styled-components"
 
+const SearchPageContainer = styled.div`
+  min-height: 100vh;
+`
 const Search = () => {
    const { query } = useRouter();
    const searchText = query.searchText as string;
@@ -28,6 +32,7 @@ const Search = () => {
   return (
       <>
     <Desktop>
+        <SearchPageContainer>
     <Container style={{width: "60%", marginTop: "2.5%" }}>
     <div style={{textAlign: "center"}}>
     <h1>Search</h1>
@@ -91,8 +96,10 @@ const Search = () => {
     </Container>
     </div>
     </Container>
+    </SearchPageContainer>
     </Desktop>
     <Mobile>
+    <SearchPageContainer>
     <Container style={{ marginTop: "2.5%" }}>
               <div style={{textAlign: "center"}}>
               <h1>Search</h1>
@@ -167,6 +174,7 @@ const Search = () => {
             </Container>
               </div>
               </Container>
+              </SearchPageContainer>
     </Mobile>
     </>
   )
