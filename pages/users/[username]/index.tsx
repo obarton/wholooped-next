@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 import React from "react"
-import NextLink from "../../../components/NextLink";
 import PageContainer, { MobilePageContainer } from "../../../components/PageContainer";
 import { Desktop, Mobile } from "../../../components/Responsive";
 import Spinner from "../../../components/Spinner";
 import { useUsers } from "../../../hooks/useUsers";
+import { useUserProfile } from "../../../hooks/useUserProfile";
 import UserProfileCard from "../../../components/UserProfileCard";
 import CreditsList from "../../../components/CreditsList";
 import HorizontalDivider from "../../../components/HorizontalDivider";
@@ -13,9 +13,10 @@ const User = () => {
   const router = useRouter()
   const { username } = router.query
   const { user, isLoading, isError} = useUsers(username as string)
+  const loggedInUserProfile = useUserProfile();
 
   if (isError) return <div>Failed to load</div>
-  if (isLoading ) return <Spinner />
+  if (isLoading || loggedInUserProfile.isLoading ) return <Spinner />
 
     return (
       <>
@@ -27,7 +28,7 @@ const User = () => {
                         displayName={user?.profile?.displayName}
                         username={username as string}
                         bio={user?.profile?.bio}
-                        canEdit={user?.profile?.name === username}
+                        canEdit={loggedInUserProfile.userProfile?.name === username}
                         // websiteUrl={websiteUrl}
                         uploads={user?.contributions}
                         // twitterUrl={twitterUrl}
@@ -55,7 +56,7 @@ const User = () => {
                         username={username as string}
                         bio={user?.profile?.bio}
                         uploads={user?.contributions}
-                        canEdit={user?.profile?.name === username}
+                        canEdit={loggedInUserProfile.userProfile?.name === username}
                     />
                 </div>
               <div>
