@@ -18,3 +18,15 @@ export const mapSearchTypeName = (type: string) => {
             break;
     }
 }
+
+export const isPersonType = (type: string): boolean => {
+    switch (type) {
+        case "artist":
+        case "user":
+        case "loopmaker":
+        case "producer":
+            return true;
+        default:
+            return false;
+    }
+}

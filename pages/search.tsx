@@ -4,7 +4,7 @@ import NextLink from '../components/NextLink';
 import { Desktop, Mobile } from '../components/Responsive';
 import Spinner from '../components/Spinner';
 import router, { useRouter } from "next/router";
-import { mapSearchTypeName } from '../utils/search';
+import { isPersonType, mapSearchTypeName } from '../utils/search';
 import { useSearch } from '../hooks/useSearch';
 import { useFormik } from 'formik';
 
@@ -46,10 +46,12 @@ const Search = () => {
                           <NextLink href={item.slug}>
                               <ListGroup.Item style={{padding: "1em", border: "0px"}}>
                               <Stack direction="horizontal" gap={1}>
-                              { item.thumbnailUrl &&
-                                  (<div style={{ paddingRight: "0.5em"}}>
-                                      <Image src={imageSrc} alt={item.title} width="100%" height="100%"/>
-                                  </div>)
+                              { item.thumbnailUrl && 
+                                  (
+                                    <div style={{ paddingRight: "0.5em"}}>
+                                      { isPersonType(item.type) ? (<Image src={imageSrc} alt={item.title} width="100%" height="100%" style={{borderRadius: "50%"}}/>) : <Image src={imageSrc} alt={item.title} width="100%" height="100%"/> }
+                                    </div>
+                                  )
                               }
                               <div>
                               <p style={{marginBottom: "0.5em"}}><b>{item.title}</b></p>
@@ -61,13 +63,15 @@ const Search = () => {
                       )}
                       else {
                           return (
-                          <NextLink to={item.slug}>
+                          <NextLink href={item.slug}>
                               <ListGroup.Item style={{padding: "1em", borderLeft: "0px", borderRight: "0px", borderBottom: "0px"}}>
                               <Stack direction="horizontal" gap={1}>
-                              { item.thumbnailUrl &&
-                                  (<div style={{ paddingRight: "0.5em"}}>
-                                      <Image src={imageSrc} alt={item.title}/>
-                                  </div>)
+                              { item.thumbnailUrl && 
+                                  (
+                                    <div style={{ paddingRight: "0.5em"}}>
+                                      { isPersonType(item.type) ? (<Image src={imageSrc} alt={item.title} width="100%" height="100%" style={{borderRadius: "50%"}}/>) : <Image src={imageSrc} alt={item.title} width="100%" height="100%"/> }
+                                    </div>
+                                  )
                               }
                               <div>
                               <p><b>{item.title}</b></p>

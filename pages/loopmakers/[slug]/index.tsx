@@ -1,6 +1,4 @@
 import React from 'react';
-import { useRouter } from 'next/router';
-import { getArtistBySlug, getArtists, getArtistSongs, getLoopmakerBySlug, getLoopmakers } from '../../../lib/contentfulApi';
 import { Desktop, Mobile } from '../../../components/Responsive';
 import PageContainer, { MobilePageContainer } from '../../../components/PageContainer';
 import NextLink from '../../../components/NextLink';
@@ -9,10 +7,8 @@ import IndexPageAvatarHeader from '../../../components/IndexPageAvatarHeader';
 import { resizeImageFromUrl } from '../../../helper/image';
 import { API } from "aws-amplify"
 import styled from "styled-components"
-import { Image } from "react-bootstrap";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFacebook, faTwitter, faInstagram } from "@fortawesome/free-brands-svg-icons"
-import { Avatar } from "@mui/material"
+import LoopmakerProfileCard from '../../../components/LoopmakerProfileCard';
+import HorizontalDivider from '../../../components/HorizontalDivider';
 
 interface LoopmakerPageProps {
     loopmaker: any;
@@ -42,40 +38,34 @@ const Loopmaker = ({ loopmaker, songs }: LoopmakerPageProps) => {
     <Desktop>
         <PageContainer>
         <NextLink href="/app">Go Back </NextLink>
-          <div style={{position: "relative"}}>
+          {/* <div style={{position: "relative"}}>
                 <div style={{position: "absolute", 
-                    top: "0px", 
-                    width: "100%", 
-                }}>
+                        top: "0px", 
+                        width: "100%", 
+                    }}>
                     <Image style={{ objectFit: "cover", width: "100%", height: "40vh"}} fluid id="headerImg" src={headerSrc} alt={name}/>
                 </div>
-            </div>
+            </div> */}
             <div className="container mt-4 mb-4 p-3 d-flex justify-content-center">
-                <div className="card p-4">
-                    <div className=" image d-flex flex-column justify-content-center align-items-center"> 
-                        <Avatar src={avatarSrc} alt={name} sx={{ width: 100, height: 100 }}/>
-                    <span className="name mt-3" style={{fontWeight: "700", fontSize: "1.5rem"}}><b>{name}</b></span> <span className="idd" style={{fontWeight: "600", fontSize: "1rem"}}><b>@{username}</b></span>
-                        <div className="d-flex flex-row justify-content-center align-items-center gap-2"> 
-                            <span className="idd1"><a href={websiteUrl}>{websiteUrl}</a></span> <span><i className="fa fa-copy"></i></span> 
-                        </div>
-                        <div className="d-flex flex-row justify-content-center align-items-center mt-3"> 
-                            <span className="number" style={{fontSize: "1.5rem", fontWeight: "bold"}}>{songs?.length} <span className="follow" style={{fontSize: "12px", fontWeight: "500", color: "#444444"}}>Credits</span></span> 
-                        </div>
-                        {/* {
-                          isLoopmakerLinkedToLoggedInUser && (
-                            <div className=" d-flex mt-2">
-                             <EditProfileButton className="btn-dark" onClick={() => navigate(`/app/profile/loopmaker/edit`)}>Edit Profile</EditProfileButton> 
-                            </div>
-                          )
-                        } */}
-
-                        <div className="text mt-3"> <span>{bio?.split('\n').map((i: any, key: any) => <p key={key}>{i}</p>)}</span> </div>
-                        <div className="gap-3 mt-3 icons d-flex flex-row justify-content-center align-items-center">{twitterUrl && <span><a href={twitterUrl} style={{color: "black"}}><FontAwesomeIcon size="lg" icon={faTwitter} /></a></span>}{facebookUrl && <span><a href={facebookUrl} style={{color: "black"}}><FontAwesomeIcon size="lg" icon={faFacebook} /></a></span>}{instagramUrl && <span><a href={instagramUrl} style={{color: "black"}}><FontAwesomeIcon size="lg" icon={faInstagram} /></a></span>} <span></span> </div> 
-                        {/* <div className=" px-2 rounded mt-4 date "> <span className="join">Joined {moment(dateJoined).format("MMM YYYY")}</span> </div> */}
-                    </div>
+                <LoopmakerProfileCard 
+                    avatarSrc={avatarSrc}
+                    displayName={name}
+                    username={username}
+                    bio={bio}
+                    websiteUrl={websiteUrl}
+                    credits={songs}
+                    twitterUrl={twitterUrl}
+                    instagramUrl={instagramUrl}
+                    facebookUrl={facebookUrl}
+                />
+            </div>
+            <div style={{marginTop: "1rem"}}>
+                <h3 style={{textAlign: "center"}}>Credits</h3>
+                <HorizontalDivider />
+                <div style={{marginTop: "2rem"}}>
+                    <CreditsList credits={songs}/>
                 </div>
             </div>
-          <CreditsList credits={songs}/>
         </PageContainer>
       </Desktop>
       <Mobile>

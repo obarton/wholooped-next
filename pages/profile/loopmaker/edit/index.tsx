@@ -1,21 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react'
-//import { Link } from "gatsby"
 import Container from "react-bootstrap/Container"
 import * as contentful from "contentful-management"
-//import UserProfileSongListSection from "../UserProfileLikesSection"
 import styled from "styled-components"
 import { API } from "aws-amplify"
 import Avatar from "@mui/material/Avatar"
-import { Desktop, Mobile } from "../../../../components/Responsive"
-import { Image, Row, Col, Stack } from "react-bootstrap";
+import { Desktop } from "../../../../components/Responsive"
+import { Image, Row} from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook, faTwitter, faInstagram } from "@fortawesome/free-brands-svg-icons"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
-import Modal from "react-bootstrap/Modal"
 import { toast } from 'react-toastify';
-import Layout from '../../../../components/Layout'
 import Spinner from '../../../../components/Spinner'
 import { useUserProfile } from '../../../../hooks/useUserProfile'
 import NextLink from '../../../../components/NextLink'
@@ -353,7 +349,7 @@ const EditLoopmaker = () => {
                             />
                         </Form.Group>
                         <div style={{marginTop: "1rem"}}>
-                            <NextLink href={`/loopmakers/${loopmakerProfile?.username}`}><p style={{textAlign: "center"}}>View my profile</p></NextLink>
+                            <NextLink href={`/loopmakers/${loopmakerProfile?.slug}`}><p style={{textAlign: "center"}}>View my profile</p></NextLink>
                         </div>
                         <div className="gap-3 mt-3 icons d-flex flex-row justify-content-center align-items-center"> <span><a href={loopmakerProfile?.twitterUrl} style={{color: "black"}}><FontAwesomeIcon size="lg" icon={faTwitter} /></a></span> <span><a href={loopmakerProfile?.facebookUrl} style={{color: "black"}}><FontAwesomeIcon size="lg" icon={faFacebook} /></a></span> <span><a href={loopmakerProfile?.instagramUrl} style={{color: "black"}}><FontAwesomeIcon size="lg" icon={faInstagram} /></a></span> <span></span> </div>
                         { formChanged && (<Form.Group as={Row} style={{marginTop: "1em"}}>

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect} from "react"
+import React from "react"
 import styled from 'styled-components';
 import SidebarWrapper from './SidebarWrapper';
 import { Desktop, Mobile } from './Responsive';
@@ -130,6 +130,7 @@ const Dashboard = () => {
                                               <AlbumCard title={title} secondaryText={subTitle} imageSrc={imageSrc} altText={title} url={url}/>
                                             )
                                         case "artist":
+                                        case "loopmaker":
                                             return (
                                               <ArtistCard title={title} imageSrc={imageSrc} altText={title} url={url}/>
                                             )
