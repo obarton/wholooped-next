@@ -6,24 +6,16 @@ import CreditsList from '../../../components/CreditsList';
 import IndexPageAvatarHeader from '../../../components/IndexPageAvatarHeader';
 import { resizeImageFromUrl } from '../../../helper/image';
 import { API } from "aws-amplify"
-import styled from "styled-components"
 import LoopmakerProfileCard from '../../../components/LoopmakerProfileCard';
 import HorizontalDivider from '../../../components/HorizontalDivider';
 import { getLoopmakerBySlug, getLoopmakers } from '../../../lib/contentfulApi';
+import { useUserProfile } from '../../../hooks/useUserProfile';
+import Spinner from '../../../components/Spinner';
 
 interface LoopmakerPageProps {
     loopmaker: any;
     songs: any;
 }
-
-const EditProfileButton = styled.button`
-    height: 40px;
-    width: 150px;
-    border: none;
-    background-color: #000;
-    color: white;
-    font-size: 15px
-`
 
 const resizeHeaderImageFromUrl = (url: string) => {
     return url ? `${url}?w=390&h=200&fm=png&q=100` : ""
@@ -31,14 +23,25 @@ const resizeHeaderImageFromUrl = (url: string) => {
 
 const Loopmaker = ({ loopmaker, songs }: LoopmakerPageProps) => {
   const {name, username, bio, websiteUrl, twitterUrl, facebookUrl, instagramUrl} = loopmaker;
+  const { userProfile, isLoading, isError} = useUserProfile()
+
+  React.useEffect(() => {
+    console.log(`userProfile ${JSON.stringify(userProfile, null, 2)}`);
+    console.log(`username ${JSON.stringify(username, null, 2)}`);
+  }, [userProfile, username]);
+  
+
   const avatarSrc = resizeImageFromUrl(loopmaker?.profilePhoto?.url)
   const headerSrc = resizeHeaderImageFromUrl(loopmaker?.headerPhoto?.url)
+
+
+  if (isError) return <div>Failed to load</div>
+  if (isLoading ) return <Spinner />
 
   return (
   <>
     <Desktop>
         <PageContainer>
-        <NextLink href="/app">Go Back </NextLink>
           {/* <div style={{position: "relative"}}>
                 <div style={{position: "absolute", 
                         top: "0px", 
@@ -58,6 +61,7 @@ const Loopmaker = ({ loopmaker, songs }: LoopmakerPageProps) => {
                     twitterUrl={twitterUrl}
                     instagramUrl={instagramUrl}
                     facebookUrl={facebookUrl}
+                    canEdit={userProfile?.linkedLoopmaker?.username == username}
                 />
             </div>
             <div style={{marginTop: "1rem"}}>
@@ -71,9 +75,25 @@ const Loopmaker = ({ loopmaker, songs }: LoopmakerPageProps) => {
       </Desktop>
       <Mobile>
         <MobilePageContainer>
-        <NextLink href="/app">Go Back </NextLink>
-          <IndexPageAvatarHeader title={loopmaker?.name} avatarSrc={avatarSrc} />
-          <CreditsList credits={songs}/>
+                <LoopmakerProfileCard 
+                    avatarSrc={avatarSrc}
+                    displayName={name}
+                    username={username}
+                    bio={bio}
+                    websiteUrl={websiteUrl}
+                    credits={songs}
+                    twitterUrl={twitterUrl}
+                    instagramUrl={instagramUrl}
+                    facebookUrl={facebookUrl}
+                    canEdit={userProfile?.linkedLoopmaker?.username == username}
+                />
+            <div style={{marginTop: "2rem"}}>
+                <h3 style={{textAlign: "center"}}>Credits</h3>
+                <HorizontalDivider />
+                <div style={{marginTop: "2rem"}}>
+                    <CreditsList credits={songs}/>
+                </div>
+            </div>
         </MobilePageContainer>
       </Mobile>
   </>)

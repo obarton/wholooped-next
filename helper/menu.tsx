@@ -6,7 +6,7 @@ export const defaultMobileMenuItems = [
     },
     {
       title: "My Profile",
-      url: "/app/profile/edit",
+      url: "/profile/user/edit",
       authRequired: true
     },
     {
@@ -26,7 +26,7 @@ export const defaultMobileMenuItems = [
     },
     {
       title: "Add A Song",
-      url: "/app/add-a-song",
+      url: "",
       authRequired: false
     }]
     
@@ -38,7 +38,7 @@ export const mobileLoopmakerMenuItems = [
       },
       {
         title: "My Profile",
-        url: "/profile/loopmaker/edit",
+        url: "/profile/edit",
         authRequired: true
       },
       {
@@ -65,7 +65,7 @@ export const defaultDesktopMenuItems = [
   },
   {
     title: "My Profile",
-    url: "/app/profile/edit",
+    url: "/profile/user/edit",
     authRequired: true
   },
   {
@@ -97,7 +97,7 @@ export const desktopLoopmakerMenuItems = [
     },
     {
       title: "My Profile",
-      url: "/profile/loopmaker/edit",
+      url: "/profile/edit",
       authRequired: true
     },
     {

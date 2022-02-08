@@ -9,7 +9,7 @@ import UserProfileCard from "../../../components/UserProfileCard";
 import CreditsList from "../../../components/CreditsList";
 import HorizontalDivider from "../../../components/HorizontalDivider";
 
-const Song = () => {
+const User = () => {
   const router = useRouter()
   const { username } = router.query
   const { user, isLoading, isError} = useUsers(username as string)
@@ -21,13 +21,13 @@ const Song = () => {
       <>
         <Desktop>
           <PageContainer>
-            <NextLink href="/app">Go Back </NextLink>
                 <div className="container mt-4 mb-4 p-3 d-flex justify-content-center">
                     <UserProfileCard 
                         avatarSrc={user?.profile?.photo.url}
                         displayName={user?.profile?.displayName}
                         username={username as string}
                         bio={user?.profile?.bio}
+                        canEdit={user?.profile?.name === username}
                         // websiteUrl={websiteUrl}
                         uploads={user?.contributions}
                         // twitterUrl={twitterUrl}
@@ -48,11 +48,29 @@ const Song = () => {
         </Desktop>
         <Mobile>
           <MobilePageContainer>
-
+                <div className="container mt-4 mb-4 p-3 d-flex justify-content-center">
+                    <UserProfileCard 
+                        avatarSrc={user?.profile?.photo.url}
+                        displayName={user?.profile?.displayName}
+                        username={username as string}
+                        bio={user?.profile?.bio}
+                        uploads={user?.contributions}
+                        canEdit={user?.profile?.name === username}
+                    />
+                </div>
+              <div>
+                <HorizontalDivider />
+              </div>
+              <div style={{marginTop: "2rem"}}>
+                <h3 style={{textAlign: "center"}}>Uploads</h3>
+                <div style={{marginTop: "1rem", paddingLeft: "5%", paddingRight: "5%"}}>
+                  <CreditsList credits={user?.contributions}/>
+                </div>
+              </div>
           </MobilePageContainer>
         </Mobile>
       </>
     )
 }
 
-export default Song;
+export default User;

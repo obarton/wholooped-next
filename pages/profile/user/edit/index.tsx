@@ -19,6 +19,7 @@ import { useLoopmakerCredits } from '../../../../hooks/useLoopmakerCredits'
 import CreditsList from '../../../../components/CreditsList'
 import AddSongModal from '../../../../components/AddSongModal'
 import { resizeImageFromUrl } from '../../../../helper/image'
+import { useUsers } from '../../../../hooks/useUsers'
 
 const UserProfileSubHeading = styled.h2({
     textAlign: "center",
@@ -44,49 +45,46 @@ async function Connect() {
   }
 
 
-const EditLoopmaker = () => {
-  const { userProfile, isLoading, isError } = useUserProfile()
+const EditUser = () => {
+  const { user, userProfile, isLoading, isError } = useUserProfile()
+  const usersApiResponse = useUsers(userProfile?.name as string)
   
-  const loopmakerProfile = userProfile?.linkedLoopmaker;
-  const loopmakerCredits = useLoopmakerCredits(loopmakerProfile?.id);
+  const profile = userProfile?.profile;
 
   const [selectedProfilePhotoFile, setSelectedProfilePhotoFile] = useState(null)
-  const [selectedHeaderPhotoFile, setSelectedHeaderPhotoFile] = useState(null)
   const [formChanged, setFormChanged] = useState(false)
   const [isSaving, setIsSaving] = useState(false);
-  const [bio, setBio] = useState(loopmakerProfile?.bio);
-  const [website, setWebsite] = useState(loopmakerProfile?.websiteUrl);
-  const [displayName, setDisplayName] = useState(loopmakerProfile?.name);
-  const [usernameData, setUsernameData] = useState(loopmakerProfile?.username);
+  const [bio, setBio] = useState(profile?.bio);
+  const [displayName, setDisplayName] = useState(profile?.displayName);
+  const [usernameData, setUsernameData] = useState(profile?.name);
   const [profilePhotoPreview, setProfilePhotoPreview] = useState();
-  const [headerPhotoPreview, setHeaderPhotoPreview] = useState();
   const profilePhotoInputRef = useRef()
-  const headerPhotoInputRef = useRef()
   const [showAddCreditModal, setShowAddCreditModal] = useState(false);
-  const [credits, setCredits] = useState(loopmakerCredits?.credits);
+  const [uploads, setUploads] = useState(user?.contributions);
   const handleCloseAddCreditModal = () => setShowAddCreditModal(false);
   const handleShowAddCreditModal = () => setShowAddCreditModal(true);
 
   useEffect(() => {
-    if(loopmakerProfile) {
-      const { bio, websiteUrl, name, username} = loopmakerProfile;
+    if(userProfile) {
+      const { bio, name, displayName} = userProfile;
+
+      console.log(`userProfile ${JSON.stringify(userProfile, null, 2)}`);
 
       setBio(bio)
-      setWebsite(websiteUrl)
-      setDisplayName(name)
-      setUsernameData(username)
+      setDisplayName(displayName)
+      setUsernameData(name)
     }
 
-  }, [loopmakerProfile]);
+  }, [userProfile]);
 
   useEffect(() => {
-    if(loopmakerCredits) {
-      const { credits } = loopmakerCredits;
+    if(usersApiResponse.user) {
+      const { contributions } = usersApiResponse.user;
 
-      setCredits(credits)
+      setUploads(contributions)
     }
 
-  }, [loopmakerCredits]);
+  }, [usersApiResponse]);
 
 
   const onDisplayNameInput = ({ target: { value }}: any)  => {
@@ -105,14 +103,6 @@ const EditLoopmaker = () => {
       setBio(value)
   }
 
-  const onWebsiteInput = ({ target: { value }}: any)  => {
-      if (!formChanged) {
-          setFormChanged(true)
-      }
-
-      setWebsite(value)
-  }
-
   const onUsernameInput = ({ target: { value }}: any)  => {
       if (!formChanged) {
           setFormChanged(true)
@@ -126,15 +116,7 @@ const EditLoopmaker = () => {
           return profilePhotoPreview;
       }
 
-      return resizeImageFromUrl(loopmakerProfile?.profilePhoto?.url)
-  }
-
-  const getHeaderImgSrc = () => {
-      if(headerPhotoPreview) {
-          return headerPhotoPreview;
-      }
-
-      return loopmakerProfile?.headerPhoto?.url ? `${loopmakerProfile?.headerPhoto?.url}?w=720&h=200&fm=png&q=100` : ""
+      return resizeImageFromUrl(userProfile?.photo?.url)
   }
 
   // create a preview as a side effect, whenever selected file is changed
@@ -151,26 +133,8 @@ const EditLoopmaker = () => {
       return () => URL.revokeObjectURL(objectUrl)
   }, [selectedProfilePhotoFile])
 
-  useEffect(() => {
-      if (!selectedHeaderPhotoFile) {
-          setHeaderPhotoPreview(undefined)
-          return
-      }
-
-      const objectUrl = URL.createObjectURL(selectedHeaderPhotoFile) as any
-      setHeaderPhotoPreview(objectUrl)
-
-      // free memory when ever this component is unmounted
-      return () => URL.revokeObjectURL(objectUrl)
-  }, [selectedHeaderPhotoFile])
-
-
   const onProfileImgClick = () => {
       (profilePhotoInputRef?.current as any)?.click()
-  }
-
-  const onHeaderImgClick = () => {
-      (headerPhotoInputRef?.current as any)?.click()
   }
 
   const profilePhotoFileSelectedHandler = (e: any) => {
@@ -183,18 +147,6 @@ const EditLoopmaker = () => {
       }
 
       setSelectedProfilePhotoFile(e.target.files[0])
-  }
-
-  const headerPhotoFileSelectedHandler = (e: any) => {
-      if (!formChanged) {
-          setFormChanged(true)
-      }
-      if (!e.target.files || e.target.files.length === 0) {
-          setSelectedHeaderPhotoFile(null)
-          return
-      }
-
-      setSelectedHeaderPhotoFile(e.target.files[0])
   }
 
   const saveSelectedPhotoAsset = async (selectedPhotoFile: any) => {
@@ -235,26 +187,17 @@ const EditLoopmaker = () => {
 
   const onFormSubmit = async (e: any) => {
       e.preventDefault()
-      const updatedProfile = loopmakerProfile;
+      const updatedProfile = profile;
       updatedProfile.name = displayName;
       updatedProfile.username = usernameData;
       updatedProfile.bio = bio;
-      updatedProfile.websiteUrl = website;
 
       setIsSaving(true)
 
       if(selectedProfilePhotoFile && selectedProfilePhotoFile !== null) {
           const photoAssetId = await saveSelectedPhotoAsset(selectedProfilePhotoFile);
       
-          updatedProfile.profilePhoto = {
-              id: photoAssetId
-          } 
-      }
-
-      if(selectedHeaderPhotoFile && selectedHeaderPhotoFile !== null) {
-          const photoAssetId = await saveSelectedPhotoAsset(selectedHeaderPhotoFile);
-      
-          updatedProfile.headerPhoto = {
+          updatedProfile.photo = {
               id: photoAssetId
           } 
       }
@@ -264,10 +207,9 @@ const EditLoopmaker = () => {
               ...updatedProfile
             }
       }
-      console.log(`updateProfileRequestBody ${JSON.stringify(updateProfileRequestBody, null, 2)}`);
-      const response = await API.put("UserProfileManagementApi", `/loopmakerProfile/${loopmakerProfile?.id}`, updateProfileRequestBody);
+      const response = await API.put("UserProfileManagementApi", `/userProfile/${profile?.id}`, updateProfileRequestBody);
 
-      //setDisplayName(response?.profile?.name)
+      setDisplayName(response?.profile?.name)
       setIsSaving(false)
       setFormChanged(false)
       toast.success("Profile updated!", {
@@ -276,22 +218,13 @@ const EditLoopmaker = () => {
   }
 
   if (isError) return <div>Failed to load</div>
-  if (isLoading  ||  loopmakerCredits?.isLoading) return <Spinner />
+  if (isLoading || usersApiResponse.isLoading) return <Spinner />
 
   return (
     <>
-      <Desktop>
-            {/* <div style={{position: "relative"}}>
-              <div style={{position: "absolute", 
-                    top: "0px", 
-                    width: "100%", 
-                }}>
-                    <Image style={{ objectFit: "cover", width: "100%", height: "40vh", cursor: "pointer"}} fluid id="headerImg" src={getHeaderImgSrc()} alt={displayName}/>
-                    <input ref={headerPhotoInputRef as any} type="file" style={{display : "none"}} onChange={headerPhotoFileSelectedHandler}/>
-                </div>
-            </div> */}
-            <div className="container mt-4 mb-4 p-3 d-flex justify-content-center">
-                <div className="card p-4" style={{width: "50%"}}>
+        <Desktop>
+            <div className="container mt-4 mb-4 p-3 d-flex justify-content-center" >
+                <div className="card p-4" style={{width: "60%"}}>
                     <div className=" image d-flex flex-column justify-content-center align-items-center"> 
                         <div>
                             <Avatar id="profileImg" onClick={onProfileImgClick} src={getImgSrc()} alt={displayName} sx={{ width: 100, height: 100 }} style={{cursor: "pointer"}}/>
@@ -316,24 +249,12 @@ const EditLoopmaker = () => {
                             </Form.Label>
                             <Form.Control 
                                 type="username" 
-                                placeholder="username" 
+                                placeholder="Username" 
                                 onChange={onUsernameInput} 
                                 value={usernameData}
                                 style={{width: "100%"}}
                             />
                         </Form.Group>                      
-                        <Form.Group style={{width: "100%"}}>
-                        <Form.Label>
-                            <b>Website</b>
-                            </Form.Label>
-                            <Form.Control 
-                                type="website" 
-                                placeholder="website" 
-                                onChange={onWebsiteInput} 
-                                value={website}
-                                style={{width: "100%"}}
-                            />
-                        </Form.Group>
                         <Form.Group style={{width: "100%"}}>
                         <Form.Label>
                             <b>Bio</b>
@@ -349,9 +270,8 @@ const EditLoopmaker = () => {
                             />
                         </Form.Group>
                         <div style={{marginTop: "1rem"}}>
-                            <NextLink href={`/loopmakers/${loopmakerProfile?.slug}`}><p style={{textAlign: "center"}}>View my profile</p></NextLink>
+                            <NextLink href={`/users/${usernameData}`}><p style={{textAlign: "center", color: "#4183c4"}}>View my profile</p></NextLink>
                         </div>
-                        <div className="gap-3 mt-3 icons d-flex flex-row justify-content-center align-items-center"> <span><a href={loopmakerProfile?.twitterUrl} style={{color: "black"}}><FontAwesomeIcon size="lg" icon={faTwitter} /></a></span> <span><a href={loopmakerProfile?.facebookUrl} style={{color: "black"}}><FontAwesomeIcon size="lg" icon={faFacebook} /></a></span> <span><a href={loopmakerProfile?.instagramUrl} style={{color: "black"}}><FontAwesomeIcon size="lg" icon={faInstagram} /></a></span> <span></span> </div>
                         { formChanged && (<Form.Group as={Row} style={{marginTop: "1em"}}>
                                     <div style={{textAlign: "center"}}>
                                         <Button type="submit" variant="success" disabled={isSaving ? true : false}>{ isSaving ? "Saving..." : "Save Changes" }</Button>
@@ -361,25 +281,15 @@ const EditLoopmaker = () => {
                     </div>
                 </div>
             </div>
-            <Container style={{ marginBottom: "5em", width: "60%" }}>
-                  <UserProfileSubHeading>Credits</UserProfileSubHeading>
+            <Container style={{ marginBottom: "5em"}}>
+                  <UserProfileSubHeading>Uploads</UserProfileSubHeading>
                   <div style={{textAlign: "center", marginBottom: "1rem"}}>
-                    <AddCreditButton onClick={handleShowAddCreditModal}>+ Add a Credit</AddCreditButton>
+                    <AddCreditButton onClick={handleShowAddCreditModal}>+ Add A Song</AddCreditButton>
                   </div>
-                <CreditsList credits={credits}/>
-            </Container>
-            <AddSongModal show={showAddCreditModal} onHide={handleCloseAddCreditModal}/>
-      </Desktop>
+                <CreditsList credits={uploads}/>
+            </Container>    
+    </Desktop>
       <Mobile>
-      {/* <div style={{position: "relative"}}>
-              <div style={{position: "absolute", 
-                    top: "0px", 
-                    width: "100%", 
-                }}>
-                    <Image style={{ objectFit: "cover", width: "100%", height: "40vh", cursor: "pointer"}} fluid id="headerImg" src={getHeaderImgSrc()} alt={displayName}/>
-                    <input ref={headerPhotoInputRef as any} type="file" style={{display : "none"}} onChange={headerPhotoFileSelectedHandler}/>
-                </div>
-            </div> */}
             <div className="container mt-4 mb-4 p-3 d-flex justify-content-center" >
                 <div className="card p-4" style={{width: "100%"}}>
                     <div className=" image d-flex flex-column justify-content-center align-items-center"> 
@@ -406,24 +316,12 @@ const EditLoopmaker = () => {
                             </Form.Label>
                             <Form.Control 
                                 type="username" 
-                                placeholder="username" 
+                                placeholder="Username" 
                                 onChange={onUsernameInput} 
                                 value={usernameData}
                                 style={{width: "100%"}}
                             />
                         </Form.Group>                      
-                        <Form.Group style={{width: "100%"}}>
-                        <Form.Label>
-                            <b>Website</b>
-                            </Form.Label>
-                            <Form.Control 
-                                type="website" 
-                                placeholder="website" 
-                                onChange={onWebsiteInput} 
-                                value={website}
-                                style={{width: "100%"}}
-                            />
-                        </Form.Group>
                         <Form.Group style={{width: "100%"}}>
                         <Form.Label>
                             <b>Bio</b>
@@ -439,9 +337,8 @@ const EditLoopmaker = () => {
                             />
                         </Form.Group>
                         <div style={{marginTop: "1rem"}}>
-                            <NextLink href={`/loopmakers/${loopmakerProfile?.slug}`}><p style={{textAlign: "center"}}>View my profile</p></NextLink>
+                            <NextLink href={`/users/${usernameData}`}><p style={{textAlign: "center", color: "#4183c4"}}>View my profile</p></NextLink>
                         </div>
-                        <div className="gap-3 mt-3 icons d-flex flex-row justify-content-center align-items-center"> <span><a href={loopmakerProfile?.twitterUrl} style={{color: "black"}}><FontAwesomeIcon size="lg" icon={faTwitter} /></a></span> <span><a href={loopmakerProfile?.facebookUrl} style={{color: "black"}}><FontAwesomeIcon size="lg" icon={faFacebook} /></a></span> <span><a href={loopmakerProfile?.instagramUrl} style={{color: "black"}}><FontAwesomeIcon size="lg" icon={faInstagram} /></a></span> <span></span> </div>
                         { formChanged && (<Form.Group as={Row} style={{marginTop: "1em"}}>
                                     <div style={{textAlign: "center"}}>
                                         <Button type="submit" variant="success" disabled={isSaving ? true : false}>{ isSaving ? "Saving..." : "Save Changes" }</Button>
@@ -452,16 +349,16 @@ const EditLoopmaker = () => {
                 </div>
             </div>
             <Container style={{ marginBottom: "5em"}}>
-                  <UserProfileSubHeading>Credits</UserProfileSubHeading>
+                  <UserProfileSubHeading>Uploads</UserProfileSubHeading>
                   <div style={{textAlign: "center", marginBottom: "1rem"}}>
-                    <AddCreditButton onClick={handleShowAddCreditModal}>+ Add a Credit</AddCreditButton>
+                    <AddCreditButton onClick={handleShowAddCreditModal}>+ Add A Song</AddCreditButton>
                   </div>
-                <CreditsList credits={credits}/>
-            </Container>
-            <AddSongModal show={showAddCreditModal} onHide={handleCloseAddCreditModal}/>
+                <CreditsList credits={uploads}/>
+            </Container>    
     </Mobile>
+    <AddSongModal show={showAddCreditModal} onHide={handleCloseAddCreditModal}/>
     </>
   );
 };
 
-export default EditLoopmaker;
+export default EditUser;

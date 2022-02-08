@@ -56,7 +56,7 @@ const Sidebar = () => {
             (
                 <div style={{textAlign: "center", marginTop: "1em"}}>
                     <p><b>Are you a loopmaker?</b></p>
-                    <SetupProfileButton onClick={() =>  router.push(`/app/profile/loopmaker/create`)}>Add Your Credits</SetupProfileButton>
+                    <SetupProfileButton onClick={() =>  router.push(`/profile/loopmaker/create`)}>Add Your Credits</SetupProfileButton>
                 </div>
             )
         }

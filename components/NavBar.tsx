@@ -22,7 +22,7 @@ const StyledLink = styled.a`
 `
 
 const NavBar = () => {
-    const { user, userProfile } = useUserProfile();
+    const { user, userProfile, isLoading, isError } = useUserProfile();
     const router = useRouter();
     const formik = useFormik({
         initialValues: {
@@ -36,6 +36,16 @@ const NavBar = () => {
     const [showAddCreditModal, setShowAddCreditModal] = useState(false);
     const handleCloseAddCreditModal = () => setShowAddCreditModal(false);
     const handleShowAddCreditModal = () => setShowAddCreditModal(true);
+
+    const [mobileMenuItems, setMenuMobileItems] = React.useState(defaultMobileMenuItems);
+
+    React.useEffect(() => {
+      if(userProfile?.linkedLoopmaker) {
+        setMenuMobileItems(mobileLoopmakerMenuItems)
+      }
+    }, [userProfile]);
+
+    if(isLoading) return <></>
 
     return (
         <>
@@ -90,10 +100,6 @@ const NavBar = () => {
                     </Navbar.Collapse>
                     </Container>
                 </Navbar>
-                <AddSongModal 
-                    show={showAddCreditModal} 
-                    onHide={handleCloseAddCreditModal} 
-                    />
             </Desktop>
             <Mobile>
             <Navbar expand={false}>
@@ -109,7 +115,7 @@ const NavBar = () => {
                     <Offcanvas.Title id="offcanvasNavbarLabel" style={{fontSize: "1.5em"}} className="header-logo">Who Looped <span style={{color:"#198754", fontSize: "0.75em"}}><b><em>Beta</em></b></span></Offcanvas.Title>
                     </Offcanvas.Header>
                     <Offcanvas.Body>
-                    <Stack gap={3}>
+                    <Stack gap={1}>
                     <div>
                     {userProfile && (
                             <> 
@@ -118,11 +124,15 @@ const NavBar = () => {
                             </>
                     )}
                     </div>
-                    <div style={{marginTop: "1em", marginBottom: "1em"}}>
+                    <div style={{marginBottom: "1em"}}>
                     <Nav>
-                        <Stack gap={4}>
+                        <Stack gap={2}>
                         { user ? (
-                                    defaultMobileMenuItems.map((menuItem: any) => {
+                                    mobileMenuItems.map((menuItem: any) => {
+                                        if (menuItem.title == "Add A Song") {
+                                            return <StyledLink key={menuItem.title} onClick={() => setShowAddCreditModal(true)}>{menuItem.title}</StyledLink>
+                                        }
+
                                         return (
                                         <StyledLink href={menuItem.url} key={menuItem.title}>{menuItem.title}</StyledLink>
                                         )
@@ -130,7 +140,11 @@ const NavBar = () => {
                                 )) 
                                 : 
                                 (
-                                    defaultMobileMenuItems.filter((i: any) => i.authRequired == false).map((menuItem: any) => {
+                                    mobileMenuItems.filter((i: any) => i.authRequired == false).map((menuItem: any) => {
+                                        if (menuItem.title == "Add A Song") {
+                                            return <StyledLink key={menuItem.title} onClick={() => setShowAddCreditModal(true)}>{menuItem.title}</StyledLink>
+                                        }
+
                                         return (
                                         <StyledLink href={menuItem.url}  key={menuItem.title}>{menuItem.title}</StyledLink>
                                         )
@@ -175,6 +189,10 @@ const NavBar = () => {
                 </Container>
             </Navbar>
             </Mobile>
+            <AddSongModal 
+                    show={showAddCreditModal} 
+                    onHide={handleCloseAddCreditModal} 
+                />
         </>
     )
 };
