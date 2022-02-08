@@ -11,38 +11,18 @@ import { Image, Row, Col, Stack } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook, faTwitter, faInstagram } from "@fortawesome/free-brands-svg-icons"
 import 'bootstrap/dist/css/bootstrap.min.css';
-//import 'semantic-ui-css/semantic.min.css'
-//import Header from '../Header';
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 import Modal from "react-bootstrap/Modal"
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-// import AccountLoadingSpinner from "../AccountLoadingSpinner"
+import { toast } from 'react-toastify';
 import Layout from '../../../../components/Layout'
 import Spinner from '../../../../components/Spinner'
 import { useUserProfile } from '../../../../hooks/useUserProfile'
 import NextLink from '../../../../components/NextLink'
 import { useLoopmakerCredits } from '../../../../hooks/useLoopmakerCredits'
-import SongList from '../../../../components/SongList'
-import Artwork from '../../../../components/Artwork'
 import CreditsList from '../../../../components/CreditsList'
-
-const PageContainer = styled.div`
-  position: relative;
-  min-height: 100vh;
-`
-
-const ContentContainer = styled.div`
-  padding-bottom: 6rem;    /* Footer height */
-`
-
-const FooterContainer = styled.div`
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 4rem;            /* Footer height */
-`
+import AddSongModal from '../../../../components/AddSongModal'
+import { resizeImageFromUrl } from '../../../../helper/image'
 
 const UserProfileSubHeading = styled.h2({
     textAlign: "center",
@@ -68,18 +48,14 @@ async function Connect() {
   }
 
 
-const EditLoopmaker = ({ username }: any) => {
-  const { user, userProfile, isLoading, isError } = useUserProfile()
+const EditLoopmaker = () => {
+  const { userProfile, isLoading, isError } = useUserProfile()
   
   const loopmakerProfile = userProfile?.linkedLoopmaker;
   const loopmakerCredits = useLoopmakerCredits(loopmakerProfile?.id);
 
-
   const [selectedProfilePhotoFile, setSelectedProfilePhotoFile] = useState(null)
   const [selectedHeaderPhotoFile, setSelectedHeaderPhotoFile] = useState(null)
-  const [userProfileData, setUserProfileData] = useState()
-  const [isLoopmakerProfile, setIsLoopmakerProfile] = useState()
-  //const [isLoading, setIsLoading] = useState(true)
   const [formChanged, setFormChanged] = useState(false)
   const [isSaving, setIsSaving] = useState(false);
   const [bio, setBio] = useState(loopmakerProfile?.bio);
@@ -91,10 +67,9 @@ const EditLoopmaker = ({ username }: any) => {
   const profilePhotoInputRef = useRef()
   const headerPhotoInputRef = useRef()
   const [showAddCreditModal, setShowAddCreditModal] = useState(false);
-  const [addCreditFormChanged, setAddCreditFormChanged] = useState(false);
-  const [addCreditSongLink, setAddCreditSongLink] = useState("")
-  const [addCreditLoopLink, setAddCreditLoopLink] = useState("")
   const [credits, setCredits] = useState(loopmakerCredits?.credits);
+  const handleCloseAddCreditModal = () => setShowAddCreditModal(false);
+  const handleShowAddCreditModal = () => setShowAddCreditModal(true);
 
   useEffect(() => {
     if(loopmakerProfile) {
@@ -116,26 +91,7 @@ const EditLoopmaker = ({ username }: any) => {
     }
 
   }, [loopmakerCredits]);
-  
 
-  const handleCloseAddCreditModal = () => setShowAddCreditModal(false);
-  const handleShowAddCreditModal = () => setShowAddCreditModal(true);
-
-  const onAddCreditSongLinkInput = ({ target: { value }}: any) => {
-      if (!addCreditFormChanged) {
-          setAddCreditFormChanged(true)
-      }
-
-      setAddCreditSongLink(value)
-  }
-
-  const onAddCreditLoopLinkInput = ({ target: { value }}: any)  => {
-      if (!addCreditFormChanged) {
-          setAddCreditFormChanged(true)
-      }
-
-      setAddCreditLoopLink(value)
-  }
 
   const onDisplayNameInput = ({ target: { value }}: any)  => {
       if (!formChanged) {
@@ -169,17 +125,12 @@ const EditLoopmaker = ({ username }: any) => {
       setUsernameData(value)
   }
 
-  // const userProfile = userProfileData;
-  const twitterUrl = loopmakerProfile?.twitterUrl;
-  const facebookUrl = loopmakerProfile?.facebookUrl;
-  const instagramUrl = loopmakerProfile?.instagramUrl;
-
   const getImgSrc = () => {
       if (profilePhotoPreview) {
           return profilePhotoPreview;
       }
 
-      return loopmakerProfile?.profilePhoto?.url ? `${loopmakerProfile?.profilePhoto?.url}?w=175&h=175&fm=png&q=100&fit=thumb` : ""
+      return resizeImageFromUrl(loopmakerProfile?.profilePhoto?.url)
   }
 
   const getHeaderImgSrc = () => {
@@ -189,21 +140,6 @@ const EditLoopmaker = ({ username }: any) => {
 
       return loopmakerProfile?.headerPhoto?.url ? `${loopmakerProfile?.headerPhoto?.url}?w=720&h=200&fm=png&q=100` : ""
   }
-
-  // useEffect(() => {
-  //   if (loopmakerProfile) {
-  //     API.get("LoopmakerApi", `/loopmaker/${loopmakerProfile?.id}/credits`).then(credits => {
-  //         console.log(`loopmakerProfile ${JSON.stringify(loopmakerProfile, null, 2)}`);
-  //         setCredits(credits) 
-  //         setDisplayName(loopmakerProfile?.name)
-  //         setUsernameData(username)
-  //         setBio(loopmakerProfile?.bio)
-  //         setWebsite(loopmakerProfile?.websiteUrl)   
-  //     }).then(
-  //         setIsLoading(false)
-  //     )
-  //   }
-  // }, [loopmakerProfile])
 
   // create a preview as a side effect, whenever selected file is changed
   useEffect(() => {
@@ -305,7 +241,7 @@ const EditLoopmaker = ({ username }: any) => {
       e.preventDefault()
       const updatedProfile = loopmakerProfile;
       updatedProfile.name = displayName;
-      updatedProfile.username = username;
+      updatedProfile.username = usernameData;
       updatedProfile.bio = bio;
       updatedProfile.websiteUrl = website;
 
@@ -343,38 +279,14 @@ const EditLoopmaker = ({ username }: any) => {
       });    
   }
 
-  const onAddCreditFormSubmit = async (e: any) => {
-      e.preventDefault();
-      toast.success("Successfully submitted credit for review!", {
-          position: toast.POSITION.BOTTOM_CENTER
-        });
-        API.post("SubmissionsApi", "/submitcredit", {
-          body: {
-              username: loopmakerProfile?.username,
-              displayName: loopmakerProfile?.displayName,
-              songUrl: addCreditSongLink,
-              loopUrl: addCreditLoopLink
-          }
-      })
-      handleCloseAddCreditModal();
-      setAddCreditSongLink("");
-      setAddCreditLoopLink("");
-  }
-
-  useEffect(() => {
-    console.log(`credits ${JSON.stringify(credits, null, 2)}`);
-  }, [credits]);
-  
-
-
   if (isError) return <div>Failed to load</div>
   if (isLoading  ||  loopmakerCredits?.isLoading) return <Spinner />
 
   return (
     <>
       <Desktop>
-      <div style={{position: "relative"}}>
-                <div style={{position: "absolute", 
+            <div style={{position: "relative"}}>
+              <div style={{position: "absolute", 
                     top: "0px", 
                     width: "100%", 
                 }}>
@@ -453,15 +365,14 @@ const EditLoopmaker = ({ username }: any) => {
                     </div>
                 </div>
             </div>
-            <Container style={{ marginBottom: "5em" }}>
-                <>
+            <Container style={{ marginBottom: "5em", width: "60%" }}>
                   <UserProfileSubHeading>Credits</UserProfileSubHeading>
                   <div style={{textAlign: "center", marginBottom: "1rem"}}>
                     <AddCreditButton onClick={handleShowAddCreditModal}>+ Add a Credit</AddCreditButton>
                   </div>
-                  <CreditsList credits={credits}/>
-                </>
-                </Container>
+                <CreditsList credits={credits}/>
+            </Container>
+            <AddSongModal show={showAddCreditModal} onHide={handleCloseAddCreditModal}/>
       </Desktop>
     </>
   );

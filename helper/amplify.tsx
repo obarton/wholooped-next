@@ -48,6 +48,10 @@ const devEndpoints = [
       name: "LoopmakerApi",
       endpoint: "https://uufxzd2mnj.execute-api.us-west-2.amazonaws.com"
     },
+    {
+      name: "LoopPackApi",
+      endpoint: "https://6k7zfnqu84.execute-api.us-west-2.amazonaws.com"
+    },
   ]
 
 const prodEndpoints = [
@@ -99,6 +103,10 @@ const prodEndpoints = [
     {
       name: "LoopmakerApi",
       endpoint: "https://33ma215sx3.execute-api.us-west-2.amazonaws.com"
+    },
+    {
+      name: "LoopPackApi",
+      endpoint: "https://6k7zfnqu84.execute-api.us-west-2.amazonaws.com"
     },
   ]
 

@@ -5,7 +5,10 @@ import { GET_SONGS_FROM_SONG_IDS } from "../graphql/getArtistSongsFromIds";
 import { GET_ARTISTS_SONG_IDS } from "../graphql/getArtistsSongIds";
 import { GET_FEATURED_LOOP_PACKS } from "../graphql/getFeaturedLoopPacks";
 import { GET_FEATURED_SONGS } from "../graphql/getFeaturedSongs";
+import { GET_LOOPMAKER_BY_SLUG } from "../graphql/getLoopmakerBySlug";
+import { GET_LOOPMAKERS } from "../graphql/getLoopmakerIndex";
 import { Config } from "../utils/config";
+
 
 async function fetchGraphQL(query: string, preview = false) {
     return fetch(
@@ -49,6 +52,13 @@ export async function getArtists() {
   return response?.data?.artistCollection?.items;
 }
 
+export async function getLoopmakers() {
+  const query = GET_LOOPMAKERS;
+  const response = await fetchGraphQL(query);
+
+  return response?.data?.loopmakerCollection?.items;
+}
+
 export async function getArtistSongsIds(id: string) {
   const query = GET_ARTIST_SONG_IDS(id);
   const response = await fetchGraphQL(query);
@@ -86,6 +96,21 @@ export async function getArtistsSongs(ids: string[]) {
 
   return response?.data?.songCollection?.items;
 }
+
+export async function getLoopmakerBySlug(slug: string) {
+  const query = GET_LOOPMAKER_BY_SLUG(slug)
+  const response = await fetchGraphQL(query);
+
+  return response?.data?.loopmakerCollection?.items[0];
+}
+
+export async function getLoopmakerLoopPackIds(loopmakerId: string) {
+  const query = GET_LOOPMAKER_BY_SLUG(loopmakerId)
+  const response = await fetchGraphQL(query);
+
+  return response?.data?.loopmakerCollection?.items[0];
+}
+
 
 export default class ContentfulApi {
 

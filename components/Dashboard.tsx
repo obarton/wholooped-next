@@ -131,7 +131,7 @@ const Dashboard = () => {
                                             )
                                         case "artist":
                                             return (
-                                              <ArtistCard title={title} imageSrc={imageSrc} altText={title}/>
+                                              <ArtistCard title={title} imageSrc={imageSrc} altText={title} url={url}/>
                                             )
                                         default:
                                             return

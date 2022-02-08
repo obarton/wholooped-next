@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react';
-import Link from "next/link"
-import { UserProfile as Auth0UserProfile, useUser } from '@auth0/nextjs-auth0';
+import React, { useState } from 'react';
 import { Desktop, Mobile } from "./Responsive"
 import Button from 'react-bootstrap/Button';
 import Container from "react-bootstrap/Container"
@@ -16,6 +14,7 @@ import { useRouter } from 'next/router'
 import Offcanvas from "react-bootstrap/Offcanvas"
 import { defaultMobileMenuItems, mobileLoopmakerMenuItems } from '../helper/menu';
 import { useUserProfile } from '../hooks/useUserProfile';
+import AddSongModal from './AddSongModal';
 
 const StyledLink = styled.a`
     color: black;
@@ -34,6 +33,9 @@ const NavBar = () => {
             router.push(`/search?searchText=${searchText}`)
         },
       })
+    const [showAddCreditModal, setShowAddCreditModal] = useState(false);
+    const handleCloseAddCreditModal = () => setShowAddCreditModal(false);
+    const handleShowAddCreditModal = () => setShowAddCreditModal(true);
 
     return (
         <>
@@ -52,7 +54,7 @@ const NavBar = () => {
                         <Stack direction="horizontal" gap={4}>
                             <StyledLink href="/app/">Browse</StyledLink>
                             <StyledLink href="/artists">Artists</StyledLink>
-                            <StyledLink href="/app/add-a-song">Add A Song</StyledLink>
+                            <StyledLink onClick={() => setShowAddCreditModal(true)}>Add A Song</StyledLink>
                             <StyledLink href="http://community.wholooped.com">Community</StyledLink>
                         </Stack>
                     </Nav>
@@ -69,7 +71,7 @@ const NavBar = () => {
                                 onChange={formik.handleChange}
                                 style={{borderRadius: "0"}}
                             />
-                            <Button variant="success" type="submit" style={{borderRadius: "0"}}>Search</Button>
+                            <Button variant="success" type="submit">Search</Button>
                         </Form>
                         <div className="vr" style={{marginLeft: "0.5rem", marginRight: "0.5rem"}}/>
                         {!user && <StyledLink href="/api/auth/login">Login</StyledLink> }
@@ -88,6 +90,10 @@ const NavBar = () => {
                     </Navbar.Collapse>
                     </Container>
                 </Navbar>
+                <AddSongModal 
+                    show={showAddCreditModal} 
+                    onHide={handleCloseAddCreditModal} 
+                    />
             </Desktop>
             <Mobile>
             <Navbar expand={false}>
@@ -148,7 +154,7 @@ const NavBar = () => {
                                 onChange={formik.handleChange}
                                 style={{borderRadius: "0"}}
                             />
-                            <Button variant="success" style={{borderRadius: "0"}} type="submit">Search</Button>
+                            <Button variant="success" type="submit">Search</Button>
                         </Form>
                     </div>  
                     <div>

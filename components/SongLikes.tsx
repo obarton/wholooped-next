@@ -14,7 +14,7 @@ const SongLikes = ({ song, user, isSongLiked }: SongLikesProps) => {
     const [isLiked, setIsLiked] = useState(isSongLiked);
     const itemId = `${song?.id}:${song?.loop[0].id}`;
 
-    function sendLikeInteraction(song: any) {     
+    function sendLikeInteraction() {     
         return API.post("InteractionsApi", "/", {
           body: {
             interactionType: "LIKE",
@@ -26,7 +26,7 @@ const SongLikes = ({ song, user, isSongLiked }: SongLikesProps) => {
         });
       }
   
-      function sendUnlikeInteraction(song: any) {
+      function sendUnlikeInteraction() {
         
         return API.post("InteractionsApi", "/", {
           body: {
