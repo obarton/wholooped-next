@@ -44,13 +44,13 @@ const SongLikes = ({ song, user, isSongLiked }: SongLikesProps) => {
   
         if (isLiked) {
           let updatedLikeCount = likesCount - 1;
-          sendUnlikeInteraction(song)
+          sendUnlikeInteraction()
           setLikesCount(updatedLikeCount)
         }
   
         if (!isLiked) {
           let updatedLikeCount = likesCount + 1;
-          sendLikeInteraction(song)
+          sendLikeInteraction()
           setLikesCount(updatedLikeCount)
         }
     }
