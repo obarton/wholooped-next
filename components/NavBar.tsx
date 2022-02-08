@@ -45,8 +45,6 @@ const NavBar = () => {
       }
     }, [userProfile]);
 
-    if(isLoading) return <></>
-
     return (
         <>
             <Desktop>
