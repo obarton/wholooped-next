@@ -11,12 +11,13 @@ import MediaPlayer from "../../../../components/MediaPlayers/MediaPlayer";
 import LoopDetails from "../../../../components/LoopDetails";
 import SongDetails from "../../../../components/SongDetails";
 import Spinner from "../../../../components/Spinner"
+import InlineAvatar from "../../../../components/InlineAvatar"
 import styled from "styled-components";
 import SongLikes from "../../../../components/SongLikes";
 import { useSongLike } from "../../../../hooks/useSongLike";
 import { useUser } from "@auth0/nextjs-auth0";
-import { Site } from "../../../../utils/page";
 import Layout from "../../../../components/Layout";
+import HorizontalDivider from "../../../../components/HorizontalDivider";
 
 const SongContentContainer = styled.div`
   display: flex; 
@@ -49,6 +50,10 @@ const Song = () => {
 
   }, [song, loop])
 
+  useEffect(() => {
+    console.log(`song page song ${JSON.stringify(song, null, 2)}`)
+  }, [song])
+
   if (isError) { 
     return (
         <Layout>
@@ -68,32 +73,57 @@ if (isLoading || userResponse.isLoading || likeResponse.isLoading) {
     return (
       <Layout title={song?.title}>
         <Desktop>
+          <div>
           <PageContainer>
             <SongPageHeader title={song?.title} artist={formatSongArtistLinksHtml(song?.artist)}/>
               <SongLikes user={userResponse.user} song={song} isSongLiked={likeResponse.isLiked}/>
-                <SocialShare />
-                  <SongContentContainer>
-                    <Stack direction="horizontal" gap={5} style={{ padding: "2em" }}>
-                        <MediaPlayerContainer>
-                          <MediaPlayer platform={song?.platform?.name} mediaUrl={song?.url} title={song?.title} mediaId={song?.platformTrackId}/>
-                          <SongDetails song={song}/>
-                      </MediaPlayerContainer>
-                      <div style={{ height: "50%"}}>
-                        Contains a loop of
+              <SocialShare />
+              <SongContentContainer>
+                <Stack direction="horizontal" gap={5} style={{ padding: "2em" }}>
+                    <MediaPlayerContainer>
+                      <MediaPlayer platform={song?.platform?.name} mediaUrl={song?.url} title={song?.title} mediaId={song?.platformTrackId}/>
+                      <SongDetails song={song}/>
+                      <HorizontalDivider />
+                      <div style={{marginTop: "1rem"}}>
+                        <Stack direction="horizontal" gap={1}>
+                            <div>
+                              <p style={{padding: "0", margin: "0"}}><b>Uploaded By</b></p>
+                            </div>
+                            <div>
+                              <InlineAvatar text={song?.primaryContributor?.displayName} redirectUrl={`/users/${song?.primaryContributor?.slug}`} thumbnailUrl={song?.primaryContributor?.photo?.url}/>
+                            </div>
+                        </Stack>
                       </div>
-                      <MediaPlayerContainer>
-                        <MediaPlayer platform={song?.loop[0]?.platform?.name} mediaUrl={song?.loop[0]?.url} title={song?.loop[0]?.title} mediaId={song?.loop[0]?.platform?.trackId}/>
-                        <LoopDetails loop={song?.loop[0]} startTimeSeconds={song?.loopStartTimeSeconds}/>
-                      </MediaPlayerContainer>
-                    </Stack>
-                  </SongContentContainer>
+                  </MediaPlayerContainer>
+                  <div style={{ height: "70%"}}>
+                    Contains a loop of
+                  </div>
+                  <MediaPlayerContainer>
+                    <MediaPlayer platform={song?.loop[0]?.platform?.name} mediaUrl={song?.loop[0]?.url} title={song?.loop[0]?.title} mediaId={song?.loop[0]?.platform?.trackId}/>
+                    <LoopDetails loop={song?.loop[0]} startTimeSeconds={song?.loopStartTimeSeconds}/>
+                  </MediaPlayerContainer>
+                </Stack>
+              </SongContentContainer>
+              
           </PageContainer>
+          </div>
         </Desktop>
         <Mobile>
           <MobilePageContainer>
               <SongPageHeader title={song?.title} artist={formatSongArtistLinksHtml(song?.artist)}/>
                 <SongLikes user={userResponse.user} song={song} isSongLiked={likeResponse.isLiked}/>
                   <SocialShare />
+                  {/* <HorizontalDivider />
+                      <div style={{marginTop: "1rem"}}>
+                        <Stack direction="horizontal" gap={1}>
+                            <div>
+                              <p style={{padding: "0", margin: "0"}}><b>Uploaded By</b></p>
+                            </div>
+                            <div>
+                              <InlineAvatar text={song?.primaryContributor?.displayName} redirectUrl={`/users/${song?.primaryContributor?.slug}`} thumbnailUrl={song?.primaryContributor?.photo?.url}/>
+                            </div>
+                        </Stack>
+                      </div> */}
               <SongContentContainer>
                 <Stack gap={5} style={{ padding: "2em" }}>
                     <MediaPlayerContainer>

@@ -1,19 +1,15 @@
 import React from 'react'
-import { Card, Image, Stack } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import TruncateMarkup from 'react-truncate-markup';
 import TextTruncate from 'react-text-truncate';
-import { Avatar } from "@mui/material"
 import Link from "next/link"
 import styled from "styled-components"
 import Artwork from './Artwork';
+import InlineAvatar from './InlineAvatar';
 
 const StyledLink = styled.a`
   color: black;
   text-decoration: none;
-`
-
-const StyledUserLink = styled.a`
-text-decoration: none;
 `
 
 const UserAlbumCard = ({ url, title, secondaryText, imageSrc, altText, width, username, userDisplayName, userThumbnailUrl, userUrl}: any) => {
@@ -37,14 +33,7 @@ const UserAlbumCard = ({ url, title, secondaryText, imageSrc, altText, width, us
                     <Card.Text>
                     <p style={{padding: "0", margin: "0", color: "#666C7E", fontSize:"0.9em"}}>Uploaded by</p>
                     <div style={{display: "flex", justifyContent: "center", marginTop: "0.5em"}}> 
-                    <Link href={userUrl || ""} passHref>
-                        <StyledUserLink>
-                            <Stack direction="horizontal" gap={2}>
-                            <Avatar src={userThumbnailUrl} alt={username} sx={{ width: 20, height: 20 }} />
-                                <p style={{color: "#4183c4", margin: "0", padding: "0"}}>{userDisplayName}</p>           
-                            </Stack>
-                        </StyledUserLink>
-                     </Link>
+                        <InlineAvatar redirectUrl={userUrl} thumbnailUrl={userThumbnailUrl} text={userDisplayName}/>
                      </div>
                     </Card.Text>                        
                 </Card.Body>
