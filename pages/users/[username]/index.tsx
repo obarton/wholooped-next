@@ -42,7 +42,7 @@ if (isLoading || loggedInUserProfile.isLoading) {
                         displayName={user?.profile?.displayName}
                         username={username as string}
                         bio={user?.profile?.bio}
-                        canEdit={loggedInUserProfile.userProfile?.name === username}
+                        canEdit={ loggedInUserProfile.userProfile && (loggedInUserProfile.userProfile?.name === username)}
                         // websiteUrl={websiteUrl}
                         uploads={user?.contributions}
                         // twitterUrl={twitterUrl}
@@ -70,7 +70,7 @@ if (isLoading || loggedInUserProfile.isLoading) {
                         username={username as string}
                         bio={user?.profile?.bio}
                         uploads={user?.contributions}
-                        canEdit={loggedInUserProfile.userProfile?.name === username}
+                        canEdit={ loggedInUserProfile.userProfile && (loggedInUserProfile.userProfile?.name === username)}
                     />
                 </div>
               <div>

@@ -77,7 +77,7 @@ if (isLoading) {
                     twitterUrl={twitterUrl}
                     instagramUrl={instagramUrl}
                     facebookUrl={facebookUrl}
-                    canEdit={userProfile?.linkedLoopmaker?.username == username}
+                    canEdit={userProfile?.linkedLoopmaker && (userProfile?.linkedLoopmaker?.username == username)}
                 />
             </div>
             <div style={{marginTop: "1rem"}}>
@@ -103,7 +103,7 @@ if (isLoading) {
                     twitterUrl={twitterUrl}
                     instagramUrl={instagramUrl}
                     facebookUrl={facebookUrl}
-                    canEdit={userProfile?.linkedLoopmaker?.username == username}
+                    canEdit={userProfile?.linkedLoopmaker && (userProfile?.linkedLoopmaker?.username == username)}
                 />
             <div style={{marginTop: "2rem"}}>
                 <h3 style={{textAlign: "center"}}>Credits</h3>
