@@ -15,6 +15,32 @@ import Offcanvas from "react-bootstrap/Offcanvas"
 import { defaultMobileMenuItems, mobileLoopmakerMenuItems } from '../helper/menu';
 import { useUserProfile } from '../hooks/useUserProfile';
 import AddSongModal from './AddSongModal';
+import { useCookies } from "react-cookie"
+import { API } from 'aws-amplify';
+
+const getAuthToken = async (user: any, userProfile: any) => {
+  if(!user) {
+    return null;
+  }
+
+  const { sub, nickname, email } = user;
+  const { displayName, photo, bio } = userProfile
+  
+  const requestBody = {
+    body: {
+        sub,
+        nickname,
+        displayName,
+        email,
+        picture: photo?.url,
+        bio
+    }
+  }
+
+  const jwtTokenResponse = await API.post("AuthApi", "/sessiontoken", requestBody);
+
+  return jwtTokenResponse;
+}
 
 const StyledLink = styled.a`
     color: black;
@@ -36,8 +62,33 @@ const NavBar = () => {
     const [showAddCreditModal, setShowAddCreditModal] = useState(false);
     const handleCloseAddCreditModal = () => setShowAddCreditModal(false);
     const handleShowAddCreditModal = () => setShowAddCreditModal(true);
-
     const [mobileMenuItems, setMenuMobileItems] = React.useState(defaultMobileMenuItems);
+    const [ssToken, setSsToken] = React.useState()
+    const [cookies, setCookie] = useCookies(['sstoken'])
+  
+    const fetchAuthToken = React.useCallback(async () => {
+      if(userProfile) {
+        const jwtTokenResponse = await getAuthToken(user, userProfile)
+        setSsToken(jwtTokenResponse)
+      }
+   }, [user, userProfile])
+    
+    React.useEffect(() => {
+      fetchAuthToken().catch(error => console.error(error))
+    }, [user, userProfile, fetchAuthToken]);
+    
+    React.useEffect(() => {
+      if(ssToken) {
+        let expires = new Date()
+        expires.setTime(expires.getTime() + (30 * 60 * 1000))
+      
+        setCookie("sstoken", ssToken, {
+          path: "/",
+          domain: "wholooped.com",
+          expires
+        })
+      }
+    }, [ssToken]);
 
     React.useEffect(() => {
       if(userProfile?.linkedLoopmaker) {
