@@ -3,11 +3,13 @@ import { Container, ListGroup, Stack, Image, Button, Form, FormControl } from 'r
 import NextLink from '../components/NextLink';
 import { Desktop, Mobile } from '../components/Responsive';
 import Spinner from '../components/Spinner';
+import Layout from '../components/Layout';
 import router, { useRouter } from "next/router";
 import { isPersonType, mapSearchTypeName } from '../utils/search';
 import { useSearch } from '../hooks/useSearch';
 import { useFormik } from 'formik';
 import styled from "styled-components"
+import { PageTitles } from '../utils/page';
 
 const SearchPageContainer = styled.div`
   min-height: 100vh;
@@ -26,11 +28,24 @@ const Search = () => {
     },
   });
 
-   if (isError) return <div>Failed to load</div>
-   if (isLoading ) return <Spinner />
+   if (isError) { 
+        return (
+            <Layout title={PageTitles.Search}>
+            <div>Failed to load</div>
+            </Layout>
+        )
+   }
+
+   if (isLoading) { 
+        return (
+            <Layout title={PageTitles.Search}>
+                <Spinner />
+            </Layout>
+        )
+    }
 
   return (
-      <>
+      <Layout title={PageTitles.Search}>
     <Desktop>
         <SearchPageContainer>
     <Container style={{width: "60%", marginTop: "2.5%" }}>
@@ -176,7 +191,7 @@ const Search = () => {
               </Container>
               </SearchPageContainer>
     </Mobile>
-    </>
+    </Layout>
   )
 };
 

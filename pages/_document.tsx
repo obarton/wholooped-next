@@ -11,6 +11,12 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <link rel="shortcut icon" href="/static/favicon.png" />
+          <script 
+            async 
+            defer 
+            key="1"
+            type="text/javascript"
+            src="https://tools.luckyorange.com/core/lo.js?site-id=f414636a"></script>
         </Head>
         <body>
           <Main />

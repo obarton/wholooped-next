@@ -5,16 +5,15 @@ import IndexPageHeader from "../../../components/IndexPageHeader"
 import ContentfulApi from '../../../lib/contentfulApi';
 import { Config } from '../../../utils/config';
 import ArtistList from '../../../components/ArtistList';
+import { PageTitles } from '../../../utils/page';
+import Layout from '../../../components/Layout';
 
 const ArtistIndexPage = ({ artists, currentPage, totalPages }: any) => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const pageTitle = "Artists"
-
   return (
-    <>
+    <Layout title={PageTitles.Artists}>
       <Desktop>
         <PageContainer>
-          <IndexPageHeader title={pageTitle} />
+          <IndexPageHeader title={PageTitles.Artists} />
             <ArtistList 
                 artists={artists}
                 currentPage={currentPage}
@@ -24,7 +23,7 @@ const ArtistIndexPage = ({ artists, currentPage, totalPages }: any) => {
       </Desktop>
       <Mobile>
           <MobilePageContainer>
-            <IndexPageHeader title={pageTitle} />
+            <IndexPageHeader title={PageTitles.Artists} />
               <ArtistList 
                   artists={artists}
                   currentPage={currentPage}
@@ -32,7 +31,7 @@ const ArtistIndexPage = ({ artists, currentPage, totalPages }: any) => {
               />
           </MobilePageContainer>
         </Mobile>
-    </>
+    </Layout>
     )
 };
 

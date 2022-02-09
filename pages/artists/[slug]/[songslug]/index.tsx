@@ -15,6 +15,8 @@ import styled from "styled-components";
 import SongLikes from "../../../../components/SongLikes";
 import { useSongLike } from "../../../../hooks/useSongLike";
 import { useUser } from "@auth0/nextjs-auth0";
+import { Site } from "../../../../utils/page";
+import Layout from "../../../../components/Layout";
 
 const SongContentContainer = styled.div`
   display: flex; 
@@ -47,11 +49,24 @@ const Song = () => {
 
   }, [song, loop])
 
-  if (isError) return <div>Failed to load</div>
-  if (isLoading || userResponse.isLoading || likeResponse.isLoading) return <Spinner />
+  if (isError) { 
+    return (
+        <Layout>
+        <div>Failed to load</div>
+        </Layout>
+    )
+}
+
+if (isLoading || userResponse.isLoading || likeResponse.isLoading) { 
+    return (
+        <Layout>
+            <Spinner />
+        </Layout>
+    )
+}
 
     return (
-      <>
+      <Layout title={song?.title}>
         <Desktop>
           <PageContainer>
             <SongPageHeader title={song?.title} artist={formatSongArtistLinksHtml(song?.artist)}/>
@@ -96,7 +111,7 @@ const Song = () => {
               </SongContentContainer>
           </MobilePageContainer>
         </Mobile>
-      </>
+      </Layout>
     )
 }
 

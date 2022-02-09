@@ -20,6 +20,8 @@ import CreditsList from '../../../../components/CreditsList'
 import AddSongModal from '../../../../components/AddSongModal'
 import { resizeImageFromUrl } from '../../../../helper/image'
 import { useRouter } from "next/router";
+import Layout from '../../../../components/Layout'
+import { PageTitles } from '../../../../utils/page'
 
 const UserProfileSubHeading = styled.h2({
     textAlign: "center",
@@ -176,10 +178,6 @@ const CreateLoopmaker = () => {
       return "https://www.guardianoffshore.com.au/wp-content/uploads/2015/03/banner-placeholder.jpg"
   }
 
-  useEffect(() => {
-    console.log(`CreateLoopmakerProfile ${JSON.stringify(userProfile, null, 2)}`)
-  }, [userProfile]);
-
   // create a preview as a side effect, whenever selected file is changed
   useEffect(() => {
       if (!selectedProfilePhotoFile) {
@@ -273,8 +271,6 @@ const CreateLoopmaker = () => {
             }
       }
 
-
-      console.log(`createProfileRequestBody ${JSON.stringify(createProfileRequestBody, null, 2)}`);
       const response = await API.post("UserProfileManagementApi", `/loopmakerProfile`, createProfileRequestBody).then(() => {
           setDisplayName("")
           setBio("")
@@ -295,12 +291,24 @@ const CreateLoopmaker = () => {
       });
   }
 
+  if (isError) { 
+        return (
+            <Layout title={PageTitles.CreateLoopmakerProfile}>
+            <div>Failed to load</div>
+            </Layout>
+        )
+    }
 
-  if (isError) return <div>Failed to load</div>
-  if (isLoading  ||  loopmakerCredits?.isLoading) return <Spinner />
+    if (isLoading || loopmakerCredits?.isLoading) { 
+        return (
+            <Layout title={PageTitles.CreateLoopmakerProfile}>
+                <Spinner />
+            </Layout>
+        )
+    }
 
   return (
-    <>
+    <Layout title={PageTitles.CreateLoopmakerProfile}>
       <Desktop>
       <>  
         <div className="container mt-4 mb-4 p-3 d-flex justify-content-center">
@@ -493,7 +501,7 @@ const CreateLoopmaker = () => {
             </div>
                 </>
     </Mobile>
-    </>
+    </Layout>
   );
 };
 

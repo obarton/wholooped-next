@@ -10,6 +10,7 @@ import { useLoopPack } from '../../../../hooks/useLoopPack';
 import Spinner from "../../../../components/Spinner"
 import SongList from '../../../../components/Shared/SongList';
 import styled from "styled-components"
+import Layout from '../../../../components/Layout';
 
 const LooppackPageContainer = styled.div`
   min-height: 100vh
@@ -21,16 +22,30 @@ const LoopPack = () => {
     const looppackSlug = slug as string;
     const loopmakerSlug = loopmakerslug as string;
     const { loopPack, songs, isLoading, isError} = useLoopPack(loopmakerSlug, looppackSlug)
-
-    if (isError) return <div>Failed to load</div>
-    if (isLoading) return <Spinner />
+    
+    
+    if (isError) { 
+      return (
+          <Layout>
+          <div>Failed to load</div>
+          </Layout>
+      )
+  }
+  
+  if (isLoading) { 
+      return (
+          <Layout>
+              <Spinner />
+          </Layout>
+      )
+  }
 
   const loopPackArtworkSrc = resizeImageFromUrl(loopPack?.imageUrl)
   const loopmakerName = loopPack?.loopmaker?.map((l: any) => l.name).join(", ")
   const description = "Songs containing loops from this sample pack"
 
   return (
-  <>
+  <Layout title={loopPack?.title}>
     <Desktop>
       <LooppackPageContainer>
         <PageContainer>
@@ -56,7 +71,7 @@ const LoopPack = () => {
         </MobilePageContainer>
         </LooppackPageContainer>
       </Mobile>
-  </>)
+  </Layout>)
 };
 
 export default LoopPack;

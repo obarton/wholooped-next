@@ -19,6 +19,8 @@ import { useLoopmakerCredits } from '../../../../hooks/useLoopmakerCredits'
 import CreditsList from '../../../../components/CreditsList'
 import AddSongModal from '../../../../components/AddSongModal'
 import { resizeImageFromUrl } from '../../../../helper/image'
+import { PageTitles } from '../../../../utils/page'
+import Layout from '../../../../components/Layout'
 
 const UserProfileSubHeading = styled.h2({
     textAlign: "center",
@@ -264,7 +266,7 @@ const EditLoopmaker = () => {
               ...updatedProfile
             }
       }
-      console.log(`updateProfileRequestBody ${JSON.stringify(updateProfileRequestBody, null, 2)}`);
+
       const response = await API.put("UserProfileManagementApi", `/loopmakerProfile/${loopmakerProfile?.id}`, updateProfileRequestBody);
 
       //setDisplayName(response?.profile?.name)
@@ -275,11 +277,24 @@ const EditLoopmaker = () => {
       });    
   }
 
-  if (isError) return <div>Failed to load</div>
-  if (isLoading  ||  loopmakerCredits?.isLoading) return <Spinner />
+  if (isError) { 
+        return (
+            <Layout title={PageTitles.EditLoopmakerProfile}>
+            <div>Failed to load</div>
+            </Layout>
+        )
+    }
+
+    if (isLoading || loopmakerCredits?.isLoading) { 
+        return (
+            <Layout title={PageTitles.EditLoopmakerProfile}>
+                <Spinner />
+            </Layout>
+        )
+    }
 
   return (
-    <>
+    <Layout title={PageTitles.EditLoopmakerProfile}>
       <Desktop>
             {/* <div style={{position: "relative"}}>
               <div style={{position: "absolute", 
@@ -460,7 +475,7 @@ const EditLoopmaker = () => {
             </Container>
             <AddSongModal show={showAddCreditModal} onHide={handleCloseAddCreditModal}/>
     </Mobile>
-    </>
+    </Layout>
   );
 };
 

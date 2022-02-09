@@ -6,11 +6,13 @@ import Carousel from 'react-multi-carousel';
 import styled from 'styled-components';
 import AlbumCard from '../components/AlbumCard';
 import NextLink from '../components/NextLink';
+import Layout from '../components/Layout';
 import { Desktop, Mobile } from '../components/Responsive';
 import { responsive } from '../helper/carousel';
 import { getFeaturedLoopPacks, getFeaturedSongs } from '../lib/contentfulApi';
 import 'react-multi-carousel/lib/styles.css';
 import { resizeImageFromUrl } from '../helper/image';
+import { Site } from '../utils/page';
 
 const StyledLandingText = styled.h1`
   font-size: 4em;
@@ -21,11 +23,7 @@ const Home = ({ songs, loopPacks }: any) => {
   const landingImageSrc = "https://images.ctfassets.net/vwlltmjzgrb5/1LTavRNkjzLIO7dzXvXIGA/9e28aaefa4d6a9665d5e80001e4571e6/Screwed_Soul_Cover_2048x.png?w=600&h=600&q=50&fm=webp";
 
   return (
-    <div>
-     <Head>
-       <title>Who Looped</title>
-       <meta name='keywords' content='Discover loops and soundpacks used in todays songs'/>
-     </Head>
+    <Layout title={Site.Description}>
      <section>
       <Desktop>
           <Container fluid>
@@ -177,7 +175,7 @@ const Home = ({ songs, loopPacks }: any) => {
           </Container>
       </Mobile>
     </section>
-    </div>
+    </Layout>
   )
 }
 

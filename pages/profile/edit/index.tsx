@@ -2,11 +2,13 @@ import React from "react"
 import PageContainer, { MobilePageContainer } from "../../../components/PageContainer";
 import { Desktop, Mobile } from "../../../components/Responsive";
 import Spinner from "../../../components/Spinner";
+import Layout from "../../../components/Layout";
 import { Button, Stack } from "react-bootstrap";
 import { useUserProfile } from "../../../hooks/useUserProfile";
 import HorizontalDivider from "../../../components/HorizontalDivider";
 import styled from "styled-components"
 import { useRouter } from "next/router";
+import { PageTitles, PageTitles } from "../../../utils/page";
 
 const EditProfileButton = styled.button`
     height: 40px;
@@ -26,11 +28,24 @@ const EditProfile = () => {
   const router = useRouter()
   const { user, userProfile, isLoading, isError} = useUserProfile()
 
-  if (isError) return <div>Failed to load</div>
-  if (isLoading ) return <Spinner />
+    if (isError) { 
+      return (
+          <Layout title={PageTitles.EditProfile}>
+          <div>Failed to load</div>
+          </Layout>
+      )
+  }
+
+  if (isLoading) { 
+      return (
+          <Layout title={PageTitles.EditProfile}>
+              <Spinner />
+          </Layout>
+      )
+  }
 
     return (
-      <>
+      <Layout title={PageTitles.EditProfile}>
         <Desktop>
             <EditProfileContainer>
           <PageContainer>
@@ -71,7 +86,7 @@ const EditProfile = () => {
           </MobilePageContainer>
           </EditProfileContainer>
         </Mobile>
-      </>
+      </Layout>
     )
 }
 

@@ -6,16 +6,15 @@ import ContentfulApi from '../../../lib/contentfulApi';
 import { Config } from '../../../utils/config';
 import LoopPackList from '../../../components/LoopPackList';
 import { LoopPackIndexPageProps } from '..';
+import Layout from '../../../components/Layout';
+import { PageTitles } from '../../../utils/page';
 
 const LoopPacksIndexPage = ({ loopPacks, currentPage, totalPages }: LoopPackIndexPageProps) => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const pageTitle = "Loop Packs"
-
   return (
-    <>
+    <Layout title={PageTitles.LoopPacks}>
       <Desktop>
         <PageContainer>
-          <IndexPageHeader title={pageTitle} />
+          <IndexPageHeader title={PageTitles.LoopPacks} />
             <LoopPackList 
                 loopPacks={loopPacks}
                 currentPage={currentPage}
@@ -25,7 +24,7 @@ const LoopPacksIndexPage = ({ loopPacks, currentPage, totalPages }: LoopPackInde
       </Desktop>
       <Mobile>
           <MobilePageContainer>
-            <IndexPageHeader title={pageTitle} />
+            <IndexPageHeader title={PageTitles.LoopPacks} />
               <LoopPackList 
                   loopPacks={loopPacks}
                   currentPage={currentPage}
@@ -33,7 +32,7 @@ const LoopPacksIndexPage = ({ loopPacks, currentPage, totalPages }: LoopPackInde
               />
           </MobilePageContainer>
         </Mobile>
-    </>
+    </Layout>
     )
 };
 

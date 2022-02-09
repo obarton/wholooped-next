@@ -8,6 +8,8 @@ import SongList from '../../../components/SongList';
 import IndexPageAvatarHeader from '../../../components/IndexPageAvatarHeader';
 import { resizeImageFromUrl } from '../../../helper/image';
 import styled from "styled-components"
+import Layout from '../../../components/Layout';
+import { Site } from '../../../utils/page';
 
 interface ArtistPageProps {
     artist: any;
@@ -22,7 +24,7 @@ const ArtistPageContainer = styled.div`
 const Artist = ({ artist, songs }: ArtistPageProps) => {
   const avatarSrc = resizeImageFromUrl(artist?.photo?.url)
   return (
-  <>
+  <Layout title={`${artist?.name} | ${Site.Title}`}>
     <Desktop>
         <ArtistPageContainer>
         <PageContainer>
@@ -45,7 +47,7 @@ const Artist = ({ artist, songs }: ArtistPageProps) => {
         </MobilePageContainer>
         </ArtistPageContainer>
       </Mobile>
-  </>)
+  </Layout>)
 };
 
 export const getStaticProps = async (context: any) => {

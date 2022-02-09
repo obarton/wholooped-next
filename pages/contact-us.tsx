@@ -3,6 +3,7 @@ import Layout from '../components/Layout'
 import { Container } from 'react-bootstrap'
 import { Desktop, Mobile } from "../components/Responsive"
 import styled from 'styled-components'
+import { PageTitles } from '../utils/page'
 
 const ContactUsPageContainer = styled.div`
   min-height: 100vh;
@@ -10,7 +11,7 @@ const ContactUsPageContainer = styled.div`
 
 const ContactUs = () => {
     return (
-        <>
+        <Layout title={PageTitles.ContactUs}>
         <Desktop>
             <ContactUsPageContainer>
               <Container style={{width: "60%", marginTop: "2.5%" }}>
@@ -35,7 +36,7 @@ const ContactUs = () => {
               </Container>
               </ContactUsPageContainer>
               </Mobile>
-        </>
+        </Layout>
     )
 }
 

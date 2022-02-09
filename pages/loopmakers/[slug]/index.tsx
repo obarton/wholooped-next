@@ -12,6 +12,7 @@ import { getLoopmakerBySlug, getLoopmakers } from '../../../lib/contentfulApi';
 import { useUserProfile } from '../../../hooks/useUserProfile';
 import Spinner from '../../../components/Spinner';
 import styled from "styled-components"
+import Layout from '../../../components/Layout';
 
 interface LoopmakerPageProps {
     loopmaker: any;
@@ -30,21 +31,30 @@ const Loopmaker = ({ loopmaker, songs }: LoopmakerPageProps) => {
   const {name, username, bio, websiteUrl, twitterUrl, facebookUrl, instagramUrl} = loopmaker;
   const { userProfile, isLoading, isError} = useUserProfile()
 
-  React.useEffect(() => {
-    console.log(`userProfile ${JSON.stringify(userProfile, null, 2)}`);
-    console.log(`username ${JSON.stringify(username, null, 2)}`);
-  }, [userProfile, username]);
-  
 
   const avatarSrc = resizeImageFromUrl(loopmaker?.profilePhoto?.url)
   const headerSrc = resizeHeaderImageFromUrl(loopmaker?.headerPhoto?.url)
 
 
-  if (isError) return <div>Failed to load</div>
-  if (isLoading ) return <Spinner />
+
+  if (isError) { 
+    return (
+        <Layout>
+        <div>Failed to load</div>
+        </Layout>
+    )
+}
+
+if (isLoading) { 
+    return (
+        <Layout>
+            <Spinner />
+        </Layout>
+    )
+}
 
   return (
-  <>
+  <Layout title={name}>
     <Desktop>
         <LoopmakerPageContainer>
         <PageContainer>
@@ -105,7 +115,7 @@ const Loopmaker = ({ loopmaker, songs }: LoopmakerPageProps) => {
         </MobilePageContainer>
         </LoopmakerPageContainer>
       </Mobile>
-  </>)
+  </Layout>)
 };
 
 export const getStaticProps = async (context: any) => {

@@ -5,6 +5,8 @@ import IndexPageHeader from '../../components/IndexPageHeader';
 import { Desktop, Mobile } from '../../components/Responsive';
 import { PageContainer, MobilePageContainer} from '../../components/PageContainer';
 import LoopPackList from '../../components/LoopPackList';
+import Layout from '../../components/Layout';
+import { PageTitles } from '../../utils/page';
 
 export interface LoopPackIndexPageProps {
   loopPacks: any;
@@ -14,13 +16,11 @@ export interface LoopPackIndexPageProps {
 
 const LoopPackIndex = ({ loopPacks, currentPage, totalPages }: LoopPackIndexPageProps) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const pageTitle = "Loop Packs"
-
   return (
-      <>
+      <Layout title={PageTitles.LoopPacks}>
         <Desktop>
           <PageContainer>
-            <IndexPageHeader title={pageTitle} />
+            <IndexPageHeader title={PageTitles.LoopPacks} />
               <LoopPackList 
                   loopPacks={loopPacks}
                   currentPage={currentPage}
@@ -30,7 +30,7 @@ const LoopPackIndex = ({ loopPacks, currentPage, totalPages }: LoopPackIndexPage
         </Desktop>
         <Mobile>
           <MobilePageContainer>
-            <IndexPageHeader title={pageTitle} />
+            <IndexPageHeader title={PageTitles.LoopPacks} />
               <LoopPackList 
                   loopPacks={loopPacks}
                   currentPage={currentPage}
@@ -38,7 +38,7 @@ const LoopPackIndex = ({ loopPacks, currentPage, totalPages }: LoopPackIndexPage
               />
           </MobilePageContainer>
         </Mobile>
-      </>
+      </Layout>
     )
 };
 

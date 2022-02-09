@@ -20,6 +20,8 @@ import CreditsList from '../../../../components/CreditsList'
 import AddSongModal from '../../../../components/AddSongModal'
 import { resizeImageFromUrl } from '../../../../helper/image'
 import { useUsers } from '../../../../hooks/useUsers'
+import Layout from '../../../../components/Layout'
+import { PageTitles } from '../../../../utils/page'
 
 const UserProfileSubHeading = styled.h2({
     textAlign: "center",
@@ -67,8 +69,6 @@ const EditUser = () => {
   useEffect(() => {
     if(userProfile) {
       const { bio, name, displayName} = userProfile;
-
-      console.log(`userProfile ${JSON.stringify(userProfile, null, 2)}`);
 
       setBio(bio)
       setDisplayName(displayName)
@@ -217,11 +217,24 @@ const EditUser = () => {
       });    
   }
 
-  if (isError) return <div>Failed to load</div>
-  if (isLoading || usersApiResponse.isLoading) return <Spinner />
+  if (isError) { 
+        return (
+            <Layout title={PageTitles.EditLoopmakerProfile}>
+            <div>Failed to load</div>
+            </Layout>
+        )
+    }
+
+    if (isLoading || usersApiResponse.isLoading) { 
+        return (
+            <Layout title={PageTitles.EditLoopmakerProfile}>
+                <Spinner />
+            </Layout>
+        )
+    }
 
   return (
-    <>
+    <Layout title={PageTitles.EditUserProfile}>
         <Desktop>
             <div className="container mt-4 mb-4 p-3 d-flex justify-content-center" >
                 <div className="card p-4" style={{width: "60%"}}>
@@ -357,7 +370,7 @@ const EditUser = () => {
             </Container>    
     </Mobile>
     <AddSongModal show={showAddCreditModal} onHide={handleCloseAddCreditModal}/>
-    </>
+    </Layout>
   );
 };
 

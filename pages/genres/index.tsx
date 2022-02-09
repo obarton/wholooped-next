@@ -4,16 +4,15 @@ import IndexPageHeader from '../../components/IndexPageHeader';
 import { Desktop, Mobile } from '../../components/Responsive';
 import { PageContainer, MobilePageContainer} from '../../components/PageContainer';
 import GenreList from '../../components/GenreList';
+import Layout from '../../components/Layout';
+import { PageTitles } from '../../utils/page';
 
 const GenreIndex = ({ genres }: any) => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const pageTitle = "Genres";
-
   return (
-      <>
+      <Layout title={PageTitles.Genres}>
         <Desktop>
           <PageContainer>
-            <IndexPageHeader title={pageTitle} />
+            <IndexPageHeader title={PageTitles.Genres} />
               <GenreList 
                   genres={genres}
               />
@@ -21,13 +20,13 @@ const GenreIndex = ({ genres }: any) => {
         </Desktop>
         <Mobile>
           <MobilePageContainer>
-            <IndexPageHeader title={pageTitle} />
+            <IndexPageHeader title={PageTitles.Genres} />
             <GenreList 
                   genres={genres}
               />
           </MobilePageContainer>
         </Mobile>
-      </>
+      </Layout>
     )
 };
 

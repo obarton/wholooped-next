@@ -8,7 +8,8 @@ const about = () => {
        <meta name='keywords' content='Discover loops and soundpacks used in todays songs'/>
      </Head>
      <h1>About</h1>
-  </div>)
+  </div>
+  )
 };
 
 export default about;

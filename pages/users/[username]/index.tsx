@@ -8,6 +8,7 @@ import { useUserProfile } from "../../../hooks/useUserProfile";
 import UserProfileCard from "../../../components/UserProfileCard";
 import CreditsList from "../../../components/CreditsList";
 import HorizontalDivider from "../../../components/HorizontalDivider";
+import Layout from "../../../components/Layout";
 
 const User = () => {
   const router = useRouter()
@@ -15,11 +16,24 @@ const User = () => {
   const { user, isLoading, isError} = useUsers(username as string)
   const loggedInUserProfile = useUserProfile();
 
-  if (isError) return <div>Failed to load</div>
-  if (isLoading || loggedInUserProfile.isLoading ) return <Spinner />
+  if (isError) { 
+    return (
+        <Layout>
+        <div>Failed to load</div>
+        </Layout>
+    )
+}
+
+if (isLoading || loggedInUserProfile.isLoading) { 
+    return (
+        <Layout>
+            <Spinner />
+        </Layout>
+    )
+}
 
     return (
-      <>
+      <Layout title={user?.profile?.displayName}>
         <Desktop>
           <PageContainer>
                 <div className="container mt-4 mb-4 p-3 d-flex justify-content-center">
@@ -70,7 +84,7 @@ const User = () => {
               </div>
           </MobilePageContainer>
         </Mobile>
-      </>
+      </Layout>
     )
 }
 

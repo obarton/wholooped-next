@@ -36,9 +36,7 @@ function App({ Component, pageProps }: AppProps) {
   return (
     <UserProvider>
         <AppContainer>
-          <Layout>
             <Component {...pageProps} />
-          </Layout> 
         </AppContainer>
         <FooterWrapper>
           <Footer />

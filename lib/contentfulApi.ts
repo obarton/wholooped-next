@@ -82,7 +82,6 @@ export async function getArtistSongs(id: string) {
 
   
   const response = await fetchGraphQL(query);
-  //console.log(`getArtistSongs response ${JSON.stringify(response, null, 2)}`); 
 
   return response?.data?.songCollection?.items;
 }
@@ -284,7 +283,6 @@ export default class ContentfulApi {
           }
         }
       }`
-      console.log(`getPaginatedArtistSongs ${JSON.stringify(query, null, 2)}`)
 
         // Call out to the API
         const response = await this.callContentful(query);
