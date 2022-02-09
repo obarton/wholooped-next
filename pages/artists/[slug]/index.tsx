@@ -59,7 +59,8 @@ export const getStaticProps = async (context: any) => {
         props: {
             artist,
             songs
-        }
+        },
+        revalidate: 10, // In seconds
     }
 }
 
@@ -71,7 +72,7 @@ export const getStaticPaths = async () => {
 
     return {
         paths,
-        fallback: false
+        fallback: 'blocking'
     }
 }
 
