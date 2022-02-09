@@ -8,7 +8,7 @@ import { useUserProfile } from "../../../hooks/useUserProfile";
 import HorizontalDivider from "../../../components/HorizontalDivider";
 import styled from "styled-components"
 import { useRouter } from "next/router";
-import { PageTitles, PageTitles } from "../../../utils/page";
+import { PageTitles } from "../../../utils/page";
 
 const EditProfileButton = styled.button`
     height: 40px;
