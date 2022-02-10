@@ -60,6 +60,7 @@ const EditLoopmaker = () => {
   const [website, setWebsite] = useState(loopmakerProfile?.websiteUrl);
   const [displayName, setDisplayName] = useState(loopmakerProfile?.name);
   const [usernameData, setUsernameData] = useState(loopmakerProfile?.username);
+  const [slug, setSlug] = useState(loopmakerProfile?.slug);
   const [profilePhotoPreview, setProfilePhotoPreview] = useState();
   const [headerPhotoPreview, setHeaderPhotoPreview] = useState();
   const profilePhotoInputRef = useRef()
@@ -70,13 +71,16 @@ const EditLoopmaker = () => {
   const handleShowAddCreditModal = () => setShowAddCreditModal(true);
 
   useEffect(() => {
+      //console.log(`loopmakerProfile changed to ${JSON.stringify(loopmakerProfile, null, 2)}`);
+      
     if(loopmakerProfile) {
-      const { bio, websiteUrl, name, username} = loopmakerProfile;
+      const { bio, websiteUrl, name, username, slug} = loopmakerProfile;
 
       setBio(bio)
       setWebsite(websiteUrl)
       setDisplayName(name)
       setUsernameData(username)
+      setSlug(slug)
     }
 
   }, [loopmakerProfile]);
@@ -112,7 +116,7 @@ const EditLoopmaker = () => {
           setFormChanged(true)
       }
 
-      setWebsite(value)
+      setWebsite(value?.toLowerCase())
   }
 
   const onUsernameInput = ({ target: { value }}: any)  => {
@@ -268,8 +272,11 @@ const EditLoopmaker = () => {
       }
 
       const response = await API.put("UserProfileManagementApi", `/loopmakerProfile/${loopmakerProfile?.id}`, updateProfileRequestBody);
-
+      //console.log(`UserProfileManagementApi response ${JSON.stringify(response ,null, 2)}`);
+      const slug = response?.loopmakerProfileData?.slug;
+      //console.log(`Updated loopmaker slug ${JSON.stringify(slug ,null, 2)}`);
       //setDisplayName(response?.profile?.name)
+      setSlug(slug)
       setIsSaving(false)
       setFormChanged(false)
       toast.success("Profile updated!", {
@@ -364,7 +371,7 @@ const EditLoopmaker = () => {
                             />
                         </Form.Group>
                         <div style={{marginTop: "1rem"}}>
-                            <NextLink href={`/loopmakers/${loopmakerProfile?.slug}`}><p style={{textAlign: "center"}}>View my profile</p></NextLink>
+                            <NextLink href={`/loopmakers/${slug}`}><p style={{textAlign: "center"}}>View my profile</p></NextLink>
                         </div>
                         <div className="gap-3 mt-3 icons d-flex flex-row justify-content-center align-items-center"> <span><a href={loopmakerProfile?.twitterUrl} style={{color: "black"}}><FontAwesomeIcon size="lg" icon={faTwitter} /></a></span> <span><a href={loopmakerProfile?.facebookUrl} style={{color: "black"}}><FontAwesomeIcon size="lg" icon={faFacebook} /></a></span> <span><a href={loopmakerProfile?.instagramUrl} style={{color: "black"}}><FontAwesomeIcon size="lg" icon={faInstagram} /></a></span> <span></span> </div>
                         { formChanged && (<Form.Group as={Row} style={{marginTop: "1em"}}>
@@ -454,7 +461,7 @@ const EditLoopmaker = () => {
                             />
                         </Form.Group>
                         <div style={{marginTop: "1rem"}}>
-                            <NextLink href={`/loopmakers/${loopmakerProfile?.slug}`}><p style={{textAlign: "center"}}>View my profile</p></NextLink>
+                            <NextLink href={`/loopmakers/${slug}`}><p style={{textAlign: "center"}}>View my profile</p></NextLink>
                         </div>
                         <div className="gap-3 mt-3 icons d-flex flex-row justify-content-center align-items-center"> <span><a href={loopmakerProfile?.twitterUrl} style={{color: "black"}}><FontAwesomeIcon size="lg" icon={faTwitter} /></a></span> <span><a href={loopmakerProfile?.facebookUrl} style={{color: "black"}}><FontAwesomeIcon size="lg" icon={faFacebook} /></a></span> <span><a href={loopmakerProfile?.instagramUrl} style={{color: "black"}}><FontAwesomeIcon size="lg" icon={faInstagram} /></a></span> <span></span> </div>
                         { formChanged && (<Form.Group as={Row} style={{marginTop: "1em"}}>
