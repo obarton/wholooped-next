@@ -50,15 +50,13 @@ async function Connect() {
 const EditUser = () => {
   const { user, userProfile, isLoading, isError } = useUserProfile()
   const usersApiResponse = useUsers(userProfile?.name as string)
-  
-  const profile = userProfile?.profile;
 
   const [selectedProfilePhotoFile, setSelectedProfilePhotoFile] = useState(null)
   const [formChanged, setFormChanged] = useState(false)
   const [isSaving, setIsSaving] = useState(false);
-  const [bio, setBio] = useState(profile?.bio);
-  const [displayName, setDisplayName] = useState(profile?.displayName);
-  const [usernameData, setUsernameData] = useState(profile?.name);
+  const [bio, setBio] = useState(userProfile?.bio);
+  const [displayName, setDisplayName] = useState(userProfile?.displayName);
+  const [usernameData, setUsernameData] = useState(userProfile?.name);
   const [profilePhotoPreview, setProfilePhotoPreview] = useState();
   const profilePhotoInputRef = useRef()
   const [showAddCreditModal, setShowAddCreditModal] = useState(false);
@@ -107,8 +105,9 @@ const EditUser = () => {
       if (!formChanged) {
           setFormChanged(true)
       }
-
+      
       setUsernameData(value)
+      console.log(`usernameData`)
   }
 
   const getImgSrc = () => {
@@ -187,9 +186,9 @@ const EditUser = () => {
 
   const onFormSubmit = async (e: any) => {
       e.preventDefault()
-      const updatedProfile = profile;
-      updatedProfile.name = displayName;
-      updatedProfile.username = usernameData;
+      const updatedProfile = userProfile;
+      updatedProfile.name = usernameData;
+      updatedProfile.displayName = displayName;
       updatedProfile.bio = bio;
 
       setIsSaving(true)
@@ -207,9 +206,11 @@ const EditUser = () => {
               ...updatedProfile
             }
       }
-      const response = await API.put("UserProfileManagementApi", `/userProfile/${profile?.id}`, updateProfileRequestBody);
 
-      setDisplayName(response?.profile?.name)
+      //console.log(`updateProfileRequestBody ${JSON.stringify(updateProfileRequestBody, null , 2)}`);
+      const response = await API.put("UserProfileManagementApi", `/userProfile/${userProfile?.id}`, updateProfileRequestBody);
+      //console.log(`Update profile response ${JSON.stringify(response, null , 2)}`);
+      //setDisplayName(response?.profile?.name)
       setIsSaving(false)
       setFormChanged(false)
       toast.success("Profile updated!", {
