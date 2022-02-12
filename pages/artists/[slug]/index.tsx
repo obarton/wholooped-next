@@ -60,7 +60,7 @@ export const getStaticProps = async (context: any) => {
             artist,
             songs
         },
-        revalidate: 10, // In seconds
+        revalidate: 10,
     }
 }
 

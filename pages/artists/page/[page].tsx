@@ -51,7 +51,7 @@ export async function getStaticPaths() {
   
     return {
       paths,
-      fallback: false,
+      fallback: 'blocking'
     };
   }
 
@@ -65,6 +65,7 @@ export const getStaticProps = async ({ params }: any) => {
         totalPages,
         currentPage: params.page,
       },
+      revalidate: 10, // In seconds
     };
 }
 
