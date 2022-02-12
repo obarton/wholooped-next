@@ -1,16 +1,14 @@
 import React from 'react';
-import { getArtistBySlug, getArtists, getArtistSongs, getLoopmakers } from '../../../../lib/contentfulApi';
-import { Desktop, Mobile } from '../../../../components/Responsive';
-import PageContainer, { MobilePageContainer } from '../../../../components/PageContainer';
-import NextLink from '../../../../components/NextLink';
-import { resizeImageFromUrl } from '../../../../helper/image';
-import IndexPageArtworkHeader from '../../../../components/IndexPageArtworkHeader';
+import { Desktop, Mobile } from '../../../../../components/Responsive';
+import PageContainer, { MobilePageContainer } from '../../../../../components/PageContainer';
+import { resizeImageFromUrl } from '../../../../../helper/image';
+import IndexPageArtworkHeader from '../../../../../components/IndexPageArtworkHeader';
 import { useRouter } from 'next/router';
-import { useLoopPack } from '../../../../hooks/useLoopPack';
-import Spinner from "../../../../components/Spinner"
-import SongList from '../../../../components/Shared/SongList';
+import { useLoopPack } from '../../../../../hooks/useLoopPack';
+import Spinner from "../../../../../components/Spinner"
+import SongList from '../../../../../components/Shared/SongList';
 import styled from "styled-components"
-import Layout from '../../../../components/Layout';
+import Layout from '../../../../../components/Layout';
 
 const LooppackPageContainer = styled.div`
   min-height: 100vh
@@ -18,10 +16,10 @@ const LooppackPageContainer = styled.div`
 
 const LoopPack = () => {
     const router = useRouter()
-    const {slug, loopmakerslug} = router.query
-    const looppackSlug = slug as string;
-    const loopmakerSlug = loopmakerslug as string;
-    const { loopPack, songs, isLoading, isError} = useLoopPack(loopmakerSlug, looppackSlug)
+    const {slug, looppackslug} = router.query
+    const loopmakerslug = slug as string;
+    const looppackSlug = looppackslug as string;
+    const { loopPack, songs, isLoading, isError} = useLoopPack(loopmakerslug, looppackSlug)
     
     
     if (isError) { 
@@ -55,19 +53,20 @@ const LoopPack = () => {
             description={description}
             artworkSrc={loopPackArtworkSrc} 
           />
-          <SongList 
-                songs={songs}
-            />
+          <SongList songs={songs}/>
         </PageContainer>
         </LooppackPageContainer>
       </Desktop>
       <Mobile>
         <LooppackPageContainer>
         <MobilePageContainer>
-        <IndexPageArtworkHeader title={loopPack?.title} subtitle={loopmakerName} artworkSrc={loopPackArtworkSrc} />
-          <SongList 
-                songs={songs}
-            />
+        <IndexPageArtworkHeader 
+            title={loopPack?.title} 
+            subtitle={loopmakerName} 
+            description={description}
+            artworkSrc={loopPackArtworkSrc} 
+          />
+        <SongList songs={songs}/>
         </MobilePageContainer>
         </LooppackPageContainer>
       </Mobile>

@@ -24,7 +24,7 @@ const LoopDetails = ({ loop, startTimeSeconds }: LoopDetailsProps) => {
 
 const formatLoopPackLinkHtml = (loop: any, loopmakerSlug: any) => {
     if (loop) {    
-      const loopPackPath = `/looppacks/${loopmakerSlug}/${loop?.loopPack?.slug}`;
+      const loopPackPath = `/loopmakers/${loopmakerSlug}/packs/${loop?.loopPack?.slug}`;
 
       return (<NextLink href={loopPackPath}>{loop?.loopPack?.title}</NextLink>)
     }

@@ -5,10 +5,10 @@ export default function Pagination({ totalPages, currentPage, prevDisabled, next
 
   const prevPageUrl =
     currentPage === "2"
-      ? "/looppacks"
-      : `/looppacks/page/${parseInt(currentPage, 10) - 1}`;
+      ? "/packs"
+      : `/packs/page/${parseInt(currentPage, 10) - 1}`;
 
-  const nextPageUrl = `/looppacks/page/${parseInt(currentPage, 10) + 1}`;
+  const nextPageUrl = `/packs/page/${parseInt(currentPage, 10) + 1}`;
 
   return (
     <div style={{marginTop: "2rem", display: "flex", justifyContent: "center"}}>

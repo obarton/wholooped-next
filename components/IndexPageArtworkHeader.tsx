@@ -1,4 +1,5 @@
 import React from 'react';
+import { Color } from '../types/Color';
 import Artwork from './Artwork';
 import HorizontalDivider from './HorizontalDivider';
 
@@ -15,7 +16,7 @@ const IndexPageArtworkHeader = ({ title, subtitle, description, artworkSrc }: In
             <Artwork src={artworkSrc} alt={title}/>
             <div style={{marginTop: "1rem", marginBottom: "1rem"}}>
                 <h1>{title}</h1>
-                {subtitle && <h3>{subtitle}</h3>}
+                {subtitle && <h3 style={{ fontWeight: "normal"}}>{subtitle}</h3>}
             </div>  
             <HorizontalDivider />       
             {description && (

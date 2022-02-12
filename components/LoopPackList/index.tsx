@@ -25,7 +25,7 @@ const LoopPackList = ({ loopPacks, currentPage, totalPages }: LoopPackListProps)
                     const altText = loopPack.title;    
                     const { title, slug, loopmakerCollection } = loopPack;
                     const loopmakers = loopmakerCollection?.items;
-                    const redirectUrl = `/looppacks/${loopmakers[0]?.slug}/${slug}`
+                    const redirectUrl = `/loopmakers/${loopmakers[0]?.slug}/packs/${slug}`
 
                     return (
                         <div style={{padding: "1em"}} key={index}>

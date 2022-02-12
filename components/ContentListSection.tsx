@@ -11,7 +11,7 @@ const ContentListSection = ({ contentLists } : ContentListSectionProps) => {
     <>
         <Stack gap={4}>
             {
-                contentLists?.map((contentList: any, i: number) => {
+                contentLists?.map((contentList: any) => {
                     return (
                         <ContentList contentList={contentList} key={contentList.title}/>
                     )
