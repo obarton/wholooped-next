@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Footer from '../components/Footer';
 import styled from 'styled-components';
 
-const stage = "dev"
+const stage = process.env.STAGE as string;
 const endpoints = getAmplifyEndpoints(stage)
 // Call it once in your app. At the root of your app is the best place
 toast.configure()
