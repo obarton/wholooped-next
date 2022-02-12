@@ -272,10 +272,9 @@ const EditLoopmaker = () => {
       }
 
       const response = await API.put("UserProfileManagementApi", `/loopmakerProfile/${loopmakerProfile?.id}`, updateProfileRequestBody);
-      //console.log(`UserProfileManagementApi response ${JSON.stringify(response ,null, 2)}`);
+
       const slug = response?.loopmakerProfileData?.slug;
-      //console.log(`Updated loopmaker slug ${JSON.stringify(slug ,null, 2)}`);
-      //setDisplayName(response?.profile?.name)
+
       setSlug(slug)
       setIsSaving(false)
       setFormChanged(false)
