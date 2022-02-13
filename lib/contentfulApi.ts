@@ -5,6 +5,9 @@ import { GET_SONGS_FROM_SONG_IDS } from "../graphql/getArtistSongsFromIds";
 import { GET_ARTISTS_SONG_IDS } from "../graphql/getArtistsSongIds";
 import { GET_FEATURED_LOOP_PACKS } from "../graphql/getFeaturedLoopPacks";
 import { GET_FEATURED_SONGS } from "../graphql/getFeaturedSongs";
+import { GET_GENRE_BY_SLUG } from "../graphql/getGenreBySlug";
+import { GET_GENRES } from "../graphql/getGenres";
+import { GET_GENRE_SONG_IDS } from "../graphql/getGenreSongIds";
 import { GET_LOOPMAKER_BY_SLUG } from "../graphql/getLoopmakerBySlug";
 import { GET_LOOPMAKERS } from "../graphql/getLoopmakerIndex";
 import { Config } from "../utils/config";
@@ -22,6 +25,38 @@ async function fetchGraphQL(query: string, preview = false) {
         body: JSON.stringify({ query }),
         }
     ).then((response) => response.json())
+}
+
+export async function getGenreBySlug(slug: string) {
+  const query = GET_GENRE_BY_SLUG(slug)
+  const response = await fetchGraphQL(query);
+
+  return response?.data?.genreCollection?.items[0];
+}
+
+export async function getGenreSongIds(id: string) {
+  const query = GET_GENRE_SONG_IDS(id);
+  const response = await fetchGraphQL(query);
+  const songIds = response?.data?.genreCollection?.items[0]?.linkedFrom?.songCollection?.items?.map((item: any) => item?.sys?.id);
+
+  return songIds;
+}
+
+export async function getGenreSongs(id: string) {
+  const genreSongIds = await getGenreSongIds(id);
+  const formattedSongIds = genreSongIds?.map((id: string) => `"${id}"`).join(",")
+  const query = GET_SONGS_FROM_SONG_IDS(formattedSongIds);
+
+  const response = await fetchGraphQL(query);
+
+  return response?.data?.songCollection?.items;
+}
+
+export async function getGenres() {
+  const query = GET_GENRES;
+  const response = await fetchGraphQL(query);
+
+  return response?.data?.genreCollection?.items;
 }
 
 export async function getFeaturedLoopPacks() {
