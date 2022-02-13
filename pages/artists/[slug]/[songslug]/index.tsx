@@ -50,10 +50,6 @@ const Song = () => {
 
   }, [song, loop])
 
-  useEffect(() => {
-    console.log(`song page song ${JSON.stringify(song, null, 2)}`)
-  }, [song])
-
   if (isError) { 
     return (
         <Layout>

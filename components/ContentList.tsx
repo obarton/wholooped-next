@@ -24,19 +24,25 @@ const ContentList = ({ contentList, key }: ContentListProps) => {
             <div key={key}>
             {
                 contentList.showMoreLink ? (
-                    <div style={{display: "flex", justifyContent: "space-between"}}>
-                        <h3 style={{padding: "0", margin: "0"}}>
-                            {contentList.title}
-                        </h3>
-                            <Link href={contentList.showMoreLink || ""} passHref>
-                                <a style={{textDecoration: "none"}}>
-                                    <h4 style={{padding: "0", margin: "0", color: "#4183c4"}}>Show More</h4>
-                                </a>
-                            </Link>
+                    <div>
+                        <div style={{display: "flex", justifyContent: "space-between"}}>
+                            <h3 style={{padding: "0", margin: "0"}}>
+                                {contentList.title}
+                            </h3>
+                                <Link href={contentList.showMoreLink || ""} passHref>
+                                    <a style={{textDecoration: "none"}}>
+                                        <h4 style={{padding: "0", margin: "0", color: "#4183c4"}}>Show More</h4>
+                                    </a>
+                                </Link>
+                        </div>
+                        {contentList.description && contentList.description !== "" && <h5 style={{color: "#666C7E", fontWeight: "400"}}>{contentList.description}</h5> }
                     </div>
                 ):(
-                    <div style={{display: "flex"}}>
-                        <h3 style={{padding: "0", margin: "0"}}>{contentList.title}</h3>
+                    <div>
+                        <div style={{display: "flex"}}>
+                            <h3 style={{padding: "0", margin: "0"}}>{contentList.title}</h3>
+                        </div>
+                        {contentList.description && contentList.description !== "" && <h5 style={{color: "#666C7E", fontWeight: "400"}}>{contentList.description}</h5> }
                     </div>
                 )
             }
@@ -72,6 +78,7 @@ const ContentList = ({ contentList, key }: ContentListProps) => {
                             )
                         case "looppack":
                         case "genre":
+                        case "loop":
                             return (
                             <AlbumCard title={title} secondaryText={subTitle} imageSrc={imageSrc} altText={title} url={url}/>
                             )
@@ -94,14 +101,20 @@ const ContentList = ({ contentList, key }: ContentListProps) => {
             {
                 contentList.showMoreLink ? 
                 (
-                    <div style={{display: "flex", justifyContent: "space-between"}}>
-                        <h3 style={{padding: "0", margin: "0"}}>{contentList.title}</h3><Link href={contentList.showMoreLink} passHref><a style={{textDecoration: "none", display: "flex", justifyContent: "center", alignItems: "center"}}><h4 style={{padding: "0", margin: "0", color: "#4183c4", fontSize: "1rem"}}>Show More</h4></a></Link>
+                    <div>
+                        <div style={{display: "flex", justifyContent: "space-between"}}>
+                            <h3 style={{padding: "0", margin: "0"}}>{contentList.title}</h3><Link href={contentList.showMoreLink} passHref><a style={{textDecoration: "none", display: "flex", justifyContent: "center", alignItems: "center"}}><h4 style={{padding: "0", margin: "0", color: "#4183c4", fontSize: "1rem"}}>Show More</h4></a></Link>
+                        </div>
+                        {contentList.description && contentList.description !== "" && <h5 style={{color: "#666C7E", fontWeight: "400"}}>{contentList.description}</h5> }
                     </div>
                 )
                 :
                 (
-                    <div style={{display: "flex"}}>
-                        <h3 style={{padding: "0", margin: "0"}}>{contentList.title}</h3>
+                    <div>
+                        <div style={{display: "flex"}}>
+                            <h3 style={{padding: "0", margin: "0"}}>{contentList.title}</h3>
+                        </div>
+                        {contentList.description && contentList.description !== "" && <h5 style={{color: "#666C7E", fontWeight: "400"}}>{contentList.description}</h5> }
                     </div>
                 )
             }
