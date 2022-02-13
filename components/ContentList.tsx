@@ -26,7 +26,7 @@ const ContentList = ({ contentList, key }: ContentListProps) => {
                 contentList.showMoreLink ? (
                     <div>
                         <div style={{display: "flex", justifyContent: "space-between"}}>
-                            <h3 style={{padding: "0", margin: "0"}}>
+                            <h3 style={{padding: "0", margin: "0", fontSize: "1.5rem"}}>
                                 {contentList.title}
                             </h3>
                                 <Link href={contentList.showMoreLink || ""} passHref>
@@ -35,14 +35,14 @@ const ContentList = ({ contentList, key }: ContentListProps) => {
                                     </a>
                                 </Link>
                         </div>
-                        {contentList.description && contentList.description !== "" && <h5 style={{color: "#666C7E", fontWeight: "400"}}>{contentList.description}</h5> }
+                        {contentList.description && contentList.description !== "" && <h5 style={{color: "#666C7E", fontWeight: "400", fontSize: "1rem"}}>{contentList.description}</h5> }
                     </div>
                 ):(
                     <div>
                         <div style={{display: "flex"}}>
-                            <h3 style={{padding: "0", margin: "0"}}>{contentList.title}</h3>
+                            <h3 style={{padding: "0", margin: "0", fontSize: "1.5rem"}}>{contentList.title}</h3>
                         </div>
-                        {contentList.description && contentList.description !== "" && <h5 style={{color: "#666C7E", fontWeight: "400"}}>{contentList.description}</h5> }
+                        {contentList.description && contentList.description !== "" && <h5 style={{color: "#666C7E", fontWeight: "400", fontSize: "1rem"}}>{contentList.description}</h5> }
                     </div>
                 )
             }
