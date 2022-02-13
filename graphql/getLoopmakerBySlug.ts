@@ -17,6 +17,7 @@ query {
             slug
             websiteUrl
             twitterUrl
+            facebookUrl
             instagramUrl
           }
     }

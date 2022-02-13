@@ -5,7 +5,7 @@ import styled from "styled-components"
 import { API } from "aws-amplify"
 import Avatar from "@mui/material/Avatar"
 import { Desktop, Mobile } from "../../../../components/Responsive"
-import { Image, Row} from "react-bootstrap";
+import { Image, Row, Stack} from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook, faTwitter, faInstagram } from "@fortawesome/free-brands-svg-icons"
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -21,6 +21,7 @@ import AddSongModal from '../../../../components/AddSongModal'
 import { resizeImageFromUrl } from '../../../../helper/image'
 import { PageTitles } from '../../../../utils/page'
 import Layout from '../../../../components/Layout'
+import { Color } from '../../../../types/Color'
 
 const UserProfileSubHeading = styled.h2({
     textAlign: "center",
@@ -67,6 +68,9 @@ const EditLoopmaker = () => {
   const headerPhotoInputRef = useRef()
   const [showAddCreditModal, setShowAddCreditModal] = useState(false);
   const [credits, setCredits] = useState(loopmakerCredits?.credits);
+  const [twitterUrl, setTwitterUrl] = useState(loopmakerProfile?.twitterUrl);
+  const [facebookUrl, setFacebookUrl] = useState(loopmakerProfile?.facebookUrl);
+  const [instagramUrl, setInstagramUrl] = useState(loopmakerProfile?.instagramUrl);
   const handleCloseAddCreditModal = () => setShowAddCreditModal(false);
   const handleShowAddCreditModal = () => setShowAddCreditModal(true);
 
@@ -74,12 +78,24 @@ const EditLoopmaker = () => {
       //console.log(`loopmakerProfile changed to ${JSON.stringify(loopmakerProfile, null, 2)}`);
       
     if(loopmakerProfile) {
-      const { bio, websiteUrl, name, username, slug} = loopmakerProfile;
+      const { 
+        bio, 
+        websiteUrl, 
+        name, 
+        username, 
+        slug,
+        twitterUrl,
+        facebookUrl,
+        instagramUrl
+    } = loopmakerProfile;
 
       setBio(bio)
       setWebsite(websiteUrl)
       setDisplayName(name)
       setUsernameData(username)
+      setTwitterUrl(twitterUrl)
+      setFacebookUrl(facebookUrl)
+      setInstagramUrl(instagramUrl)
       setSlug(slug)
     }
 
@@ -134,6 +150,30 @@ const EditLoopmaker = () => {
 
       return resizeImageFromUrl(loopmakerProfile?.profilePhoto?.url)
   }
+
+  const onTwitterUrlInput = ({ target: { value } }: any) => {
+    if (!formChanged) {
+        setFormChanged(true)
+    }
+
+    setTwitterUrl(value)
+}
+
+const onFacebookUrlInput = ({ target: { value } }: any) => {
+    if (!formChanged) {
+        setFormChanged(true)
+    }
+
+    setFacebookUrl(value)
+}
+
+const onInstagramUrlInput = ({ target: { value } }: any) => {
+    if (!formChanged) {
+        setFormChanged(true)
+    }
+
+    setInstagramUrl(value)
+}
 
   const getHeaderImgSrc = () => {
       if(headerPhotoPreview) {
@@ -239,6 +279,18 @@ const EditLoopmaker = () => {
       return null;
   }
 
+  const appendUrlPrefix = (input: string): string => {
+        if(!input) {
+            return ""
+        }
+
+      if (!input.startsWith("https://") && !input.startsWith("http://")) {
+          return `https://${input}`;
+      }
+
+      return input;
+  }
+
   const onFormSubmit = async (e: any) => {
       e.preventDefault()
       const updatedProfile = loopmakerProfile;
@@ -246,6 +298,9 @@ const EditLoopmaker = () => {
       updatedProfile.username = usernameData;
       updatedProfile.bio = bio;
       updatedProfile.websiteUrl = website;
+      updatedProfile.twitterUrl = appendUrlPrefix(twitterUrl);
+      updatedProfile.instagramUrl = appendUrlPrefix(instagramUrl);
+      updatedProfile.facebookUrl = appendUrlPrefix(facebookUrl);
 
       setIsSaving(true)
 
@@ -312,67 +367,109 @@ const EditLoopmaker = () => {
                 </div>
             </div> */}
             <div className="container mt-4 mb-4 p-3 d-flex justify-content-center">
-                <div className="card p-4" style={{width: "50%"}}>
+                <div className="card p-4" style={{width: "50%", boxShadow: "5px 5px 15px 5px rgba(0,0,0,0.09)"}}>
                     <div className=" image d-flex flex-column justify-content-center align-items-center"> 
-                        <div>
+                        <div><h1 style={{fontSize: "1.5rem"}}>Edit Loopmaker</h1></div>
+                        <div style={{marginTop: "1rem"}}>
                             <Avatar id="profileImg" onClick={onProfileImgClick} src={getImgSrc()} alt={displayName} sx={{ width: 100, height: 100 }} style={{cursor: "pointer"}}/>
                             <input ref={profilePhotoInputRef as any} type="file" style={{display : "none"}} onChange={profilePhotoFileSelectedHandler}/>
                         </div>
+                        <div style={{marginTop: "0.5rem"}}>
+                        <p style={{color: `${Color.SECONDARY_TEXT}`, fontSize: "0.75rem"}}>Click to change photo</p>
+                        </div>
                         <Form onSubmit={onFormSubmit} style={{width: "100%"}}>
-                        <Form.Group style={{width: "100%"}}>
+                        <Stack gap={3}>
+                            <Form.Group style={{width: "100%"}}>
+                            <Form.Label>
+                                <b>Name</b>
+                                </Form.Label>
+                                <Form.Control 
+                                    type="name" 
+                                    placeholder="Name" 
+                                    onChange={onDisplayNameInput} 
+                                    value={displayName}
+                                    style={{width: "100%"}}
+                                />
+                            </Form.Group>    
+                            <Form.Group style={{width: "100%"}}>
+                            <Form.Label>
+                                <b>Username</b>
+                                </Form.Label>
+                                <Form.Control 
+                                    type="username" 
+                                    placeholder="username" 
+                                    onChange={onUsernameInput} 
+                                    value={usernameData}
+                                    style={{width: "100%"}}
+                                />
+                            </Form.Group>                      
+                            <Form.Group style={{width: "100%"}}>
+                            <Form.Label>
+                                <b>Website</b>
+                                </Form.Label>
+                                <Form.Control 
+                                    type="website" 
+                                    placeholder="website" 
+                                    onChange={onWebsiteInput} 
+                                    value={website}
+                                    style={{width: "100%"}}
+                                />
+                            </Form.Group>
+                            <Form.Group style={{width: "100%"}}>
+                            <Form.Label>
+                                <b>Bio</b>
+                                </Form.Label>
+                                <Form.Control 
+                                    as="textarea" 
+                                    type="bio" 
+                                    rows={3}
+                                    placeholder="Bio" 
+                                    onChange={onBioInput} 
+                                    value={bio}
+                                    style={{width: "100%"}}
+                                />
+                            </Form.Group>
+                            <Form.Group style={{width: "100%"}}>
                         <Form.Label>
-                            <b>Name</b>
-                            </Form.Label>
-                            <Form.Control 
-                                type="name" 
-                                placeholder="Name" 
-                                onChange={onDisplayNameInput} 
-                                value={displayName}
-                                style={{width: "100%"}}
-                            />
-                        </Form.Group>    
-                        <Form.Group style={{width: "100%"}}>
-                        <Form.Label>
-                            <b>Username</b>
-                            </Form.Label>
-                            <Form.Control 
-                                type="username" 
-                                placeholder="username" 
-                                onChange={onUsernameInput} 
-                                value={usernameData}
-                                style={{width: "100%"}}
-                            />
-                        </Form.Group>                      
-                        <Form.Group style={{width: "100%"}}>
-                        <Form.Label>
-                            <b>Website</b>
+                            <b>Twitter</b>
                             </Form.Label>
                             <Form.Control 
                                 type="website" 
-                                placeholder="website" 
-                                onChange={onWebsiteInput} 
-                                value={website}
-                                style={{width: "100%"}}
+                                placeholder="twitter.com/wholooped" 
+                                onChange={onTwitterUrlInput} 
+                                value={twitterUrl}
+                                style={{width: "100%", borderRadius: "0"}}
                             />
                         </Form.Group>
                         <Form.Group style={{width: "100%"}}>
                         <Form.Label>
-                            <b>Bio</b>
+                            <b>Instagram</b>
                             </Form.Label>
                             <Form.Control 
-                                as="textarea" 
-                                type="bio" 
-                                rows={3}
-                                placeholder="Bio" 
-                                onChange={onBioInput} 
-                                value={bio}
-                                style={{width: "100%"}}
+                                type="website" 
+                                placeholder="instagram.com/wholooped" 
+                                onChange={onInstagramUrlInput} 
+                                value={instagramUrl}
+                                style={{width: "100%", borderRadius: "0"}}
                             />
                         </Form.Group>
-                        <div style={{marginTop: "1rem"}}>
-                            <NextLink href={`/loopmakers/${slug}`}><p style={{textAlign: "center"}}>View my profile</p></NextLink>
+                        <Form.Group style={{width: "100%"}}>
+                        <Form.Label>
+                            <b>Facebook</b>
+                            </Form.Label>
+                            <Form.Control 
+                                type="website" 
+                                placeholder="facebook.com/wholooped" 
+                                onChange={onFacebookUrlInput} 
+                                value={facebookUrl}
+                                style={{width: "100%", borderRadius: "0"}}
+                            />
+                        </Form.Group>
+                        </Stack>
+                        <div style={{marginTop: "1.5rem"}}>
+                            <NextLink href={`/loopmakers/${slug}`}><p style={{color: `${Color.LINK}`, textAlign: "center"}}>View my profile</p></NextLink>
                         </div>
-                        <div className="gap-3 mt-3 icons d-flex flex-row justify-content-center align-items-center"> <span><a href={loopmakerProfile?.twitterUrl} style={{color: "black"}}><FontAwesomeIcon size="lg" icon={faTwitter} /></a></span> <span><a href={loopmakerProfile?.facebookUrl} style={{color: "black"}}><FontAwesomeIcon size="lg" icon={faFacebook} /></a></span> <span><a href={loopmakerProfile?.instagramUrl} style={{color: "black"}}><FontAwesomeIcon size="lg" icon={faInstagram} /></a></span> <span></span> </div>
+                        {/* <div className="gap-3 mt-3 icons d-flex flex-row justify-content-center align-items-center"> <span><a href={loopmakerProfile?.twitterUrl} style={{color: "black"}}><FontAwesomeIcon size="lg" icon={faTwitter} /></a></span> <span><a href={loopmakerProfile?.facebookUrl} style={{color: "black"}}><FontAwesomeIcon size="lg" icon={faFacebook} /></a></span> <span><a href={loopmakerProfile?.instagramUrl} style={{color: "black"}}><FontAwesomeIcon size="lg" icon={faInstagram} /></a></span> <span></span> </div> */}
                         { formChanged && (<Form.Group as={Row} style={{marginTop: "1em"}}>
                                     <div style={{textAlign: "center"}}>
                                         <Button type="submit" variant="success" disabled={isSaving ? true : false}>{ isSaving ? "Saving..." : "Save Changes" }</Button>
@@ -402,7 +499,7 @@ const EditLoopmaker = () => {
                 </div>
             </div> */}
             <div className="container mt-4 mb-4 p-3 d-flex justify-content-center" >
-                <div className="card p-4" style={{width: "100%"}}>
+                <div className="card p-4" style={{width: "100%", boxShadow: "5px 5px 15px 5px rgba(0,0,0,0.07)"}}>
                     <div className=" image d-flex flex-column justify-content-center align-items-center"> 
                         <div>
                             <Avatar id="profileImg" onClick={onProfileImgClick} src={getImgSrc()} alt={displayName} sx={{ width: 100, height: 100 }} style={{cursor: "pointer"}}/>
@@ -462,7 +559,7 @@ const EditLoopmaker = () => {
                         <div style={{marginTop: "1rem"}}>
                             <NextLink href={`/loopmakers/${slug}`}><p style={{textAlign: "center"}}>View my profile</p></NextLink>
                         </div>
-                        <div className="gap-3 mt-3 icons d-flex flex-row justify-content-center align-items-center"> <span><a href={loopmakerProfile?.twitterUrl} style={{color: "black"}}><FontAwesomeIcon size="lg" icon={faTwitter} /></a></span> <span><a href={loopmakerProfile?.facebookUrl} style={{color: "black"}}><FontAwesomeIcon size="lg" icon={faFacebook} /></a></span> <span><a href={loopmakerProfile?.instagramUrl} style={{color: "black"}}><FontAwesomeIcon size="lg" icon={faInstagram} /></a></span> <span></span> </div>
+                        {/* <div className="gap-3 mt-3 icons d-flex flex-row justify-content-center align-items-center"> <span><a href={loopmakerProfile?.twitterUrl} style={{color: "black"}}><FontAwesomeIcon size="lg" icon={faTwitter} /></a></span> <span><a href={loopmakerProfile?.facebookUrl} style={{color: "black"}}><FontAwesomeIcon size="lg" icon={faFacebook} /></a></span> <span><a href={loopmakerProfile?.instagramUrl} style={{color: "black"}}><FontAwesomeIcon size="lg" icon={faInstagram} /></a></span> <span></span> </div> */}
                         { formChanged && (<Form.Group as={Row} style={{marginTop: "1em"}}>
                                     <div style={{textAlign: "center"}}>
                                         <Button type="submit" variant="success" disabled={isSaving ? true : false}>{ isSaving ? "Saving..." : "Save Changes" }</Button>
