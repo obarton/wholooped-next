@@ -36,7 +36,7 @@ if (isLoading || loggedInUserProfile.isLoading) {
       <Layout title={user?.profile?.displayName}>
         <Desktop>
           <PageContainer>
-                <div className="container mt-4 mb-4 p-3 d-flex justify-content-center">
+                <div className="container mt-4 mb-4 p-3 d-flex justify-content-center" style={{width: "60%"}}>
                     <UserProfileCard 
                         avatarSrc={user?.profile?.photo.url}
                         displayName={user?.profile?.displayName}

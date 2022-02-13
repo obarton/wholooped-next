@@ -21,6 +21,7 @@ interface LoopmakerPageProps {
 
 const LoopmakerPageContainer = styled.div`
   min-height: 100vh
+  paddingBottom: 6rem
 `
 
 const resizeHeaderImageFromUrl = (url: string) => {
@@ -67,6 +68,7 @@ if (isLoading) {
                 </div>
             </div> */}
             <div className="container mt-4 mb-4 p-3 d-flex justify-content-center">
+                <div style={{width: "60%"}}>
                 <LoopmakerProfileCard 
                     avatarSrc={avatarSrc}
                     displayName={name}
@@ -79,6 +81,7 @@ if (isLoading) {
                     facebookUrl={facebookUrl}
                     canEdit={userProfile?.linkedLoopmaker && (userProfile?.linkedLoopmaker?.username == username)}
                 />
+                </div>
             </div>
             <div style={{marginTop: "1rem"}}>
                 <h3 style={{textAlign: "center"}}>Credits</h3>
@@ -93,6 +96,7 @@ if (isLoading) {
       <Mobile>
         <LoopmakerPageContainer>
         <MobilePageContainer>
+        <div className="container d-flex justify-content-center">
                 <LoopmakerProfileCard 
                     avatarSrc={avatarSrc}
                     displayName={name}
@@ -105,6 +109,7 @@ if (isLoading) {
                     facebookUrl={facebookUrl}
                     canEdit={userProfile?.linkedLoopmaker && (userProfile?.linkedLoopmaker?.username == username)}
                 />
+            </div>
             <div style={{marginTop: "2rem"}}>
                 <h3 style={{textAlign: "center"}}>Credits</h3>
                 <HorizontalDivider />

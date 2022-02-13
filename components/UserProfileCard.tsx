@@ -44,7 +44,7 @@ const UserProfileCard = ({
     const router = useRouter()
     
   return (
-    <div className="card p-4" style={{width: "100%"}}>
+    <div className="card p-4" style={{ width: "100%", boxShadow: "5px 5px 15px 5px rgba(0,0,0,0.07)"}}>
         <div className=" image d-flex flex-column justify-content-center align-items-center"> 
             <Avatar src={avatarSrc} sx={{ width: 100, height: 100 }}/>
         <span className="name mt-3" style={{fontWeight: "700", fontSize: "1.5rem"}}><b>{displayName}</b></span> <span className="idd" style={{fontWeight: "600", fontSize: "1rem"}}><b>@{username}</b></span>

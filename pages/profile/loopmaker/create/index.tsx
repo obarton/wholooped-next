@@ -1,41 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react'
-import Container from "react-bootstrap/Container"
 import * as contentful from "contentful-management"
 import styled from "styled-components"
 import { API } from "aws-amplify"
 import Avatar from "@mui/material/Avatar"
 import { Desktop, Mobile } from "../../../../components/Responsive"
 import { Image, Row} from "react-bootstrap";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFacebook, faTwitter, faInstagram } from "@fortawesome/free-brands-svg-icons"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 import { toast } from 'react-toastify';
 import Spinner from '../../../../components/Spinner'
 import { useUserProfile } from '../../../../hooks/useUserProfile'
-import NextLink from '../../../../components/NextLink'
 import { useLoopmakerCredits } from '../../../../hooks/useLoopmakerCredits'
-import CreditsList from '../../../../components/CreditsList'
-import AddSongModal from '../../../../components/AddSongModal'
-import { resizeImageFromUrl } from '../../../../helper/image'
 import { useRouter } from "next/router";
 import Layout from '../../../../components/Layout'
 import { PageTitles } from '../../../../utils/page'
-
-const UserProfileSubHeading = styled.h2({
-    textAlign: "center",
-    marginTop: "1rem"
-})
-
-const AddCreditButton = styled.button`
-    height: 40px;
-    width: 150px;
-    border: none;
-    background-color: #0d6efd;
-    color: white;
-    font-size: 15px
-`
 
 async function Connect() {
     const client = await contentful.createClient({
@@ -360,11 +339,11 @@ const CreateLoopmaker = () => {
                         </Form.Group>
                         <Form.Group style={{width: "100%"}}>
                         <Form.Label>
-                            <b>Twitter Account</b>
+                            <b>Twitter</b>
                             </Form.Label>
                             <Form.Control 
                                 type="website" 
-                                placeholder="Ex: https://www.twitter.com/wholooped" 
+                                placeholder="Ex: twitter.com/wholooped" 
                                 onChange={onTwitterUrlInput} 
                                 value={twitterUrl}
                                 style={{width: "100%", borderRadius: "0"}}
@@ -372,11 +351,11 @@ const CreateLoopmaker = () => {
                         </Form.Group>
                         <Form.Group style={{width: "100%"}}>
                         <Form.Label>
-                            <b>Instagram Account</b>
+                            <b>Instagram</b>
                             </Form.Label>
                             <Form.Control 
                                 type="website" 
-                                placeholder="Ex: https://www.instagram.com/wholooped" 
+                                placeholder="Ex: instagram.com/wholooped" 
                                 onChange={onInstagramUrlInput} 
                                 value={instagramUrl}
                                 style={{width: "100%", borderRadius: "0"}}
@@ -384,11 +363,11 @@ const CreateLoopmaker = () => {
                         </Form.Group>
                         <Form.Group style={{width: "100%"}}>
                         <Form.Label>
-                            <b>Facebook Account</b>
+                            <b>Facebook</b>
                             </Form.Label>
                             <Form.Control 
                                 type="website" 
-                                placeholder="Ex: https://www.facebook.com/wholooped" 
+                                placeholder="Ex: facebook.com/wholooped" 
                                 onChange={onFacebookUrlInput} 
                                 value={facebookUrl}
                                 style={{width: "100%", borderRadius: "0"}}
@@ -456,11 +435,11 @@ const CreateLoopmaker = () => {
                         </Form.Group>
                         <Form.Group style={{width: "100%"}}>
                         <Form.Label>
-                            <b>Twitter Account</b>
+                            <b>Twitter</b>
                             </Form.Label>
                             <Form.Control 
                                 type="website" 
-                                placeholder="Ex: https://www.twitter.com/wholooped" 
+                                placeholder="Ex: twitter.com/wholooped" 
                                 onChange={onTwitterUrlInput} 
                                 value={twitterUrl}
                                 style={{width: "100%", borderRadius: "0"}}
@@ -468,11 +447,11 @@ const CreateLoopmaker = () => {
                         </Form.Group>
                         <Form.Group style={{width: "100%"}}>
                         <Form.Label>
-                            <b>Instagram Account</b>
+                            <b>Instagram</b>
                             </Form.Label>
                             <Form.Control 
                                 type="website" 
-                                placeholder="Ex: https://www.instagram.com/wholooped" 
+                                placeholder="Ex: instagram.com/wholooped" 
                                 onChange={onInstagramUrlInput} 
                                 value={instagramUrl}
                                 style={{width: "100%", borderRadius: "0"}}
@@ -480,11 +459,11 @@ const CreateLoopmaker = () => {
                         </Form.Group>
                         <Form.Group style={{width: "100%"}}>
                         <Form.Label>
-                            <b>Facebook Account</b>
+                            <b>Facebook</b>
                             </Form.Label>
                             <Form.Control 
                                 type="website" 
-                                placeholder="Ex: https://www.facebook.com/wholooped" 
+                                placeholder="Ex: facebook.com/wholooped" 
                                 onChange={onFacebookUrlInput} 
                                 value={facebookUrl}
                                 style={{width: "100%", borderRadius: "0"}}
