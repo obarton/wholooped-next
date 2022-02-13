@@ -31,7 +31,7 @@ const ContentList = ({ contentList, key }: ContentListProps) => {
                             </h3>
                                 <Link href={contentList.showMoreLink || ""} passHref>
                                     <a style={{textDecoration: "none"}}>
-                                        <h4 style={{padding: "0", margin: "0", color: "#4183c4"}}>Show More</h4>
+                                        <h4 style={{padding: "0", margin: "0", color: "black", fontWeight: "500", fontSize: "1.25rem"}}>Show More &#8594;</h4>
                                     </a>
                                 </Link>
                         </div>
