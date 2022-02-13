@@ -103,18 +103,18 @@ const ContentList = ({ contentList, key }: ContentListProps) => {
                 (
                     <div>
                         <div style={{display: "flex", justifyContent: "space-between"}}>
-                            <h3 style={{padding: "0", margin: "0"}}>{contentList.title}</h3><Link href={contentList.showMoreLink} passHref><a style={{textDecoration: "none", display: "flex", justifyContent: "center", alignItems: "center"}}><h4 style={{padding: "0", margin: "0", color: "#4183c4", fontSize: "1rem"}}>Show More</h4></a></Link>
+                            <h3 style={{padding: "0", margin: "0", fontSize: "1.25rem"}}>{contentList.title}</h3><Link href={contentList.showMoreLink} passHref><a style={{textDecoration: "none", display: "flex", justifyContent: "center", alignItems: "center"}}><h4 style={{padding: "0", margin: "0",color: "black", fontWeight: "500", fontSize: "1rem"}}>Show More &#8594;</h4></a></Link>
                         </div>
-                        {contentList.description && contentList.description !== "" && <h5 style={{color: "#666C7E", fontWeight: "400"}}>{contentList.description}</h5> }
+                        {contentList.description && contentList.description !== "" && <h5 style={{color: "#666C7E", fontWeight: "400", fontSize: "0.75rem"}}>{contentList.description}</h5> }
                     </div>
                 )
                 :
                 (
                     <div>
                         <div style={{display: "flex"}}>
-                            <h3 style={{padding: "0", margin: "0"}}>{contentList.title}</h3>
+                            <h3 style={{padding: "0", margin: "0", fontSize: "1.25rem"}}>{contentList.title}</h3>
                         </div>
-                        {contentList.description && contentList.description !== "" && <h5 style={{color: "#666C7E", fontWeight: "400"}}>{contentList.description}</h5> }
+                        {contentList.description && contentList.description !== "" && <h5 style={{color: "#666C7E", fontWeight: "400", fontSize: "0.75rem"}}>{contentList.description}</h5> }
                     </div>
                 )
             }
@@ -151,6 +151,7 @@ const ContentList = ({ contentList, key }: ContentListProps) => {
                             )
                         case "looppack":
                         case "genre":
+                        case "loop":
                             return (
                             <SmallAlbumCard title={title} secondaryText={subTitle} imageSrc={imageSrc} altText={title} url={url}/>
                             )
