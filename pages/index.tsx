@@ -15,7 +15,7 @@ import { resizeImageFromUrl } from '../helper/image';
 import { Site } from '../utils/page';
 
 const StyledLandingText = styled.h1`
-  font-size: 4em;
+  font-size: 3.5em;
   display: block;
 `
 const Home = ({ songs, loopPacks }: any) => {
@@ -29,9 +29,9 @@ const Home = ({ songs, loopPacks }: any) => {
           <Container fluid>
             <Row style={{height: "80vh"}}>
               <Col xs={6} md={6} style={{height: "100%", display: "flex", justifyContent: "flex-end"}}>
-                <div style={{height: "100%", width: "70%", display: "flex", justifyContent: "center", alignItems: "center"}}>
+                <div style={{height: "100%", width: "75%", display: "flex", justifyContent: "center", alignItems: "center"}}>
                       <Stack style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-                        <div style={{"maxWidth": "430px"}}>
+                        <div style={{"maxWidth": "430px", width: "100%"}}>
                           <StyledLandingText><b>{landingText}</b></StyledLandingText>
                         </div>
                         <div style={{padding: "2em"}}>

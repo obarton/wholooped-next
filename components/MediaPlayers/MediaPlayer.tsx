@@ -3,6 +3,7 @@ import { PlatformType } from '../../types/PlatformType';
 import { parseYoutubeIdFromUrl } from '../../utils/youtube';
 import LoopermanPlayer from './LoopermanPlayer';
 import SoundCloudPlayer from './SoundCloudPlayer';
+import SplicePlayer from './SplicePlayer';
 import YoutubeVideoPlayer from './YoutubeVideoPlayer';
 
 interface MediaPlayerProps {
@@ -24,6 +25,9 @@ const MediaPlayer = ({ platform, title, mediaUrl, mediaId }: MediaPlayerProps) =
             {
                 (platform === PlatformType.Looperman ? <LoopermanPlayer url={mediaUrl}/> : <></>)
             }
+            {
+                (platform === PlatformType.Splice ? <SplicePlayer url={mediaUrl}/> : <></>)
+            } 
         </>
   );
 };
