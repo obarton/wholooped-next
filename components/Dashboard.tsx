@@ -26,13 +26,12 @@ const MenuButton = styled(Button)`
 const PageContainer = styled.div`
 `
 
-const SetupProfileButton = styled.button`
-    height: 40px;
-    width: 150px;
+const SetupProfileButton = styled(Button)`
     border: none;
     background-color: #FFD000;
     color: black;
-    font-size: 15px
+    font-size: 15px;
+    border-radius: 0px;
 `
 
 const Dashboard = () => {
