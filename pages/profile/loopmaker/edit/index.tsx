@@ -63,7 +63,7 @@ const EditLoopmaker = () => {
   const [usernameData, setUsernameData] = useState(loopmakerProfile?.username);
   const [slug, setSlug] = useState(loopmakerProfile?.slug);
   const [profilePhotoPreview, setProfilePhotoPreview] = useState();
-  const [headerPhotoPreview, setHeaderPhotoPreview] = useState(loopmakerProfile?.headerPhoto?.url ? `${loopmakerProfile?.headerPhoto?.url}?fm=png&q=100` : "");
+  const [headerPhotoPreview, setHeaderPhotoPreview] = useState(); //(loopmakerProfile?.headerPhoto?.url ? `${loopmakerProfile?.headerPhoto?.url}?fm=png&q=100` : undefined);
   const profilePhotoInputRef = useRef()
   const headerPhotoInputRef = useRef()
   const [showAddCreditModal, setShowAddCreditModal] = useState(false);
@@ -296,7 +296,7 @@ const onInstagramUrlInput = ({ target: { value } }: any) => {
   }
 
   const handleRemoveHeaderImageClick = (e: any) => {
-    setHeaderPhotoPreview()
+    setHeaderPhotoPreview(undefined)
     setSelectedHeaderPhotoFile(null)
   }
 

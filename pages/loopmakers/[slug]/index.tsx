@@ -191,8 +191,8 @@ if (isLoading) {
                         </div>
                     </div>
                     { headerSrc ? (
-                        <div style={{ height: "512px", width: "100%", overflow: "hidden"}}>
-                        <Image alt="header-photo" src={headerSrc} fluid style={{height: "256px", width: "100%", objectFit: "cover"}}/>
+                        <div style={{ height: "512px", width: "100vw", overflow: "hidden"}}>
+                        <Image alt="header-photo" src={headerSrc} fluid style={{height: "256px", minWidth: "100%", objectFit: "cover"}}/>
                     </div>
                     ) :(
                         <div style={{height: "325px", width: "100%"}}>
