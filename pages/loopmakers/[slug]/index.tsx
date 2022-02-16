@@ -1,6 +1,6 @@
 import React from 'react';
 import { Desktop, Mobile } from '../../../components/Responsive';
-import PageContainer, { MobilePageContainer } from '../../../components/PageContainer';
+import { MobilePageContainer } from '../../../components/PageContainer';
 import NextLink from '../../../components/NextLink';
 import CreditsList from '../../../components/CreditsList';
 import IndexPageAvatarHeader from '../../../components/IndexPageAvatarHeader';
@@ -13,6 +13,18 @@ import { useUserProfile } from '../../../hooks/useUserProfile';
 import Spinner from '../../../components/Spinner';
 import styled from "styled-components"
 import Layout from '../../../components/Layout';
+import { Container, Image } from 'react-bootstrap';
+
+const StyledContainer = styled(Container)({
+    width: "50%", 
+    marginBottom: "2rem"
+})
+
+const StyledMobileContainer = styled.div`
+    margin-top: 2rem; 
+    margin-bottom: 2rem;
+    padding: 0;
+`
 
 interface LoopmakerPageProps {
     loopmaker: any;
@@ -24,8 +36,51 @@ const LoopmakerPageContainer = styled.div`
   paddingBottom: 6rem
 `
 
+const HeaderImage = styled.img`
+    position: relative
+    top: 0
+    left: 0
+    min-width: 100%
+    min-height: 100%
+    object-fit: cover
+`
+
+const HeaderImageTest = styled.img`
+width: 100%
+    object-fit: cover
+`
+
+const HeaderSubContainer = styled.div`
+    position: relative
+    height: 325px
+    width: 1024px
+`
+
+const HeaderImageContainer = styled.div`
+    position: relative
+    top: 0
+    left: 0
+    min-width: 100%
+    min-height: 100%
+    display: flex
+    justify-content: center
+`
+
+const MobileHeaderImageContainer = styled.div`
+    position: relative
+    top: 0
+    left: 0
+    min-width: 100%
+    min-height: 100%
+    display: flex
+    justify-content: center
+    border: 2px solid red
+    padding: 0
+`
+
+
 const resizeHeaderImageFromUrl = (url: string) => {
-    return url ? `${url}?w=390&h=200&fm=png&q=100` : ""
+    return url ? `${url}?w=1024&h=512&fm=png&q=100` : ""
 }
 
 const Loopmaker = ({ loopmaker, songs }: LoopmakerPageProps) => {
@@ -36,7 +91,8 @@ const Loopmaker = ({ loopmaker, songs }: LoopmakerPageProps) => {
   const avatarSrc = resizeImageFromUrl(loopmaker?.profilePhoto?.url)
   const headerSrc = resizeHeaderImageFromUrl(loopmaker?.headerPhoto?.url)
 
-
+  const width = 1024;
+  const height = 512;
 
   if (isError) { 
     return (
@@ -58,30 +114,41 @@ if (isLoading) {
   <Layout title={name}>
     <Desktop>
         <LoopmakerPageContainer>
-        <PageContainer>
-          {/* <div style={{position: "relative"}}>
-                <div style={{position: "absolute", 
-                        top: "0px", 
-                        width: "100%", 
-                    }}>
-                    <Image style={{ objectFit: "cover", width: "100%", height: "40vh"}} fluid id="headerImg" src={headerSrc} alt={name}/>
-                </div>
-            </div> */}
-            <div className="container mt-4 mb-4 p-3 d-flex justify-content-center">
-                <div style={{width: "60%"}}>
-                <LoopmakerProfileCard 
-                    avatarSrc={avatarSrc}
-                    displayName={name}
-                    username={username}
-                    bio={bio}
-                    websiteUrl={websiteUrl}
-                    credits={songs}
-                    twitterUrl={twitterUrl}
-                    instagramUrl={instagramUrl}
-                    facebookUrl={facebookUrl}
-                    canEdit={userProfile?.linkedLoopmaker && (userProfile?.linkedLoopmaker?.username == username)}
-                />
-                </div>
+        <StyledContainer>
+            <div className="container mb-4 d-flex justify-content-center">
+                <HeaderImageContainer>
+                    <div style={{
+                        width: "400px", 
+                        position: "absolute", 
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        left: "50%",
+                        transform: "translate(-50%, 0%)",
+                        paddingTop: "1rem"
+                        }}>
+                    <LoopmakerProfileCard 
+                        avatarSrc={avatarSrc}
+                        displayName={name}
+                        username={username}
+                        bio={bio}
+                        websiteUrl={websiteUrl}
+                        credits={songs}
+                        twitterUrl={twitterUrl}
+                        instagramUrl={instagramUrl}
+                        facebookUrl={facebookUrl}
+                        canEdit={userProfile?.linkedLoopmaker && (userProfile?.linkedLoopmaker?.username == username)}
+                    />
+                    </div>
+                    { headerSrc ? (
+                        <div style={{ height: "512px", width: "1024px", overflow: "hidden"}}>
+                        <Image alt="header-photo" src={headerSrc} fluid style={{width: "100%", objectFit: "cover"}}/>
+                    </div>
+                    ) :(
+                        <div style={{height: "325px", width: "1024px"}}>
+                        </div>
+                    )}    
+                </HeaderImageContainer>
             </div>
             <div style={{marginTop: "1rem"}}>
                 <h3 style={{textAlign: "center"}}>Credits</h3>
@@ -90,34 +157,57 @@ if (isLoading) {
                     <CreditsList credits={songs}/>
                 </div>
             </div>
-        </PageContainer>
+        </StyledContainer>
         </LoopmakerPageContainer>
       </Desktop>
       <Mobile>
         <LoopmakerPageContainer>
-        <MobilePageContainer>
-        <div className="container d-flex justify-content-center">
-                <LoopmakerProfileCard 
-                    avatarSrc={avatarSrc}
-                    displayName={name}
-                    username={username}
-                    bio={bio}
-                    websiteUrl={websiteUrl}
-                    credits={songs}
-                    twitterUrl={twitterUrl}
-                    instagramUrl={instagramUrl}
-                    facebookUrl={facebookUrl}
-                    canEdit={userProfile?.linkedLoopmaker && (userProfile?.linkedLoopmaker?.username == username)}
-                />
+            <StyledMobileContainer>
+            <div className="d-flex justify-content-center">
+                <MobileHeaderImageContainer>
+                    <div style={{
+                        width: "100%", 
+                        position: "absolute", 
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        left: "50%",
+                        transform: "translate(-50%, 0)",
+                        paddingTop: "2rem"
+                        }}>
+                        <div style={{width: "70%"}}>
+                            <LoopmakerProfileCard 
+                                avatarSrc={avatarSrc}
+                                displayName={name}
+                                username={username}
+                                bio={bio}
+                                websiteUrl={websiteUrl}
+                                credits={songs}
+                                twitterUrl={twitterUrl}
+                                instagramUrl={instagramUrl}
+                                facebookUrl={facebookUrl}
+                                canEdit={userProfile?.linkedLoopmaker && (userProfile?.linkedLoopmaker?.username == username)}
+                            />
+                        </div>
+                    </div>
+                    { headerSrc ? (
+                        <div style={{ height: "512px", width: "100vw", overflow: "hidden"}}>
+                        <Image alt="header-photo" src={headerSrc} fluid style={{height: "256px", minWidth: "100%", objectFit: "cover"}}/>
+                    </div>
+                    ) :(
+                        <div style={{height: "325px", width: "100%"}}>
+                        </div>
+                    )}    
+                </MobileHeaderImageContainer>
             </div>
-            <div style={{marginTop: "2rem"}}>
+            <div style={{marginTop: "2rem", padding: "1rem"}}>
                 <h3 style={{textAlign: "center"}}>Credits</h3>
                 <HorizontalDivider />
                 <div style={{marginTop: "2rem"}}>
                     <CreditsList credits={songs}/>
                 </div>
             </div>
-        </MobilePageContainer>
+            </StyledMobileContainer>
         </LoopmakerPageContainer>
       </Mobile>
   </Layout>)
@@ -127,8 +217,8 @@ export const getStaticProps = async (context: any) => {
     const slug = context.params.slug;
     const loopmaker = await getLoopmakerBySlug(slug)
     const songs = await API.get("LoopmakerApi", `/loopmaker/${loopmaker?.sys?.id}/credits`, {})
-
-
+    console.log(`loopmaker ${JSON.stringify(loopmaker, null, 2)}`);
+    
     return {
         props: {
             loopmaker,
