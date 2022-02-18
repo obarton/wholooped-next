@@ -22,7 +22,7 @@ const Likes = () => {
 
     if (error) { 
         return (
-            <Layout title={PageTitles.Likes}>
+            <Layout title={PageTitles.Saved}>
             <div>Failed to load</div>
             </Layout>
         )
@@ -30,19 +30,19 @@ const Likes = () => {
 
    if (isLoading || useLikesData.isLoading ) { 
         return (
-            <Layout title={PageTitles.Likes}>
+            <Layout title={PageTitles.Saved}>
                 <Spinner />
             </Layout>
         )
     }
 
   return (
-        <Layout title={PageTitles.Likes}>
+        <Layout title={PageTitles.Saved}>
             <Desktop>
             <PageContainer>
                     <SidebarWrapper>
                         <Container style={{padding: "68px"}}>
-                            <h2>Likes</h2>
+                            <h2>Saved</h2>
                             {useLikesData.likes.length == 0 && <p>No likes yet.</p>}
                             {<LikesList songs={useLikesData.likes}/>}
                         </Container>
@@ -51,7 +51,7 @@ const Likes = () => {
             </Desktop>
         <Mobile>
             <MobilePageContainer>
-                    <h2>Likes</h2>
+                    <h2>Saved</h2>
                     {useLikesData.likes.length == 0 && <p>No likes yet.</p>}
                     {<LikesList songs={useLikesData.likes}/>}
                 </MobilePageContainer>

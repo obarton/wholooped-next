@@ -16,7 +16,7 @@ export const PageTitles = {
     EditLoopmakerProfile: "Edit Loopmaker Profile", 
     Genre: "Genre",
     Genres: "Genres",
-    Likes: "Likes",
+    Saved: "Saved",
     LoopPacks: "Loop Packs",
     Search: "Search"
 } as const;

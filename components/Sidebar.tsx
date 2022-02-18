@@ -23,12 +23,14 @@ const StyledLink = styled.a`
 const MenuItem = styled.li({fontSize: "24px", marginBottom: "10px"})
 
 const Sidebar = () => {
-    const [menuItems, setMenuItems] = useState(defaultDesktopMenuItems);
     const { userProfile, isLoading, isError } = useUserProfile()
-
+    const [menuItems, setMenuItems] = useState(defaultDesktopMenuItems(userProfile?.name));
+    
     useEffect(() => {
       if(userProfile?.linkedLoopmaker) {
         setMenuItems(desktopLoopmakerMenuItems)
+      } else {
+        setMenuItems(defaultDesktopMenuItems(userProfile?.name))
       }
     }, [userProfile]);
 

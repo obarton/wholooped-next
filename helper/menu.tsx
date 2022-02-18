@@ -1,4 +1,4 @@
-export const defaultMobileMenuItems = [
+export const defaultMobileMenuItems = (username: string) => [
     {
       title: "Browse",
       url: "/app",
@@ -6,7 +6,7 @@ export const defaultMobileMenuItems = [
     },
     {
       title: "My Profile",
-      url: "/profile/user/edit",
+      url: `/users/${username}`,
       authRequired: true
     },
     {
@@ -15,13 +15,8 @@ export const defaultMobileMenuItems = [
       authRequired: false
     },
     {
-      title: "Artists",
-      url: "/artists",
-      authRequired: false
-    },
-    {
-      title: "Likes",
-      url: "/app/likes",
+      title: "Saved",
+      url: "/app/saved",
       authRequired: true
     },
     {
@@ -38,7 +33,7 @@ export const mobileLoopmakerMenuItems = [
       },
       {
         title: "My Profile",
-        url: "/profile/edit",
+        url: "/profile/select",
         authRequired: true
       },
       {
@@ -47,17 +42,18 @@ export const mobileLoopmakerMenuItems = [
         authRequired: false
       },
       {
-        title: "Artists",
-        url: "/artists",
-        authRequired: false
+        title: "Saved",
+        url: "/app/saved",
+        authRequired: true
       },
       {
-        title: "Likes",
-        url: "/app/likes",
+        title: "Add A Song",
+        url: "",
         authRequired: true
-}]
+      }
+    ]
 
-export const defaultDesktopMenuItems = [
+export const defaultDesktopMenuItems = (username: string) => [
   {
     title: "Browse",
     url: "/app",
@@ -65,7 +61,7 @@ export const defaultDesktopMenuItems = [
   },
   {
     title: "My Profile",
-    url: "/profile/user/edit",
+    url: `/users/${username}`,
     authRequired: true
   },
   {
@@ -74,19 +70,9 @@ export const defaultDesktopMenuItems = [
     authRequired: false
   },
   {
-    title: "Artists",
-    url: "/artists",
-    authRequired: false
-  },
-  {
-    title: "Likes",
-    url: "/app/likes",
+    title: "Saved",
+    url: "/app/saved",
     authRequired: true
-  },
-  {
-    title: "Add A Song",
-    url: "/app/add-a-song",
-    authRequired: false
   }]
   
 export const desktopLoopmakerMenuItems = [
@@ -97,7 +83,7 @@ export const desktopLoopmakerMenuItems = [
     },
     {
       title: "My Profile",
-      url: "/profile/edit",
+      url: "/profile/select",
       authRequired: true
     },
     {
@@ -106,12 +92,8 @@ export const desktopLoopmakerMenuItems = [
       authRequired: false
     },
     {
-      title: "Artists",
-      url: "/artists",
-      authRequired: false
-    },
-    {
-      title: "Likes",
-      url: "/app/likes",
+      title: "Saved",
+      url: "/app/saved",
       authRequired: true
-    }]
+    }
+  ]

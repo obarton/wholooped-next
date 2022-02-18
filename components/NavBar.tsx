@@ -62,7 +62,7 @@ const NavBar = () => {
     const [showAddCreditModal, setShowAddCreditModal] = useState(false);
     const handleCloseAddCreditModal = () => setShowAddCreditModal(false);
     const handleShowAddCreditModal = () => setShowAddCreditModal(true);
-    const [mobileMenuItems, setMenuMobileItems] = React.useState(defaultMobileMenuItems);
+    const [mobileMenuItems, setMenuMobileItems] = React.useState(defaultMobileMenuItems(userProfile?.name));
     const [ssToken, setSsToken] = React.useState()
     const [cookies, setCookie] = useCookies(['sstoken'])
   
@@ -93,6 +93,8 @@ const NavBar = () => {
     React.useEffect(() => {
       if(userProfile?.linkedLoopmaker) {
         setMenuMobileItems(mobileLoopmakerMenuItems)
+      } else {
+        setMenuMobileItems(defaultMobileMenuItems(userProfile?.name))
       }
     }, [userProfile]);
 
@@ -112,8 +114,8 @@ const NavBar = () => {
                     >
                         <Stack direction="horizontal" gap={4}>
                             <StyledLink href="/app/">Browse</StyledLink>
-                            <StyledLink href="/artists">Artists</StyledLink>
-                            <StyledLink onClick={() => setShowAddCreditModal(true)}>Add A Song</StyledLink>
+                            {!user && <StyledLink href="/app/">Add A Song</StyledLink>}
+                            {user && <StyledLink onClick={() => setShowAddCreditModal(true)}>Add A Song</StyledLink>}
                             <StyledLink href="http://community.wholooped.com">Community</StyledLink>
                         </Stack>
                     </Nav>
@@ -191,7 +193,7 @@ const NavBar = () => {
                                 (
                                     mobileMenuItems.filter((i: any) => i.authRequired == false).map((menuItem: any) => {
                                         if (menuItem.title == "Add A Song") {
-                                            return <StyledLink key={menuItem.title} onClick={() => setShowAddCreditModal(true)}>{menuItem.title}</StyledLink>
+                                            return <StyledLink key={menuItem.title} href={`/app`}>{menuItem.title}</StyledLink>
                                         }
 
                                         return (

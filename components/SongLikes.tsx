@@ -82,7 +82,7 @@ const SongLikes = ({ song, user, isSongLiked }: SongLikesProps) => {
             <FavoriteBorder />
           )
         }
-        <span style={{marginLeft: "0.4em"}}>{likesCount} like{likesCount == 1 ? "" : "s"}</span>
+        <span style={{marginLeft: "0.4em"}}>{likesCount} save{likesCount == 1 ? "" : "s"}</span>
       </div>
   );
 };

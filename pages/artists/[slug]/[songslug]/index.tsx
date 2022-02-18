@@ -230,7 +230,6 @@ if (isLoading || userResponse.isLoading || likeResponse.isLoading) {
                 <SongPageHeader title={song?.title} artist={formatSongArtistLinksHtml(song?.artist)}/>
                 <SongLikes user={userResponse.user} song={song} isSongLiked={likeResponse.isLiked}/>
                   <SocialShare />
-                  <HorizontalDivider />
                       <div style={{marginTop: "1rem", textAlign: "center"}}>
                         <Stack gap={1}>
                             <div>

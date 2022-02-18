@@ -18,7 +18,7 @@ const Footer = () => {
                         <ul style={{color: "white", listStyleType: "none", margin: "0", padding: "0"}}>
                             <li><b>Music</b></li>
                             <li style={{marginBottom: "0.25em", padding: "0"}}><LightNextLink href="/app" style={{color: "white"}}>Browse</LightNextLink></li>
-                            <li style={{marginBottom: "0.25em", padding: "0"}}><LightNextLink href="/artists" style={{color: "white"}}>Artists</LightNextLink></li>
+                            {/* <li style={{marginBottom: "0.25em", padding: "0"}}><LightNextLink href="/artists" style={{color: "white"}}>Artists</LightNextLink></li> */}
                             <li style={{marginBottom: "0.25em", padding: "0"}}><LightNextLink href="http://community.wholooped.com/" style={{color: "white"}}>Community</LightNextLink></li>
                             {/* <li style={{marginBottom: "0.25em", padding: "0"}}><LightNextLink href="/app" style={{color: "white"}}>Add A Song</LightNextLink></li> */}
                         </ul>
@@ -58,7 +58,7 @@ const Footer = () => {
                         <ul style={{color: "white", listStyleType: "none", margin: "0", padding: "0"}}>
                             <li><b>Music</b></li>
                             <li style={{marginBottom: "0.25em", padding: "0"}}><LightNextLink href="/app" style={{color: "white"}}>Browse</LightNextLink></li>
-                            <li style={{marginBottom: "0.25em", padding: "0"}}><LightNextLink href="/artists" style={{color: "white"}}>Artists</LightNextLink></li>
+                            {/* <li style={{marginBottom: "0.25em", padding: "0"}}><LightNextLink href="/artists" style={{color: "white"}}>Artists</LightNextLink></li> */}
                             <li style={{marginBottom: "0.25em", padding: "0"}}><LightNextLink href="http://community.wholooped.com/" style={{color: "white"}}>Community</LightNextLink></li>
                             {/* <li style={{marginBottom: "0.25em", padding: "0"}}><LightNextLink href="/app" style={{color: "white"}}>Add A Song</LightNextLink></li> */}
                         </ul>
