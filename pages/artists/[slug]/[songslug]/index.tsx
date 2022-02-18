@@ -115,11 +115,11 @@ if (isLoading || userResponse.isLoading || likeResponse.isLoading) {
                 </NavigationContainer>
               </Col>
               <Col md={8}>
-                <div>
+                <Row>
                   <SongPageHeader title={song?.title} artist={formatSongArtistLinksHtml(song?.artist)}/>
                   <SongLikes user={userResponse.user} song={song} isSongLiked={likeResponse.isLiked}/>
                   <SocialShare />
-                </div>
+                </Row>
               </Col>
               <Col>
               <NavigationContainer>
@@ -148,45 +148,49 @@ if (isLoading || userResponse.isLoading || likeResponse.isLoading) {
             </Row>
             <Container style={{paddingRight: "10%", paddingLeft: "10%", marginTop: "2rem"}}>
             <Row>
-              <Col>
-              <Row>
-                <Col>
-                  <div style={{display: "flex", justifyContent: "center"}}>
-                    <div>
-                      <MediaPlayer platform={song?.platform?.name} mediaUrl={song?.url} title={song?.title} mediaId={song?.platformTrackId}/>
-                      <SongDetails song={song}/>
-                      <HorizontalDivider />
-                      <div style={{marginTop: "1rem"}}>
-                        <Stack direction="horizontal" gap={1}>
-                            <div>
-                              <p style={{padding: "0", margin: "0"}}><b>Uploaded By</b></p>
-                            </div>
-                            <div>
-                              <InlineAvatar text={song?.primaryContributor?.displayName} redirectUrl={`/users/${song?.primaryContributor?.slug}`} thumbnailUrl={song?.primaryContributor?.photo?.url}/>
-                            </div>
-                        </Stack>
+              <Col md={5}>
+                <Row>
+                  <Col>
+                    <div style={{display: "flex", justifyContent: "center"}}>
+                      <div>
+                        <div style={{display: "flex", justifyContent: "center"}}>
+                        <MediaPlayer platform={song?.platform?.name} mediaUrl={song?.url} title={song?.title} mediaId={song?.platformTrackId}/>
+                        </div>
+                        <SongDetails song={song}/>
+                        <HorizontalDivider />
+                        <div style={{marginTop: "1rem"}}>
+                          <Stack direction="horizontal" gap={1}>
+                              <div>
+                                <p style={{padding: "0", margin: "0"}}><b>Uploaded By</b></p>
+                              </div>
+                              <div>
+                                <InlineAvatar text={song?.primaryContributor?.displayName} redirectUrl={`/users/${song?.primaryContributor?.slug}`} thumbnailUrl={song?.primaryContributor?.photo?.url}/>
+                              </div>
+                          </Stack>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Col>
-              </Row>
+                  </Col>
+                </Row>
               </Col>
-              <Col md={1} style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+              <Col md={2} style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
                   <div>
                     <p style={{textAlign: "center"}}>Contains a loop of</p>
                   </div>
               </Col>
-              <Col>
-              <Row>
-                <Col>
-                  <div style={{display: "flex", justifyContent: "center"}}>
-                    <div>
-                  <MediaPlayer platform={song?.loop[0]?.platform?.name} mediaUrl={song?.loop[0]?.url} title={song?.loop[0]?.title} mediaId={song?.loop[0]?.platform?.trackId}/>
-                  <LoopDetails loop={song?.loop[0]} startTimeSeconds={song?.loopStartTimeSeconds}/>
-                  </div>
-                  </div>
-                </Col>
-              </Row>
+              <Col md={5}>
+                <Row>
+                  <Col>
+                    <div style={{display: "flex", justifyContent: "center"}}>
+                      <div>
+                        <div style={{display: "flex", justifyContent: "center"}}>
+                          <MediaPlayer platform={song?.loop[0]?.platform?.name} mediaUrl={song?.loop[0]?.url} title={song?.loop[0]?.title} mediaId={song?.loop[0]?.platform?.trackId}/>
+                        </div>
+                      <LoopDetails loop={song?.loop[0]} startTimeSeconds={song?.loopStartTimeSeconds}/>
+                    </div>
+                    </div>
+                  </Col>
+                </Row>
               </Col>
             </Row>
               </Container>
