@@ -198,20 +198,78 @@ if (isLoading || userResponse.isLoading || likeResponse.isLoading) {
         </Desktop>
         <Mobile>
           <MobilePageContainer>
+            <Container>
+              <Row>
+              <Col style={{padding: "0"}}>
+                      <NavigationContainer >
+                  <Container fluid style={{padding: "0", textAlign: "center"}}>
+                  <Row>
+                    <Col>
+                    {lastSong && (
+                      <p>Previous</p>
+                    )}
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <ArrowContainer>
+                        {lastSong && (
+                          <NextLink href={`/artists/${lastSong?.artist[0].slug}/${lastSong?.slug}`}>
+                            <FontAwesomeIcon icon={faArrowLeft} size="2x"/>
+                          </NextLink>
+                        )}
+                      </ArrowContainer>
+                    </Col>
+                  </Row>
+                  </Container>
+                </NavigationContainer>
+                </Col>
+                <Col xs={8}>
+                  <div style={{display: "flex", justifyContent: "center", paddingLeft: "0.5rem", paddingRight: "0.5rem"}}>
+                    <div>
                 <SongPageHeader title={song?.title} artist={formatSongArtistLinksHtml(song?.artist)}/>
                 <SongLikes user={userResponse.user} song={song} isSongLiked={likeResponse.isLiked}/>
                   <SocialShare />
-                  {/* <HorizontalDivider />
-                      <div style={{marginTop: "1rem"}}>
-                        <Stack direction="horizontal" gap={1}>
+                  <HorizontalDivider />
+                      <div style={{marginTop: "1rem", textAlign: "center"}}>
+                        <Stack gap={1}>
                             <div>
                               <p style={{padding: "0", margin: "0"}}><b>Uploaded By</b></p>
                             </div>
-                            <div>
+                            <div style={{display: "flex", justifyContent: "center"}}>
                               <InlineAvatar text={song?.primaryContributor?.displayName} redirectUrl={`/users/${song?.primaryContributor?.slug}`} thumbnailUrl={song?.primaryContributor?.photo?.url}/>
                             </div>
                         </Stack>
-                      </div> */}
+                      </div>
+                      </div>
+                      </div>
+                      </Col>
+                      <Col style={{padding: "0"}}>
+                      <NavigationContainer>
+                  <Container fluid style={{padding: "0", textAlign: "center"}}>
+                  <Row>
+                    <Col>
+                    {nextSong && (
+                      <p>Next</p>
+                    )}
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <ArrowContainer>
+                      {nextSong && (
+                        <NextLink href={`/artists/${nextSong?.artist[0].slug}/${nextSong?.slug}`}>
+                          <FontAwesomeIcon icon={faArrowRight} size="2x"/>
+                        </NextLink>
+                      )}
+                      </ArrowContainer>
+                    </Col>
+                  </Row>
+                  </Container>
+                </NavigationContainer>
+                      </Col>
+                  </Row>
+                </Container>
               <SongContentContainer>
                 <Stack gap={5} style={{ padding: "2em" }}>
                     <MediaPlayerContainer>
