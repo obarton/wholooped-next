@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react"
-import { Stack } from "react-bootstrap";
+import { Col, Container, Row, Stack } from "react-bootstrap";
 import NextLink from "../../../../components/NextLink";
 import PageContainer, { MobilePageContainer } from "../../../../components/PageContainer";
 import { Desktop, Mobile } from "../../../../components/Responsive";
@@ -18,6 +18,8 @@ import { useSongLike } from "../../../../hooks/useSongLike";
 import { useUser } from "@auth0/nextjs-auth0";
 import Layout from "../../../../components/Layout";
 import HorizontalDivider from "../../../../components/HorizontalDivider";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const SongContentContainer = styled.div`
   display: flex; 
@@ -30,6 +32,15 @@ const MediaPlayerContainer = styled.div`
   width: 100%;
 `
 
+const NavigationContainer = styled.div({
+  height: "100%", 
+  display: "flex", 
+  justifyContent: "center", 
+  alignItems: "center"
+})
+
+const ArrowContainer = styled.div({textAlign: "center"})
+
 const Song = () => {
   const router = useRouter()
   const [loop, setLoop] = useState({});
@@ -37,8 +48,16 @@ const Song = () => {
   const artistSlug = slug as string;
   const songSlug = songslug as string;
   
-  const { song, isLoading, isError} = useSong(artistSlug, songSlug)
+  const { song, nextSong, lastSong, isLoading, isError} = useSong(artistSlug, songSlug)
   const userResponse = useUser();
+
+  useEffect(() => {
+    console.log(`nextSong ${JSON.stringify(nextSong, null, 2)}`)
+  }, [nextSong])
+  
+  useEffect(() => {
+    console.log(`lastSong ${JSON.stringify(lastSong, null, 2)}`)
+  }, [lastSong])
 
   const itemId = `${song?.id}:${song?.loop[0].id}`;
   const likeResponse = useSongLike(userResponse.user?.sub as string, itemId)
@@ -69,14 +88,71 @@ if (isLoading || userResponse.isLoading || likeResponse.isLoading) {
     return (
       <Layout title={song?.title}>
         <Desktop>
-          <div>
-          <PageContainer>
-            <SongPageHeader title={song?.title} artist={formatSongArtistLinksHtml(song?.artist)}/>
-              <SongLikes user={userResponse.user} song={song} isSongLiked={likeResponse.isLiked}/>
-              <SocialShare />
-              <SongContentContainer>
-                <Stack direction="horizontal" gap={5} style={{ padding: "2em" }}>
-                    <MediaPlayerContainer>
+          <Container style={{paddingBottom: "3rem"}}>
+            <Row>
+              <Col>
+                <NavigationContainer>
+                  <Container fluid>
+                  <Row>
+                    <Col>
+                    {lastSong && (
+                      <p>Previous Song</p>
+                    )}
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <ArrowContainer>
+                        {lastSong && (
+                          <NextLink href={`/artists/${lastSong?.artist[0].slug}/${lastSong?.slug}`}>
+                            <FontAwesomeIcon icon={faArrowLeft} size="3x"/>
+                          </NextLink>
+                        )}
+                      </ArrowContainer>
+                    </Col>
+                  </Row>
+                  </Container>
+                </NavigationContainer>
+              </Col>
+              <Col md={8}>
+                <div>
+                  <SongPageHeader title={song?.title} artist={formatSongArtistLinksHtml(song?.artist)}/>
+                  <SongLikes user={userResponse.user} song={song} isSongLiked={likeResponse.isLiked}/>
+                  <SocialShare />
+                </div>
+              </Col>
+              <Col>
+              <NavigationContainer>
+                  <Container fluid>
+                  <Row>
+                    <Col>
+                    {nextSong && (
+                      <p>Next Song</p>
+                    )}
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <ArrowContainer>
+                      {nextSong && (
+                        <NextLink href={`/artists/${nextSong?.artist[0].slug}/${nextSong?.slug}`}>
+                          <FontAwesomeIcon icon={faArrowRight} size="3x"/>
+                        </NextLink>
+                      )}
+                      </ArrowContainer>
+                    </Col>
+                  </Row>
+                  </Container>
+                </NavigationContainer>
+              </Col>
+            </Row>
+            <Container style={{paddingRight: "10%", paddingLeft: "10%", marginTop: "2rem"}}>
+            <Row>
+              <Col>
+              <Row>
+                <Col>
+                  <div style={{display: "flex", justifyContent: "center"}}>
+                    <div>
                       <MediaPlayer platform={song?.platform?.name} mediaUrl={song?.url} title={song?.title} mediaId={song?.platformTrackId}/>
                       <SongDetails song={song}/>
                       <HorizontalDivider />
@@ -90,23 +166,35 @@ if (isLoading || userResponse.isLoading || likeResponse.isLoading) {
                             </div>
                         </Stack>
                       </div>
-                  </MediaPlayerContainer>
-                  <div style={{ height: "70%"}}>
-                    Contains a loop of
+                    </div>
                   </div>
-                  <MediaPlayerContainer>
-                    <MediaPlayer platform={song?.loop[0]?.platform?.name} mediaUrl={song?.loop[0]?.url} title={song?.loop[0]?.title} mediaId={song?.loop[0]?.platform?.trackId}/>
-                    <LoopDetails loop={song?.loop[0]} startTimeSeconds={song?.loopStartTimeSeconds}/>
-                  </MediaPlayerContainer>
-                </Stack>
-              </SongContentContainer>
-              
-          </PageContainer>
-          </div>
+                </Col>
+              </Row>
+              </Col>
+              <Col md={1} style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                  <div>
+                    <p style={{textAlign: "center"}}>Contains a loop of</p>
+                  </div>
+              </Col>
+              <Col>
+              <Row>
+                <Col>
+                  <div style={{display: "flex", justifyContent: "center"}}>
+                    <div>
+                  <MediaPlayer platform={song?.loop[0]?.platform?.name} mediaUrl={song?.loop[0]?.url} title={song?.loop[0]?.title} mediaId={song?.loop[0]?.platform?.trackId}/>
+                  <LoopDetails loop={song?.loop[0]} startTimeSeconds={song?.loopStartTimeSeconds}/>
+                  </div>
+                  </div>
+                </Col>
+              </Row>
+              </Col>
+            </Row>
+              </Container>
+            </Container>
         </Desktop>
         <Mobile>
           <MobilePageContainer>
-              <SongPageHeader title={song?.title} artist={formatSongArtistLinksHtml(song?.artist)}/>
+                <SongPageHeader title={song?.title} artist={formatSongArtistLinksHtml(song?.artist)}/>
                 <SongLikes user={userResponse.user} song={song} isSongLiked={likeResponse.isLiked}/>
                   <SocialShare />
                   {/* <HorizontalDivider />
