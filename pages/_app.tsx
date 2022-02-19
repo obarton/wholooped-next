@@ -1,15 +1,15 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import type { AppProps } from 'next/app'
-import Layout from '../components/Layout'
 import { UserProvider } from '@auth0/nextjs-auth0';
 import Amplify from 'aws-amplify'
 import config from "../aws-exports"
 import { getAmplifyEndpoints } from '../helper/amplify';
 import { toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
 import Footer from '../components/Footer';
 import styled from 'styled-components';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 const stage = process.env.STAGE as string;
 const endpoints = getAmplifyEndpoints(stage)
@@ -32,7 +32,22 @@ const FooterWrapper = styled.div`
   bottom: 0;
 `
 
-function App({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps } : AppProps) {
+  const router = useRouter()
+  
+  useEffect(() => {
+    import('react-facebook-pixel')
+      .then((x) => x.default)
+      .then((ReactPixel) => {
+        ReactPixel.init('1953135531530233')
+        ReactPixel.pageView()
+
+        router.events.on('routeChangeComplete', () => {
+          ReactPixel.pageView()
+        })
+      })
+  }, [router.events])
+
   return (
     <UserProvider>
         <AppContainer>
