@@ -25,27 +25,26 @@ const StyledLandingText = styled.h1`
 
 const fadeImages = [
   {
-    url: "https://images.ctfassets.net/vwlltmjzgrb5/1LTavRNkjzLIO7dzXvXIGA/9e28aaefa4d6a9665d5e80001e4571e6/Screwed_Soul_Cover_2048x.png?w=400&h=400&q=50&fm=webp",
+    url: "https://images.ctfassets.net/vwlltmjzgrb5/1LTavRNkjzLIO7dzXvXIGA/9e28aaefa4d6a9665d5e80001e4571e6/Screwed_Soul_Cover_2048x.png?w=400&h=400&q=100&fm=webp",
   },
   {
-    url: "https://images.ctfassets.net/vwlltmjzgrb5/50h9NnH1UeH8cunIIG5bkN/dd4678bc8a3ff404530183b2096c9814/Kingsway_Music_Library_-_Coop_The_Truth_Sample_Pack_1024x1024.jpg?w=400&h=400&q=50&fm=webp",
+    url: "https://images.ctfassets.net/vwlltmjzgrb5/50h9NnH1UeH8cunIIG5bkN/dd4678bc8a3ff404530183b2096c9814/Kingsway_Music_Library_-_Coop_The_Truth_Sample_Pack_1024x1024.jpg?w=400&h=400&q=100&fm=webp",
   },
   {
-    url: "https://images.ctfassets.net/vwlltmjzgrb5/3ECLr2WC4aLCqmzXhVaBQM/757ddf167efe601ff9735d801e548f0c/VV_sr2_900x.jpg?w=400&h=400&q=50&fm=webp",
+    url: "https://images.ctfassets.net/vwlltmjzgrb5/3ECLr2WC4aLCqmzXhVaBQM/757ddf167efe601ff9735d801e548f0c/VV_sr2_900x.jpg?w=400&h=400&q=100&fm=webp",
   },
   {
-    url: "https://images.ctfassets.net/vwlltmjzgrb5/1sEGczV8ALvBDhDhV0QZhG/5bab05757b037d18f5c77b5e17e22f0b/1534525738.jpg?w=400&h=400&q=50&fm=webp"
+    url: "https://images.ctfassets.net/vwlltmjzgrb5/1sEGczV8ALvBDhDhV0QZhG/5bab05757b037d18f5c77b5e17e22f0b/1534525738.jpg?w=400&h=400&q=100&fm=webp"
   }
 ];
 const Home = ({ songs, loopPacks }: any) => {
   const landingText = "Discover loops and sound packs used in today's songs.";
-  const landingImageSrc = "https://images.ctfassets.net/vwlltmjzgrb5/1LTavRNkjzLIO7dzXvXIGA/9e28aaefa4d6a9665d5e80001e4571e6/Screwed_Soul_Cover_2048x.png?w=600&h=600&q=50&fm=webp";
 
   return (
     <Layout title={Site.Description}>
      <section>
       <Desktop>
-          <Container fluid>
+          <Container fluid style={{paddingBottom: "4rem"}}>
             <Row >
               <Col xs={6} md={6}>
                   <Row>
