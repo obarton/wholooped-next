@@ -100,9 +100,7 @@ const Home = ({ songs, loopPacks }: any) => {
                                const primaryText = song.title;
                                       
                                return (
-                                 <NextLink key={i}  style={{color: "black"}} href={"/app"}>
-                                   <AlbumCard title={primaryText} secondaryText={secondaryText} imageSrc={image} altText={altText}/>
-                                 </NextLink>
+                                   <AlbumCard url={"/app"} key={i}  title={primaryText} secondaryText={secondaryText} imageSrc={image} altText={altText}/>
                                )
                            })}
                        </Carousel>
@@ -122,9 +120,7 @@ const Home = ({ songs, loopPacks }: any) => {
                               const primaryText = loopPack.title;
                                       
                               return (
-                                <NextLink key={i}  style={{color: "black"}} href={"/app"}>
-                                  <AlbumCard title={primaryText} secondaryText={secondaryText} imageSrc={image} altText={altText}/>
-                                </NextLink>
+                                  <AlbumCard key={loopPack.title} url={"/app"} title={primaryText} secondaryText={secondaryText} imageSrc={image} altText={altText}/>
                               )
                           })}
                       </Carousel>
@@ -133,7 +129,7 @@ const Home = ({ songs, loopPacks }: any) => {
                 <div style={{marginBottom: "3rem", textAlign: "center"}}>
                   <h2>Database</h2>
                   <p style={{fontSize: "1.5rem", color: Color.SECONDARY_TEXT}}>Contribute to our community-driven database of loops and sample libraries and help credit the loop makers in today&apos;s music industry.</p>
-                  <Button size="lg" onClick={(e) => router.push(`/app/add-a-song`)}>Add a song</Button>
+                  <Button size="lg" onClick={(e) => router.push(`/app`)}>Add a song</Button>
                 </div>
                 <div style={{marginBottom: "3rem", textAlign: "center"}}>
                   <h2>Community</h2>
@@ -199,9 +195,7 @@ const Home = ({ songs, loopPacks }: any) => {
                                const primaryText = song.title;
                                       
                                return (
-                                 <NextLink key={i}  style={{color: "black"}} href={"/app"}>
-                                   <AlbumCard title={primaryText} secondaryText={secondaryText} imageSrc={image} altText={altText}/>
-                                 </NextLink>
+                                <AlbumCard key={i} url={"/app"} title={primaryText} secondaryText={secondaryText} imageSrc={image} altText={altText}/>
                                )
                            })}
                       </Carousel>
@@ -221,9 +215,7 @@ const Home = ({ songs, loopPacks }: any) => {
                               const primaryText = loopPack.title;
                                       
                               return (
-                                <NextLink key={i}  style={{color: "black"}} href={"/app"}>
-                                  <AlbumCard title={primaryText} secondaryText={secondaryText} imageSrc={image} altText={altText}/>
-                                </NextLink>
+                                  <AlbumCard key={i} url={"/app"} title={primaryText} secondaryText={secondaryText} imageSrc={image} altText={altText}/>
                               )
                           })}
                       </Carousel>
@@ -232,7 +224,7 @@ const Home = ({ songs, loopPacks }: any) => {
                 <div style={{marginBottom: "3rem", textAlign: "center"}}>
                   <h2>Database</h2>
                   <p style={{fontSize: "1.5rem", color: Color.SECONDARY_TEXT}}>Contribute to our community-driven database of loops and sample libraries and help credit the loop makers in today&apos;s music industry.</p>
-                  <Button size="lg" onClick={(e) => router.push(`/app/add-a-song`)}>Add a song</Button>
+                  <Button size="lg" onClick={(e) => router.push(`/app`)}>Add a song</Button>
                 </div>
                 <div style={{marginBottom: "3rem", textAlign: "center"}}>
                   <h2>Community</h2>
