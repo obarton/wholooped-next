@@ -85,16 +85,14 @@ const resizeHeaderImageFromUrl = (url: string) => {
 
 const Loopmaker = ({ loopmaker, songs }: LoopmakerPageProps) => {
   const {name, username, bio, websiteUrl, twitterUrl, facebookUrl, instagramUrl} = loopmaker;
-  const { userProfile, isLoading, isError} = useUserProfile()
+  const { userProfile, isLoading, isError, isAuthenticated} = useUserProfile()
 
 
   const avatarSrc = resizeImageFromUrl(loopmaker?.profilePhoto?.url)
   const headerSrc = resizeHeaderImageFromUrl(loopmaker?.headerPhoto?.url)
+  
 
-  const width = 1024;
-  const height = 512;
-
-  if (isError) { 
+  if (isError && isAuthenticated) { 
     return (
         <Layout>
         <div>Failed to load</div>
@@ -145,7 +143,7 @@ if (isLoading) {
                         <Image alt="header-photo" src={headerSrc} fluid style={{width: "100%", objectFit: "cover"}}/>
                     </div>
                     ) :(
-                        <div style={{height: "325px", width: "1024px"}}>
+                        <div style={{height: "400px", width: "1024px"}}>
                         </div>
                     )}    
                 </HeaderImageContainer>

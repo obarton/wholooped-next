@@ -3,13 +3,14 @@ import useSWR from "swr"
 import { amplifyApiFetcher } from "../helper/fetcher"
 
 export function useUserProfile () {
-  const { user } = useUser()
-  const { data, error } = useSWR({apiName: "UserProfileManagementApi", endpoint: `/userProfile/auth/${user?.sub as string}`}, amplifyApiFetcher)
+  const userData = useUser()
+  const { data, error } = useSWR({apiName: "UserProfileManagementApi", endpoint: `/userProfile/auth/${userData?.user?.sub as string}`}, amplifyApiFetcher)
 
   return {
-    user,
+    user: userData.user,
     userProfile: data,
-    isLoading: !error && !data,
+    isAuthenticated: !userData.isLoading && userData.user,
+    isLoading: (!error && !data && userData.isLoading),
     isError: error
   }
 }

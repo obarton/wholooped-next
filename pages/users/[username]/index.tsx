@@ -24,7 +24,7 @@ const User = () => {
     )
 }
 
-if (isLoading || loggedInUserProfile.isLoading) { 
+if ((isLoading || loggedInUserProfile.isLoading) && loggedInUserProfile.isAuthenticated) { 
     return (
         <Layout>
             <Spinner />
