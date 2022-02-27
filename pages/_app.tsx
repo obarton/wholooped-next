@@ -26,6 +26,12 @@ Amplify.configure({
   ...config, 
   API: {
     endpoints
+  },
+  Storage: {
+    AWSS3: {
+        bucket: 'dev-wholooped-graphql-appsy-uploadsbucketc4b27cc7-h3zdu4v11oyi',
+        region: 'us-west-2'
+    }
   }
 });
 
