@@ -4,12 +4,17 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap"
 import { useRouter } from "next/router";
 import 'react-h5-audio-player/lib/styles.css';
 import "antd/dist/antd.css";
+import styled from "styled-components"
 
-const CreateNFT = () => {
+const NFTSubmitted = () => {
      const router = useRouter()
+     const NFTSubmittedPageContainer = styled.div`
+        min-height: 75vh;
+    `
 
   return (
     <Layout>
+        <NFTSubmittedPageContainer>
         <Container style={{paddingLeft: "15%", paddingRight: "15%", marginTop: "2rem", marginBottom: "2rem"}}>
             <Row>
                 <Col>
@@ -30,8 +35,9 @@ const CreateNFT = () => {
             </Form.Group>
             </Row>
         </Container>
+        </NFTSubmittedPageContainer>
     </Layout>
   )
 }
 
-export default CreateNFT
+export default NFTSubmitted

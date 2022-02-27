@@ -8,6 +8,8 @@ import "antd/dist/antd.css";
 import AWS from 'aws-sdk'
 import { API } from 'aws-amplify';
 import { useUserProfile } from '../hooks/useUserProfile';
+import Spinner from '../components/Spinner';
+import { useRouter } from "next/router";
 
 const { Step } = Steps;
 const S3_BUCKET = process.env.NEXT_AWS_S3_BUCKET as string;
@@ -35,8 +37,9 @@ const CreateNFT = () => {
     const [artworkPreview, setArtworkPreview] = useState();
     const [loopPreview, setLoopPreview] = useState()
     const [progress , setProgress] = useState(0);
-    const headerPhotoInputRef = useRef()
-    const { user, userProfile, isLoading, isError } = useUserProfile()
+    const { user, userProfile} = useUserProfile()
+    const [isLoading, setIsLoading] = useState(false)
+    const router = useRouter()
 
     useEffect(() => {
       console.log(`user ${JSON.stringify(user, null, 2)}`)
@@ -84,29 +87,36 @@ const CreateNFT = () => {
 
     const onFormSubmit = async (e: any) => {
         e.preventDefault()
-        console.log(`contractName ${contractName}`)
-        console.log(`description ${description}`)
-        console.log(`symbol ${symbol}`)
-        console.log(`selectedArtworkFile ${selectedArtworkFile}`)
-        console.log(`selectedLoopFile ${selectedLoopFile}`)
         
-        const submitNftResponse = await API.post("Web3Api", "/nft/submit", {
-            body: {
-                userId: user?.sub,
-                displayName: userProfile?.displayName,
-                contractName,
-                description,
-                symbol
-            }
-          });
-        
-        const { id } = submitNftResponse;
+        try {
+            setIsLoading(true)
+            const submitNftResponse = await API.post("Web3Api", "/nft/submit", {
+                body: {
+                    userId: user?.sub,
+                    displayName: userProfile?.displayName,
+                    contractName,
+                    description,
+                    symbol
+                }
+            });
+    
+            console.log(`submitNftResponse ${JSON.stringify(submitNftResponse, null, 2)}`)
+            
+            const { id } = submitNftResponse;
+    
+            const artworkKey = `${user?.sub}-${id}-${contractName}-${(selectedArtworkFile as any)?.name}`;
+            const loopKey = `${user?.sub}-${id}-${contractName}-${(selectedLoopFile as any)?.name}`;
+    
+            await uploadFileToS3(selectedArtworkFile, artworkKey);
+            await uploadFileToS3(selectedLoopFile, loopKey).then(() => router.push(`/nft-submitted`));
 
-        const artworkKey = `${user?.sub}-${id}-${contractName}-${(selectedArtworkFile as any)?.name}`;
-        const loopKey = `${user?.sub}-${id}-${contractName}-${(selectedLoopFile as any)?.name}`;
-
-        await uploadFileToS3(selectedArtworkFile, artworkKey);
-        await uploadFileToS3(selectedLoopFile, loopKey);
+            
+        }
+        catch(err) {
+            console.log(`err ${err}`)
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     const onNextClick = () => {
@@ -280,6 +290,11 @@ const CreateNFT = () => {
             case 2: 
             return (
                 <div>
+                    { isLoading ? (
+                        <>
+                            <Spinner />
+                        </>
+                    ): (
                     <Descriptions
                     bordered
                     column={{ xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 }}
@@ -298,6 +313,7 @@ const CreateNFT = () => {
                             </div>
                         </Descriptions.Item>
                     </Descriptions>
+                )}
                 </div>
             )
             default:
@@ -333,11 +349,13 @@ const CreateNFT = () => {
             <Row>
             <Form.Group style={{marginTop: "1em"}}>
                 <div style={{display: "flex", justifyContent: "center"}}>
-                    <Stack direction="horizontal" gap={2}>
-                        { (step !== 0) && <Button onClick={() => onBackClick()}>Back</Button> }
-                        { (step !== 2) && <Button onClick={() => onNextClick()}>Next</Button> }
-                        { (step === 2) && <Button type="submit">Submit</Button> }
-                    </Stack>
+                    {!isLoading && (
+                        <Stack direction="horizontal" gap={2}>
+                            { (step !== 0) && <Button onClick={() => onBackClick()}>Back</Button> }
+                            { (step !== 2) && <Button onClick={() => onNextClick()}>Next</Button> }
+                            { (step === 2) && <Button type="submit">Submit</Button> }
+                        </Stack>
+                    )}
                 </div>
             </Form.Group>
             </Row>
