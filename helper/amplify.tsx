@@ -56,6 +56,10 @@ const devEndpoints = [
       name: "LoopApi",
       endpoint: "https://1vmjdwynd3.execute-api.us-west-2.amazonaws.com"
     },
+    {
+      name: "Web3Api",
+      endpoint: "https://lle2p8z2u6.execute-api.us-west-2.amazonaws.com"
+    }
   ]
 
 const prodEndpoints = [
