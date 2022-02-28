@@ -46,12 +46,16 @@ const Sidebar = () => {
             {menuItems.map(menuItem => {
                 const { title, url } = menuItem;
 
-                if (menuItem.title == "NFT") {
-                    return (
-                        <StyledLink href={url} key={menuItem.title}>
-                            <MenuItem>{title} <Chip label="New" color="primary" size="small"/></MenuItem>
-                        </StyledLink>
-                    )
+                if (menuItem.title == "NFT" && userProfile?.id) {
+                    if( userProfile?.id == 'aefa1b26-0d4b-41b3-9f03-39aad1a1e080' || userProfile?.id == '7efc8460-fb27-4f60-b74a-fb02586a2f66')
+                    {
+                        return (
+                            <StyledLink href={url} key={menuItem.title}>
+                                <MenuItem>{title} <Chip label="New" color="primary" size="small"/></MenuItem>
+                            </StyledLink>
+                        )
+                    }
+                    return <></>
                 }
 
                 return(
