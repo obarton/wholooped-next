@@ -95,5 +95,10 @@ export const desktopLoopmakerMenuItems = [
       title: "Saved",
       url: "/app/saved",
       authRequired: true
+    },
+    {
+      title: "NFT",
+      url: "/nft",
+      authRequired: true
     }
   ]

@@ -5,6 +5,7 @@ import Stack from "react-bootstrap/Stack"
 import styled from "styled-components"
 import { defaultDesktopMenuItems, desktopLoopmakerMenuItems } from '../helper/menu'
 import { useUserProfile } from '../hooks/useUserProfile'
+import Chip from '@mui/material/Chip';
 
 const SetupProfileButton = styled.button`
     height: 40px;
@@ -45,9 +46,21 @@ const Sidebar = () => {
             {menuItems.map(menuItem => {
                 const { title, url } = menuItem;
 
+                if (menuItem.title == "NFT" && userProfile?.id) {
+                    if( userProfile?.id == 'aefa1b26-0d4b-41b3-9f03-39aad1a1e080' || userProfile?.id == '7efc8460-fb27-4f60-b74a-fb02586a2f66')
+                    {
+                        return (
+                            <StyledLink href={url} key={menuItem.title}>
+                                <MenuItem>{title} <Chip label="New" color="primary" size="small"/></MenuItem>
+                            </StyledLink>
+                        )
+                    }
+                    return <></>
+                }
+
                 return(
                     <StyledLink href={url} key={menuItem.title}>
-                        <MenuItem>{title}</MenuItem>
+                            <MenuItem>{title}</MenuItem>
                     </StyledLink>
                 )
             })}
