@@ -98,7 +98,7 @@ function NFTBalance() {
                 <Row style={{padding: "2rem"}}>
                     <Col>
                     <div>
-                        <h2>Collectible NFTs</h2>
+                        <h2>My Loop NFTs</h2>
                     </div>
                     </Col>
                     <Col>
@@ -118,13 +118,13 @@ function NFTBalance() {
                     </div>
                     </Col>
                 </Row>
-                <Row>
+                {/* <Row>
                     <Col>
                         <div style={{textAlign: "center", marginBottom: "2rem"}}>
                             <Button onClick={()=> router.push(`/createnft`)}>Create New NFT</Button> 
                         </div>
                     </Col>
-                </Row>
+                </Row> */}
                 <Row>
                     <Col>
 				<Skeleton loading={!NFTBalances?.result}>

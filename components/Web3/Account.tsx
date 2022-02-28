@@ -27,15 +27,15 @@ function Account() {
   const { authenticate, isAuthenticated, logout, account, chainId } = useMoralis();
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-//   useEffect(() => {
-//     console.log(`authenticate ${authenticate}`)
-//     console.log(`isAuthenticated ${isAuthenticated}`)
-//     console.log(`account ${account}`)
-//     console.log(`chainId ${chainId}`)
-//   }, [authenticate, isAuthenticated, account, chainId])
+  useEffect(() => {
+    console.log(`Account authenticate ${authenticate}`)
+    console.log(`Account isAuthenticated ${isAuthenticated}`)
+    console.log(`Account account ${account}`)
+    console.log(`Account chainId ${chainId}`)
+  }, [authenticate, isAuthenticated, account, chainId])
   
 
-  if (!isAuthenticated) {
+  if (!isAuthenticated || !account) {
     return (
       <div style={styles.account} onClick={() => authenticate({ signingMessage: "Welcome to WhoLooped NFTs!" })}>
         <p style={{color: "#21BF96", margin: "0"}}>Connect Wallet</p>

@@ -98,7 +98,7 @@ export const desktopLoopmakerMenuItems = [
     },
     {
       title: "NFT",
-      url: "/create-nft",
+      url: "/nft",
       authRequired: true
     }
   ]
