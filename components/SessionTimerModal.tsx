@@ -35,6 +35,7 @@ const SessionTimerModal = () => {
 
             if(currentDate < browseLimitExpirationDate) {
                 console.log(`browse limit not yet expired`)
+                setShow(true)
                 setBrowseLimitReached(true)
                 return
             }
@@ -108,7 +109,7 @@ const SessionTimerModal = () => {
         keyboard={false}
     >
         <Modal.Header>
-        <Modal.Title>Login to continue browsing.</Modal.Title>
+        <Modal.Title>Login to continue browsing</Modal.Title>
         </Modal.Header>
         <Modal.Body>
         Login or create a free account to continue browsing Who Looped!
