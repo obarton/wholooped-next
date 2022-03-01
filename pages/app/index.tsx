@@ -1,6 +1,5 @@
 import React from 'react';
 import Dashboard from '../../components/Dashboard';
-import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import Layout from '../../components/Layout';
 import { PageTitles } from "../../utils/page"
 
@@ -13,4 +12,4 @@ const App = () => {
   )
 };
 
-export default withPageAuthRequired(App);
+export default App;
