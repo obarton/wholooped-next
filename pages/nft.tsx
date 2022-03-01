@@ -24,9 +24,7 @@ function nftBalance() {
                     }
                     key="1"
                     >
-                    <Web3Layout>
                         <NFTBalance />
-                    </Web3Layout>
                     </TabPane>
                     <TabPane
                     tab={
