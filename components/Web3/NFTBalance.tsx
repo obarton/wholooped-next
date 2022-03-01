@@ -136,11 +136,12 @@ function NFTBalance() {
                         
                         )}
 
+                    <Row style={{marginBottom: "2rem", padding: "2em", borderRadius: "14px", backgroundColor: "white"}}> 
 					{NFTBalances?.result ? (
 						NFTBalances.result.sort((a, b) => (a.token_id > b.token_id) ? 1 : -1).filter(nft => nft.token_address.toLowerCase() === CONTRACT_ADDRESS.toLowerCase()).map((nft, index) => {
                             return (
-                            <Row key={index} style={{marginBottom: "2rem", padding: "2em", borderRadius: "14px", backgroundColor: "white"}}> 
-                                <Col key={index} lg={4}>
+                            
+                                <Col key={index} lg={6} style={{marginBottom: "2rem"}}>
                                 <Card
                                     hoverable
                                     key={index}
@@ -201,32 +202,14 @@ function NFTBalance() {
                                     { nft.metadata?.animation_url &&  <AudioPlayer style={{width: "100%", marginTop: "2em"}} src={nft.metadata?.animation_url} customAdditionalControls={[]} /> }
                                 </Card>
                                 </Col>
-                                <Col lg={8}>
-                                    <div>
-                                        <Descriptions
-                                        // title="NFT Details"
-                                        bordered
-                                        column={{ xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 }}
-                                        >
-                                        <Descriptions.Item label="Address">{nft.token_address}</Descriptions.Item>
-                                        <Descriptions.Item label="Owner">{nft.owner_of}</Descriptions.Item>
-                                        <Descriptions.Item label="ID">{nft.token_id}</Descriptions.Item>
-                                        <Descriptions.Item label="Name">{nft.metadata?.name}</Descriptions.Item>
-                                        <Descriptions.Item label="Description">{nft.metadata?.description}</Descriptions.Item>
-                                        {/* <Descriptions.Item label="Amount">{nft.amount}</Descriptions.Item> */}
-                                        </Descriptions>
-                                    </div>
-                                    {/* <div style={{textAlign: "center", marginTop: "2rem"}}>
-                                    <Button onClick={() => router.push(`/mint?nftId=${nft.token_id}`)}>Mint</Button>
-                                    </div> */}
-                                </Col>
-                            </Row>
+
                             )
                         }
                         )
 					) : (
 						<>NO NFTs found!</>
 					)}
+                   </Row>
                     </Container>
 				</Skeleton>
                 </Col>
