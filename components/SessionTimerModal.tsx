@@ -6,6 +6,7 @@ import { Modal, Button, Container, Row, Col } from 'react-bootstrap';
 import NextLink from "../components/NextLink"
 import { useRouter } from "next/router";
 import styled from "styled-components";
+import { Desktop, Mobile} from "./Responsive"
 
 const BROWSING_TIME_LIMIT = 30 * 1000;
 
@@ -117,6 +118,8 @@ const SessionTimerModal = () => {
     
 
   return (
+      <>
+      <Desktop>
         <Modal
         show={show}
         onHide={handleClose}
@@ -149,6 +152,43 @@ const SessionTimerModal = () => {
         </NextLink>
         </Modal.Footer>
     </Modal>
+    </Desktop>
+    <Mobile>
+        <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+        centered
+    >
+        <Modal.Header>
+        <Modal.Title>Login to continue browsing</Modal.Title>
+        </Modal.Header>
+        <Modal.Body style={{fontSize: "1rem"}}>
+            <Container>
+                <Row>
+                    <Col>
+                        You have reached your browse limit for today.
+                    </Col>
+                </Row>
+                <Row style={{marginTop: "1rem"}}>
+                    <Col>
+                        <StyledLink href="/api/auth/login">Login</StyledLink> or <StyledLink href="/api/auth/login">create a free account</StyledLink> to continue browsing WhoLooped!
+                    </Col>
+                </Row>  
+            </Container>
+        </Modal.Body>
+        <Modal.Footer>
+        <NextLink href="/api/auth/login">                   
+            <Button variant="primary">Login</Button>
+        </NextLink>
+        <NextLink href="/api/auth/login">
+            <Button variant="success">Sign Up</Button>
+        </NextLink>
+        </Modal.Footer>
+    </Modal>
+    </Mobile>
+    </>
   )
 }
 

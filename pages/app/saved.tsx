@@ -40,6 +40,7 @@ const Likes = () => {
     if (!isLoading && !user) { 
         return (
             <Layout title={PageTitles.Saved}>
+                <Desktop>
                 <PageContainer>
                         <SidebarWrapper>
                             <Container style={{padding: "68px"}}>
@@ -52,6 +53,19 @@ const Likes = () => {
                             </Container>
                         </SidebarWrapper>
                 </PageContainer>
+                </Desktop>
+                <Mobile>
+                    <MobilePageContainer>
+                    <div style={{textAlign: "center", minHeight: "70vh"}}>
+                    <h2>Saved</h2>
+                        <div style={{marginTop: "2rem"}}>
+                            <NextLink href="/api/auth/login">
+                                <Button>Login to save songs!</Button>  
+                            </NextLink>  
+                        </div> 
+                        </div>     
+                    </MobilePageContainer>
+            </Mobile>
             </Layout>
         )
     }
