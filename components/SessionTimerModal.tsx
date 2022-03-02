@@ -1,23 +1,37 @@
 import React from 'react'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useUserProfile } from '../hooks/useUserProfile';
 import { useIdleTimer } from 'react-idle-timer'
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Container, Row, Col } from 'react-bootstrap';
 import NextLink from "../components/NextLink"
+import { useRouter } from "next/router";
+import styled from "styled-components";
+
+export const StyledLink = styled.a`
+    text-decoration: none;
+`
 
 const SessionTimerModal = () => {
     const [show, setShow] = useState(false);
     const [browseLimitReached, setBrowseLimitReached] = useState(false)
     const userProfileData = useUserProfile()
+    const router = useRouter();
+
+    const shouldShow = useCallback(() => {
+        return !userProfileData.user && !userProfileData.isLoading && router.pathname !== "/"
+    }, [userProfileData, router])
 
     const handleClose = () =>  {
         setShow(false)
     };
     
-    const handleShow = () => {
-        setShow(true)
-        setBrowseLimitReached(true)
-    };
+    const handleShow = useCallback(() => {
+        const shouldShowResult = shouldShow();
+        if(shouldShowResult) {
+            setShow(true)
+            setBrowseLimitReached(true)
+        }
+    }, [setShow, setBrowseLimitReached, shouldShow ]);
 
     useEffect(() => {
         //setBrowseLimitReached(JSON.parse(window.localStorage.getItem('browseLimitExpiration') as string));
@@ -35,8 +49,7 @@ const SessionTimerModal = () => {
 
             if(currentDate < browseLimitExpirationDate) {
                 console.log(`browse limit not yet expired`)
-                setShow(true)
-                setBrowseLimitReached(true)
+                handleShow()
                 return
             }
 
@@ -44,7 +57,7 @@ const SessionTimerModal = () => {
         } else {
             console.log(`browse limit not yet set`)
         }
-      }, []);
+      }, [userProfileData, handleShow]);
 
     useEffect(() => {
         const today = new Date()
@@ -62,7 +75,7 @@ const SessionTimerModal = () => {
       console.log('user is idle', event)
       console.log('last active', getLastActiveTime())
       console.log('total active time', totalActiveTime)
-      if(totalActiveTime > 10000 && !show && !userProfileData.user && !userProfileData.isLoading) {
+      if(totalActiveTime > 10000 && !show && shouldShow()) {
         console.log(`ACTIVE TIME LIMIT REACHED`)
         handleShow()
       }
@@ -75,7 +88,7 @@ const SessionTimerModal = () => {
       console.log('time remaining', getRemainingTime())
       console.log('total active time', totalActiveTime)
   
-      if(totalActiveTime > 10000 && !show && !userProfileData) {
+      if(totalActiveTime > 10000 && !show && shouldShow()) {
         console.log(`ACTIVE TIME LIMIT REACHED`)
         handleShow()
       }
@@ -86,7 +99,7 @@ const SessionTimerModal = () => {
       console.log('user did something', event)
       console.log('total active time', totalActiveTime)
   
-      if(totalActiveTime > 10000 && !show && !userProfileData) {
+      if(totalActiveTime > 10000 && !show && shouldShow()) {
         console.log(`ACTIVE TIME LIMIT REACHED`)
         handleShow()
       }
@@ -111,8 +124,19 @@ const SessionTimerModal = () => {
         <Modal.Header>
         <Modal.Title>Login to continue browsing</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-        Login or create a free account to continue browsing Who Looped!
+        <Modal.Body style={{fontSize: "1rem"}}>
+            <Container>
+                <Row>
+                    <Col>
+                        You have reached your browse limit for today.
+                    </Col>
+                </Row>
+                <Row style={{marginTop: "1rem"}}>
+                    <Col>
+                        <StyledLink href="/api/auth/login">Login</StyledLink> or <StyledLink href="/api/auth/login">create a free account</StyledLink> to continue browsing WhoLooped!
+                    </Col>
+                </Row>  
+            </Container>
         </Modal.Body>
         <Modal.Footer>
         <NextLink href="/api/auth/login">                   
