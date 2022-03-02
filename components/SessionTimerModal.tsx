@@ -7,6 +7,8 @@ import NextLink from "../components/NextLink"
 import { useRouter } from "next/router";
 import styled from "styled-components";
 
+const BROWSING_TIME_LIMIT = 30 * 1000;
+
 export const StyledLink = styled.a`
     text-decoration: none;
 `
@@ -75,7 +77,7 @@ const SessionTimerModal = () => {
       console.log('user is idle', event)
       console.log('last active', getLastActiveTime())
       console.log('total active time', totalActiveTime)
-      if(totalActiveTime > 10000 && !show && shouldShow()) {
+      if(totalActiveTime > BROWSING_TIME_LIMIT && !show && shouldShow()) {
         console.log(`ACTIVE TIME LIMIT REACHED`)
         handleShow()
       }
@@ -88,7 +90,7 @@ const SessionTimerModal = () => {
       console.log('time remaining', getRemainingTime())
       console.log('total active time', totalActiveTime)
   
-      if(totalActiveTime > 10000 && !show && shouldShow()) {
+      if(totalActiveTime > BROWSING_TIME_LIMIT && !show && shouldShow()) {
         console.log(`ACTIVE TIME LIMIT REACHED`)
         handleShow()
       }
@@ -99,7 +101,7 @@ const SessionTimerModal = () => {
       console.log('user did something', event)
       console.log('total active time', totalActiveTime)
   
-      if(totalActiveTime > 10000 && !show && shouldShow()) {
+      if(totalActiveTime > BROWSING_TIME_LIMIT && !show && shouldShow()) {
         console.log(`ACTIVE TIME LIMIT REACHED`)
         handleShow()
       }
