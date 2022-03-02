@@ -60,15 +60,7 @@ const Dashboard = () => {
                 { 
                     <div>
                     { 
-                        userProfileData?.userProfile ? 
-                            (
-                                <h2>Hi, { userProfileData?.userProfile?.displayName ? userProfileData?.userProfile?.displayName : "friend"}!</h2>        
-                            ) 
-                            :
-                            (
-                            <h2>Hi, friend!</h2>        
-                            )
-                        
+                        userProfileData?.userProfile && <h2>Hi, { userProfileData?.userProfile?.displayName ? userProfileData?.userProfile?.displayName : "friend"}!</h2>          
                     }
                     </div>
                 } 
@@ -82,14 +74,7 @@ const Dashboard = () => {
             { 
                 <div style={{marginBottom: "1em"}}>
                 {
-                    userProfileData?.userProfile ? 
-                    (
-                        <h3>Hi, { userProfileData?.userProfile?.displayName ? userProfileData?.userProfile?.displayName : "friend"}!</h3>        
-                    ) 
-                    :
-                    (
-                    <h3>Hi, friend!</h3>        
-                    )
+                    userProfileData?.userProfile && <h3>Hi, { userProfileData?.userProfile?.displayName ? userProfileData?.userProfile?.displayName : "friend"}!</h3>
                 }
                 </div>
             }

@@ -3,13 +3,14 @@ import styled from 'styled-components';
 import Layout from "../../components/Layout"
 import SidebarWrapper from "../../components/SidebarWrapper"
 import { Desktop, Mobile } from '../../components/Responsive';
-import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0';
-import { Container } from 'react-bootstrap';
+import { useUser } from '@auth0/nextjs-auth0';
+import { Container, Button } from 'react-bootstrap';
 import { useLikes } from '../../hooks/useLikes';
 import Spinner from '../../components/Spinner';
 import LikesList from '../../components/LikesList';
 import { MobilePageContainer } from '../../components/PageContainer';
 import { PageTitles } from '../../utils/page';
+import NextLink from "../../components/NextLink"
 
 const PageContainer = styled.div`
   position: relative;
@@ -32,6 +33,39 @@ const Likes = () => {
         return (
             <Layout title={PageTitles.Saved}>
                 <Spinner />
+            </Layout>
+        )
+    }
+
+    if (!isLoading && !user) { 
+        return (
+            <Layout title={PageTitles.Saved}>
+                <Desktop>
+                <PageContainer>
+                        <SidebarWrapper>
+                            <Container style={{padding: "68px"}}>
+                            <h2>Saved</h2>
+                            <div style={{marginTop: "1rem"}}>
+                                <NextLink href="/api/auth/login">
+                                    <Button>Login to save songs!</Button>  
+                                </NextLink>  
+                            </div>             
+                            </Container>
+                        </SidebarWrapper>
+                </PageContainer>
+                </Desktop>
+                <Mobile>
+                    <MobilePageContainer>
+                    <div style={{textAlign: "center", minHeight: "70vh"}}>
+                    <h2>Saved</h2>
+                        <div style={{marginTop: "2rem"}}>
+                            <NextLink href="/api/auth/login">
+                                <Button>Login to save songs!</Button>  
+                            </NextLink>  
+                        </div> 
+                        </div>     
+                    </MobilePageContainer>
+            </Mobile>
             </Layout>
         )
     }
@@ -60,4 +94,4 @@ const Likes = () => {
     );
 };
 
-export default withPageAuthRequired(Likes);
+export default Likes;

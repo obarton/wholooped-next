@@ -11,6 +11,7 @@ import Footer from '../components/Footer';
 import styled from 'styled-components';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import SessionTimerModal from '../components/SessionTimerModal';
 
 const APP_ID = process.env.NEXT_PUBLIC_MORALIS_APPLICATION_ID as string;
 const SERVER_URL = process.env.NEXT_PUBLIC_MORALIS_SERVER_URL as string;
@@ -46,7 +47,7 @@ const FooterWrapper = styled.div`
 
 function App({ Component, pageProps } : AppProps) {
   const router = useRouter()
-  
+
   useEffect(() => {
     import('react-facebook-pixel')
       .then((x) => x.default)
@@ -58,6 +59,7 @@ function App({ Component, pageProps } : AppProps) {
           ReactPixel.pageView()
         })
       })
+      console.log(`router.events ${JSON.stringify(router.events)}`)
   }, [router.events])
 
   return (
@@ -65,6 +67,7 @@ function App({ Component, pageProps } : AppProps) {
       <UserProvider>
           <AppContainer>
               <Component {...pageProps} />
+              <SessionTimerModal />
           </AppContainer>
           <FooterWrapper>
             <Footer />

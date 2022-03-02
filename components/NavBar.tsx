@@ -114,7 +114,7 @@ const NavBar = () => {
                     >
                         <Stack direction="horizontal" gap={4}>
                             <StyledLink href="/app/">Browse</StyledLink>
-                            {!user && <StyledLink href="/app/">Add A Song</StyledLink>}
+                            {!user && <StyledLink href="/add-a-song">Add A Song</StyledLink>}
                             {user && <StyledLink onClick={() => setShowAddCreditModal(true)}>Add A Song</StyledLink>}
                             <StyledLink href="http://community.wholooped.com">Community</StyledLink>
                         </Stack>
@@ -193,7 +193,7 @@ const NavBar = () => {
                                 (
                                     mobileMenuItems.filter((i: any) => i.authRequired == false).map((menuItem: any) => {
                                         if (menuItem.title == "Add A Song") {
-                                            return <StyledLink key={menuItem.title} href={`/app`}>{menuItem.title}</StyledLink>
+                                            return <StyledLink key={menuItem.title} href={`/add-a-song`}>{menuItem.title}</StyledLink>
                                         }
 
                                         return (

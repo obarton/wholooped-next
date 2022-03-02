@@ -17,7 +17,7 @@ export const defaultMobileMenuItems = (username: string) => [
     {
       title: "Saved",
       url: "/app/saved",
-      authRequired: true
+      authRequired: false
     },
     {
       title: "Add A Song",
@@ -72,7 +72,7 @@ export const defaultDesktopMenuItems = (username: string) => [
   {
     title: "Saved",
     url: "/app/saved",
-    authRequired: true
+    authRequired: false
   }]
   
 export const desktopLoopmakerMenuItems = [
@@ -94,7 +94,7 @@ export const desktopLoopmakerMenuItems = [
     {
       title: "Saved",
       url: "/app/saved",
-      authRequired: true
+      authRequired: false
     },
     {
       title: "NFT",
