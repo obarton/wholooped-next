@@ -46,7 +46,7 @@ const ContentList = ({ contentList, key }: ContentListProps) => {
                     </div>
                 )
             }
-                <Carousel responsive={responsive} infinite={true}>
+                <Carousel responsive={responsive} infinite={true} autoPlay={false} autoPlaySpeed={100000}>
                 {items.map((item: any) => {
                     const {
                         title, 
@@ -119,7 +119,7 @@ const ContentList = ({ contentList, key }: ContentListProps) => {
                 )
             }
             </div>
-                <Carousel responsive={responsive} infinite={true}>
+            <Carousel responsive={responsive} infinite={true} autoPlay={false} autoPlaySpeed={100000}>
                 {items.map((item: any) => {
                     const {
                         title, 
