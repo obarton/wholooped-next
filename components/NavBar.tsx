@@ -116,7 +116,7 @@ const NavBar = () => {
                             <StyledLink href="/app/">Browse</StyledLink>
                             {!user && <StyledLink href="/add-a-song">Add A Song</StyledLink>}
                             {user && <StyledLink onClick={() => setShowAddCreditModal(true)}>Add A Song</StyledLink>}
-                            <StyledLink href="http://community.wholooped.com">Community</StyledLink>
+                            <a href="https://discord.gg/kZgXCTPPUr"><Button>Join our Discord!</Button></a>
                         </Stack>
                     </Nav>
                     <Stack direction="horizontal" gap={2}>
@@ -205,6 +205,9 @@ const NavBar = () => {
                             }
                         </Stack>
                     </Nav>
+                    </div>
+                    <div style={{marginBottom: "1em"}}>
+                        <a href="https://discord.gg/kZgXCTPPUr"><Button>Join our Discord!</Button></a>
                     </div>
                     <div>
                     <Form className="d-flex" onSubmit={formik.handleSubmit}>

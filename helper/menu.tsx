@@ -9,11 +9,11 @@ export const defaultMobileMenuItems = (username: string) => [
       url: `/users/${username}`,
       authRequired: true
     },
-    {
-      title: "Community",
-      url: "http://community.wholooped.com/",
-      authRequired: false
-    },
+    // {
+    //   title: "Community",
+    //   url: "http://community.wholooped.com/",
+    //   authRequired: false
+    // },
     {
       title: "Saved",
       url: "/app/saved",
@@ -36,11 +36,11 @@ export const mobileLoopmakerMenuItems = [
         url: "/profile/select",
         authRequired: true
       },
-      {
-        title: "Community",
-        url: "http://community.wholooped.com/",
-        authRequired: false
-      },
+      // {
+      //   title: "Community",
+      //   url: "http://community.wholooped.com/",
+      //   authRequired: false
+      // },
       {
         title: "Saved",
         url: "/app/saved",
@@ -64,11 +64,11 @@ export const defaultDesktopMenuItems = (username: string) => [
     url: `/users/${username}`,
     authRequired: true
   },
-  {
-    title: "Community",
-    url: "http://community.wholooped.com/",
-    authRequired: false
-  },
+  // {
+  //   title: "Community",
+  //   url: "http://community.wholooped.com/",
+  //   authRequired: false
+  // },
   {
     title: "Saved",
     url: "/app/saved",
@@ -86,11 +86,11 @@ export const desktopLoopmakerMenuItems = [
       url: "/profile/select",
       authRequired: true
     },
-    {
-      title: "Community",
-      url: "http://community.wholooped.com/",
-      authRequired: false
-    },
+    // {
+    //   title: "Community",
+    //   url: "http://community.wholooped.com/",
+    //   authRequired: false
+    // },
     {
       title: "Saved",
       url: "/app/saved",
