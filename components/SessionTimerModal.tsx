@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import { Desktop, Mobile} from "./Responsive"
 
-const BROWSING_TIME_LIMIT = 30 * 1000;
+const BROWSING_TIME_LIMIT = 60 * 1000;
 
 export const StyledLink = styled.a`
     text-decoration: none;
