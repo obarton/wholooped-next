@@ -18,6 +18,7 @@ export const PageTitles = {
     Genres: "Genres",
     Saved: "Saved",
     LoopPacks: "Loop Packs",
-    Search: "Search"
+    Search: "Search",
+    Rewards: "Rewards",
 } as const;
   

@@ -41,6 +41,10 @@ const devEndpoints = [
       endpoint: "https://rtamputs31.execute-api.us-west-2.amazonaws.com"
     },
     {
+      name: "AccountApi",
+      endpoint: "https://llj1tb48qb.execute-api.us-west-2.amazonaws.com"
+    },
+    {
       name: "AuthApi",
       endpoint: "https://slloxtqq3b.execute-api.us-west-2.amazonaws.com"
     },

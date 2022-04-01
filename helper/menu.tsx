@@ -64,6 +64,11 @@ export const defaultDesktopMenuItems = (username: string) => [
     url: `/users/${username}`,
     authRequired: true
   },
+  {
+    title: "Rewards",
+    url: "/rewards",
+    authRequired: true
+  },
   // {
   //   title: "Community",
   //   url: "http://community.wholooped.com/",
@@ -97,8 +102,13 @@ export const desktopLoopmakerMenuItems = [
       authRequired: false
     },
     {
+      title: "Rewards",
+      url: "/rewards",
+      authRequired: true
+    },
+    {
       title: "NFT",
       url: "/nft",
       authRequired: true
-    }
+    },
   ]
