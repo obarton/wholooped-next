@@ -52,7 +52,7 @@ const Home = ({ songs, loopPacks }: any) => {
                       <div style={{paddingLeft: "25%", paddingRight: "5%", paddingBottom: "15%", paddingTop: "15%"}}>
                         <StyledLandingText><b>{landingText}</b></StyledLandingText>
                         <div style={{textAlign: "center", marginTop: "2rem"}}>
-                          <Button size="lg" onClick={(e) => router.push(`/app/dashboard`)}>Browse</Button>
+                          <Button size="lg" onClick={(e) => router.push(`/app`)}>Browse</Button>
                         </div> 
                       </div> 
                     </Col>
