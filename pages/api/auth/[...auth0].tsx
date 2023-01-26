@@ -1,9 +1,9 @@
 // pages/api/auth/[...auth0].tsx
-import { handleAuth, handleLogin } from '@auth0/nextjs-auth0';
+import auth0 from '../../../lib/auth0';
 
-export default handleAuth({
+export default auth0.handleAuth({
     async login(req, res) {
-      await handleLogin(req, res, {
+      await auth0.handleLogin(req, res, {
         returnTo: "/app",
       });
     },

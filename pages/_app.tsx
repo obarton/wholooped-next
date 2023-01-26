@@ -63,7 +63,6 @@ function App({ Component, pageProps } : AppProps) {
   }, [router.events])
 
   return (
-    <MoralisProvider appId={APP_ID} serverUrl={SERVER_URL}>
       <UserProvider>
           <AppContainer>
               <Component {...pageProps} />
@@ -73,7 +72,6 @@ function App({ Component, pageProps } : AppProps) {
             <Footer />
           </FooterWrapper>
       </UserProvider>
-    </MoralisProvider>
   )
 }
 
